@@ -36,8 +36,15 @@
         
         <div>
           <% if (post.image) { %>
-            <div class="h-48 overflow-hidden bg-slate-100">
+            <div class="h-48 overflow-hidden bg-slate-100 relative group/thumb">
               <img src="<%= post.image %>" alt="<%= post.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <% if (post.youtubeId) { %>
+                <div class="absolute inset-0 bg-black/25 flex items-center justify-center transition group-hover:bg-black/15">
+                  <div class="w-12 h-12 rounded-full bg-red-600/95 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                    <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              <% } %>
             </div>
           <% } %>
 
