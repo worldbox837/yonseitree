@@ -41,12 +41,15 @@ function fixLinks(html) {
     // Navigation & internal links
     .replace(/href="\/(#[^"]*)"/g, 'href="index.html$1"')
     .replace(/href="\/"/g, 'href="index.html"')
-    .replace(/href="\/doctors"/g, 'href="doctors.html"')
+    .replace(/href="\/doctors(\?[^"]*)?"/g, (match, p1) => `href="doctors.html${p1 || ''}"`)
     .replace(/href="\/location(#?[^"]*)"/g, 'href="location.html$1"')
     .replace(/href="\/non-covered"/g, 'href="non-covered.html"')
     .replace(/href="\/subjects(#?[^"]*)"/g, 'href="subjects.html$1"')
-    .replace(/href="\/posts"/g, 'href="posts.html"')
+    .replace(/href="\/news"/g, 'href="posts.html?filter=언론보도"')
+    .replace(/href="\/posts\/(post-[^"]*)"/g, 'href="$1.html"')
+    .replace(/href="\/posts(\?[^"]*)?"/g, (match, p1) => `href="posts.html${p1 || ''}"`)
     .replace(/onclick="location\.href='\/location(#?[^']*)'"/g, 'onclick="location.href=\'location.html$1\'"')
+    .replace(/href="\/admin"/g, 'href="javascript:alert(\'관리자 기능은 로컬 Express 서버에서 지원됩니다.\')"')
     // Image assets
     .replace(/src="\/images\//g, 'src="./images/')
     .replace(/href="\/images\//g, 'href="./images/');
@@ -105,6 +108,14 @@ async function build() {
     ...globalData,
     posts
   }, path.join(ROOT_DIR, 'posts.html'));
+
+  // 7. Post detail pages
+  for (const post of posts) {
+    await renderPage('post-detail', {
+      ...globalData,
+      post
+    }, path.join(ROOT_DIR, `${post.id}.html`));
+  }
 
   console.log('GitHub Pages static build completed successfully!');
 }

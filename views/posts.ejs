@@ -14,16 +14,16 @@
 
   <!-- J-Min Filter Buttons -->
   <div class="flex flex-wrap items-center justify-center gap-2">
-    <button onclick="filterPosts('all')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+    <button onclick="filterPosts('all', event)" data-category="all" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
       전체 글
     </button>
-    <button onclick="filterPosts('공지사항')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('공지사항', event)" data-category="공지사항" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       공지사항
     </button>
-    <button onclick="filterPosts('언론보도')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('언론보도', event)" data-category="언론보도" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       방송 및 언론보도
     </button>
-    <button onclick="filterPosts('마음건강 칼럼')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('마음건강 칼럼', event)" data-category="마음건강 칼럼" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       마음건강 칼럼
     </button>
   </div>
@@ -71,14 +71,18 @@
 </main>
 
 <script>
-  function filterPosts(cat) {
+  function filterPosts(cat, evt) {
     const cards = document.querySelectorAll('.post-card');
     const btns = document.querySelectorAll('.post-filter-btn');
 
     btns.forEach(b => {
       b.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
     });
-    event.target.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    
+    const activeBtn = (evt && evt.currentTarget) ? evt.currentTarget : document.querySelector(`.post-filter-btn[data-category="${cat}"]`);
+    if (activeBtn) {
+      activeBtn.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    }
 
     cards.forEach(c => {
       const cardCat = c.getAttribute('data-category');
@@ -89,6 +93,14 @@
       }
     });
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get('filter') || params.get('category');
+    if (filter) {
+      filterPosts(filter);
+    }
+  });
 </script>
 
 <%- include('partials/footer') %>

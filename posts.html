@@ -85,7 +85,7 @@
     <div class="flex items-center gap-4 text-[11px]">
       <a href="location.html" class="hover:text-jmin-navy transition">오시는 길 &bull; 진료시간</a>
       <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">공식 네이버 블로그</a>
-      <a href="/admin" class="hover:text-slate-800 transition">관리자</a>
+      <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="hover:text-slate-800 transition">관리자</a>
     </div>
   </div>
 </div>
@@ -256,7 +256,7 @@
     </div>
 
     <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-      <a href="/admin" class="text-xs text-slate-400 hover:text-slate-600">⚙️ 관리자 로그인</a>
+      <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="text-xs text-slate-400 hover:text-slate-600">⚙️ 관리자 로그인</a>
       <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-xs text-emerald-700 font-bold">📗 네이버 블로그</a>
     </div>
   </div>
@@ -286,16 +286,16 @@
 
   <!-- J-Min Filter Buttons -->
   <div class="flex flex-wrap items-center justify-center gap-2">
-    <button onclick="filterPosts('all')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+    <button onclick="filterPosts('all', event)" data-category="all" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
       전체 글
     </button>
-    <button onclick="filterPosts('공지사항')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('공지사항', event)" data-category="공지사항" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       공지사항
     </button>
-    <button onclick="filterPosts('언론보도')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('언론보도', event)" data-category="언론보도" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       방송 및 언론보도
     </button>
-    <button onclick="filterPosts('마음건강 칼럼')" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+    <button onclick="filterPosts('마음건강 칼럼', event)" data-category="마음건강 칼럼" class="post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
       마음건강 칼럼
     </button>
   </div>
@@ -303,7 +303,7 @@
   <!-- Post List Grid (J-Min Style Cards) -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     
-      <a href="/posts/post-1" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
+      <a href="post-1.html" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
          data-category="공지사항">
         
         <div>
@@ -341,7 +341,7 @@
 
       </a>
     
-      <a href="/posts/post-2" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
+      <a href="post-2.html" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
          data-category="언론보도">
         
         <div>
@@ -375,7 +375,7 @@
 
       </a>
     
-      <a href="/posts/post-3" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
+      <a href="post-3.html" class="post-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:border-jmin-navy hover:shadow-md transition flex flex-col justify-between group"
          data-category="마음건강 칼럼">
         
         <div>
@@ -413,14 +413,18 @@
 </main>
 
 <script>
-  function filterPosts(cat) {
+  function filterPosts(cat, evt) {
     const cards = document.querySelectorAll('.post-card');
     const btns = document.querySelectorAll('.post-filter-btn');
 
     btns.forEach(b => {
       b.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
     });
-    event.target.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    
+    const activeBtn = (evt && evt.currentTarget) ? evt.currentTarget : document.querySelector(`.post-filter-btn[data-category="${cat}"]`);
+    if (activeBtn) {
+      activeBtn.className = 'post-filter-btn px-5 py-2.5 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    }
 
     cards.forEach(c => {
       const cardCat = c.getAttribute('data-category');
@@ -431,6 +435,14 @@
       }
     });
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get('filter') || params.get('category');
+    if (filter) {
+      filterPosts(filter);
+    }
+  });
 </script>
 
 <!-- J-Min Style Floating Side Quick Menu (Right Fixed) -->
@@ -484,7 +496,7 @@
           <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 hover:bg-emerald-900 transition">
             <span>📗 공식 네이버 블로그</span> &rarr;
           </a>
-          <a href="/admin" class="text-xs text-slate-500 hover:text-slate-300 transition">
+          <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="text-xs text-slate-500 hover:text-slate-300 transition">
             ⚙️ 관리자 모드
           </a>
         </div>
