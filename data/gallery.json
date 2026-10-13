@@ -3,28 +3,28 @@
     "id": "gal-1",
     "title": "따뜻하고 아늑한 대기 공간",
     "category": "대기실",
-    "image": "",
+    "image": "/images/gallery/gallery_lounge.jpg",
     "order": 1
   },
   {
     "id": "gal-2",
-    "title": "편안한 심층 상담실",
-    "category": "진료실",
-    "image": "",
+    "title": "정갈한 병원 입구 및 안내데스크",
+    "category": "병원 입구",
+    "image": "/images/gallery/gallery_entrance.jpg",
     "order": 2
   },
   {
     "id": "gal-3",
-    "title": "전문 아동 놀이치료실",
-    "category": "치료실",
-    "image": "",
+    "title": "마음의 안정을 주는 힐링 존",
+    "category": "원내 전경",
+    "image": "/images/gallery/gallery_healing.jpg",
     "order": 3
   },
   {
     "id": "gal-4",
-    "title": "1:1 맞춤 언어치료실",
-    "category": "치료실",
-    "image": "",
+    "title": "프라이빗 심층 진료 및 치료실",
+    "category": "진료실/치료실",
+    "image": "/images/gallery/gallery_corridor.jpg",
     "order": 4
   }
 ]
