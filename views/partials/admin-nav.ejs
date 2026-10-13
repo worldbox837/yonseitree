@@ -1,0 +1,60 @@
+<header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      <!-- Left: Logo & Title -->
+      <div class="flex items-center gap-3">
+        <a href="/admin" class="flex items-center gap-2">
+          <img src="/images/logo.jpg" alt="연세나무" class="w-8 h-8 rounded-lg object-contain bg-white p-0.5" />
+          <span class="font-bold text-base sm:text-lg tracking-tight">연세나무 관리자</span>
+        </a>
+        <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
+          Admin Console
+        </span>
+      </div>
+
+      <!-- Center: Main Navigation -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="/admin" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'dashboard' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          대시보드
+        </a>
+        <a href="/admin/homepage" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'homepage' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          🎨 첫 페이지 배치 & 사진
+        </a>
+        <a href="/admin/doctors" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'doctors' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          👨‍⚕️ 의사 & 치료사 관리
+        </a>
+        <a href="/admin/posts" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'posts' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          📝 게시글 & 공지
+        </a>
+        <a href="/admin/gallery" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'gallery' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          🖼️ 시설 사진 갤러리
+        </a>
+        <a href="/admin/branches" class="px-3 py-2 rounded-lg hover:bg-slate-800 transition <%= activeMenu === 'branches' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300' %>">
+          🏢 지점 & 진료현황
+        </a>
+      </nav>
+
+      <!-- Right: View Site & Logout -->
+      <div class="flex items-center gap-2">
+        <a href="/" target="_blank" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1">
+          <span>홈페이지 보기</span> &nearr;
+        </a>
+        <a href="/admin/logout" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-rose-900/60 hover:bg-rose-800 text-rose-200 transition">
+          로그아웃
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Subnav for Admin -->
+  <div class="md:hidden flex overflow-x-auto gap-1 p-2 bg-slate-950 text-xs custom-scrollbar">
+    <a href="/admin" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'dashboard' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">대시보드</a>
+    <a href="/admin/homepage" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'homepage' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">🎨 첫 페이지 설정</a>
+    <a href="/admin/doctors" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'doctors' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">👨‍⚕️ 의료진</a>
+    <a href="/admin/posts" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'posts' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">📝 게시글</a>
+    <a href="/admin/gallery" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'gallery' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">🖼️ 갤러리</a>
+    <a href="/admin/branches" class="px-3 py-1.5 rounded-lg whitespace-nowrap <%= activeMenu === 'branches' ? 'bg-slate-800 text-emerald-400' : 'text-slate-400' %>">🏢 지점 설정</a>
+  </div>
+</header>

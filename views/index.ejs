@@ -1,0 +1,736 @@
+<%- include('partials/head', { title: '병원소개' }) %>
+<%- include('partials/header') %>
+
+<main class="flex-1 space-y-20 sm:space-y-32 pb-24">
+
+  <% 
+    // Render sections according to admin configuration
+    const sortedSections = (settings.sections || []).filter(s => s.visible).sort((a, b) => a.order - b.order);
+  %>
+
+  <% sortedSections.forEach(section => { %>
+
+    <!-- ============================================================ -->
+    <!-- 1. HERO: J-Min Full-Width Visual Hero with Official Logo Mark -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'hero') { %>
+      <section class="relative w-full bg-jmin-dark text-white overflow-hidden">
+        
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 z-0">
+          <% if (settings.hero && settings.hero.backgroundImage) { %>
+            <img src="<%= settings.hero.backgroundImage %>" alt="연세나무 배경" class="w-full h-full object-cover opacity-30 filter brightness-90" />
+          <% } else { %>
+            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=2000&q=80" alt="연세나무 클리닉" class="w-full h-full object-cover opacity-25 filter brightness-75" />
+          <% } %>
+          <div class="absolute inset-0 bg-gradient-to-t from-jmin-dark via-jmin-dark/70 to-jmin-dark/40"></div>
+        </div>
+
+        <!-- Typography Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-36 lg:py-44 flex flex-col items-center text-center space-y-6">
+          
+          <!-- Official Logo Mark Badge -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
+            <img src="/images/logo.jpg" alt="연세나무 마크" class="w-6 h-6 rounded-full object-contain bg-white p-0.5" />
+            <span class="text-xs sm:text-sm font-medium text-amber-200">
+              <%= settings.hero.badgeText || '아이마다 타고난 바탕이 다릅니다 · 기질을 알면 육아가 달라집니다' %>
+            </span>
+          </div>
+
+          <!-- Main Hero Title -->
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-white tracking-tight drop-shadow-md">
+            <% const titleLines = (settings.hero.mainTitle || '아이의 성장을 기다려주는 마음의 숲,\n연세나무정신건강의학과').split('\n'); %>
+            <% titleLines.forEach((line, idx) => { %>
+              <span class="block <%= idx > 0 ? 'mt-4 sm:mt-6' : '' %>"><%= line %></span>
+            <% }) %>
+          </h1>
+
+          <!-- Body Description (Comforting message for parents) -->
+          <p class="text-xs sm:text-base text-slate-300 max-w-2xl font-light leading-relaxed pt-1">
+            <%= settings.hero.subTitle || '우리 아이, 왜 이럴까 자책하며 홀로 힘들어하셨나요? 부모님의 탓이 아닙니다. 《기질육아》 저자 원장단과 1급 전문 치료사진이 아이의 기질을 깊이 이해하고 덜 싸우며 더 잘 사랑할 수 있도록 따뜻한 위안과 맞춤 양육의 답을 찾아드립니다.' %>
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <a href="#philosophy" class="px-8 py-3.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg transition duration-200">
+              병원 철학 & 도서 소개 &darr;
+            </a>
+            <a href="/doctors" class="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm backdrop-blur-sm border border-white/25 transition duration-200">
+              의료진 소개 보기 &rarr;
+            </a>
+          </div>
+
+          <!-- Branch Quick Info Cards -->
+          <div class="pt-8 w-full max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 p-4 rounded-2xl hover:bg-white/15 transition cursor-pointer" onclick="location.href='/location#hanam'">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  하남미사 클리닉
+                </span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/20 text-slate-200">
+                  미사역 8번 출구
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">차지민 원장 &bull; 김남욱 원장 (소아청소년 세부전문의)</p>
+              <p class="text-[11px] text-emerald-300 mt-1 font-semibold flex items-center gap-1">
+                <span>진료안내 & 오시는 길</span> &rarr;
+              </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 p-4 rounded-2xl hover:bg-white/15 transition cursor-pointer" onclick="location.href='/location#sejong'">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                  세종 클리닉
+                </span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/20 text-slate-200">
+                  어반아트리움 인근
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">김현진 원장 (소아청소년 세부전문의)</p>
+              <p class="text-[11px] text-teal-300 mt-1 font-semibold flex items-center gap-1">
+                <span>진료안내 & 오시는 길</span> &rarr;
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 2. PHILOSOPHY: 기질육아 책을 참고한 부모 위안 철학 메시지 -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'philosophy') { %>
+      <section id="philosophy" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-warm-50 border border-warm-200 rounded-3xl p-8 sm:p-14 lg:p-16 shadow-xs space-y-10">
+          
+          <div class="text-center space-y-3">
+            <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Philosophy of Yonsei Tree</span>
+            <h2 class="text-2xl sm:text-4xl font-serif font-extrabold text-slate-900 leading-snug">
+              "우리 아이, 왜 이럴까요?"<br>
+              <span class="text-jmin-navy">부모님의 탓이 아닙니다. 아이마다 타고난 바탕이 다를 뿐입니다.</span>
+            </h2>
+            <div class="w-12 h-0.5 bg-jmin-gold mx-auto mt-4"></div>
+          </div>
+
+          <!-- Deep Comforting Letter -->
+          <div class="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-light">
+            <p>
+              쉽게 울고 짜증 내는 아이, 시작도 전에 쉽게 포기하는 아이, 의욕도 욕심도 너무 없는 아이, 
+              혹은 친구들에게 상처받으면서도 자꾸 끌려가는 아이를 보며...<br class="hidden sm:inline">
+              <strong>"내가 양육을 잘못하고 있는 걸까?", "내가 부족한 부모라서 그런 걸까?"</strong> 수없이 자책하며 남몰래 가슴 아파하셨나요?
+            </p>
+            
+            <p>
+              육아의 어려움은 부모의 정성이 부족해서 생기는 것이 아닙니다. 
+              세상에 태어난 모든 아이는 저마다 세상을 탐색하고 반응하는 <strong>'고유한 기질(타고난 바탕)'</strong>을 품고 태어납니다. 
+              아이의 기질을 이해하지 못한 채 세상의 획일적인 기준에 맞추려 하면, 부모와 아이는 매일 싸우고 서로에게 깊은 상처를 남기게 됩니다.
+            </p>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl border border-warm-300/80 shadow-xs space-y-3 my-6 font-serif">
+              <p class="text-base sm:text-lg text-slate-900 font-bold text-center leading-relaxed">
+                "기질을 알면 덜 싸우고, 더 잘 사랑하며 키울 수 있습니다."
+              </p>
+              <p class="text-xs sm:text-sm text-slate-600 text-center leading-relaxed font-sans">
+                아이의 타고난 바탕을 깊이 관찰하고 인정해 주는 순간, 부모의 죄책감은 내려앉고 
+                아이의 가능성을 활짝 꽃피우는 진정한 부모의 기술이 시작됩니다.
+              </p>
+            </div>
+
+            <p>
+              연세나무정신건강의학과는 조급함 없이 아이의 속도에 맞추어 성장을 기다려주는 <strong>든든한 나무 그늘</strong>이자,<br class="hidden sm:inline">
+              그동안 홀로 외롭게 분투하셨을 <strong>부모님의 지친 마음을 따뜻하게 위로하고 안아드리는 안식처</strong>가 되어 드리겠습니다.
+            </p>
+          </div>
+
+          <!-- Director Signature -->
+          <div class="pt-6 border-t border-warm-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <img src="/images/logo.jpg" alt="연세나무 마크" class="w-10 h-10 rounded-xl object-contain bg-white p-0.5 border border-slate-200" />
+              <div class="text-left">
+                <span class="block text-xs font-bold text-slate-900">연세나무정신건강의학과</span>
+                <span class="block text-[11px] text-slate-500">소아청소년 세부전문의 &bull; 성인 클리닉</span>
+              </div>
+            </div>
+            <div class="text-right text-xs sm:text-sm font-serif text-slate-800">
+              대표원장 <strong class="text-slate-900 text-base">차지민 &bull; 김남욱</strong> 드림
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 3. BOOK: 원장단 저서 《기질육아》 특별 소개 섹션 -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'book') { %>
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-gradient-to-br from-slate-900 via-jmin-dark to-slate-950 rounded-3xl p-8 sm:p-14 text-white shadow-xl">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Book 3D Cover (4 cols) -->
+            <div class="lg:col-span-4 flex flex-col items-center text-center space-y-4">
+              <div class="relative group max-w-xs">
+                <img src="/images/book_3d.png" alt="기질육아 도서" class="w-full h-auto drop-shadow-2xl transform group-hover:scale-105 transition duration-500" />
+              </div>
+              <div class="space-y-1">
+                <span class="inline-block px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-bold">
+                  베스트셀러 도서
+                </span>
+                <h4 class="text-lg font-bold font-serif text-white">기질육아</h4>
+                <p class="text-xs text-slate-300">소아정신과 전문의 차지민 · 김남욱 지음 | 저녁달</p>
+              </div>
+            </div>
+
+            <!-- Book Chapters & Narrative (8 cols) -->
+            <div class="lg:col-span-8 space-y-6">
+              
+              <div class="space-y-2">
+                <span class="text-xs font-bold text-amber-300 tracking-widest uppercase">Special Publication</span>
+                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-extrabold text-white leading-tight">
+                  아이의 타고난 바탕을 인정하고 가능성을 키우는 부모의 기술
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                  소아정신과 전문의 2인이 임상 현장에서 수많은 부모님과 아이들을 직접 치료하며 정립한 
+                  <strong>'아이마다 다른 답을 찾는 양육 최적화 전략'</strong>입니다.
+                </p>
+              </div>
+
+              <!-- 4 Chapters Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                
+                <div class="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-amber-400/90 text-slate-900 text-[10px] font-bold">1장</span>
+                    <h5 class="text-sm font-bold text-white">기질 관찰의 힘</h5>
+                  </div>
+                  <ul class="text-xs text-slate-300 space-y-1 pl-1 font-light">
+                    <li>&bull; 쉽게 울고 짜증 내는 아이</li>
+                    <li>&bull; 늘 심심하다고 하는 아이</li>
+                    <li>&bull; 의욕도 욕심도 너무 없는 아이</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-amber-400/90 text-slate-900 text-[10px] font-bold">2장</span>
+                    <h5 class="text-sm font-bold text-white">기질 맞춤 학습 전략</h5>
+                  </div>
+                  <ul class="text-xs text-slate-300 space-y-1 pl-1 font-light">
+                    <li>&bull; 쉽게 시작하고 쉽게 포기하는 아이</li>
+                    <li>&bull; 노력해도 실력이 늘지 않는 아이</li>
+                    <li>&bull; 잘할 때와 못할 때의 차이가 큰 아이</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-amber-400/90 text-slate-900 text-[10px] font-bold">3장</span>
+                    <h5 class="text-sm font-bold text-white">아이마다 다른 사회성 기술</h5>
+                  </div>
+                  <ul class="text-xs text-slate-300 space-y-1 pl-1 font-light">
+                    <li>&bull; 상처 주는 친구에게 끌리는 아이</li>
+                    <li>&bull; 인기 있고 싶어 과하게 행동하는 아이</li>
+                    <li>&bull; 눈치가 없어서 미움 받는 아이</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-amber-400/90 text-slate-900 text-[10px] font-bold">4장</span>
+                    <h5 class="text-sm font-bold text-white">좋은 습관 완성 전략</h5>
+                  </div>
+                  <ul class="text-xs text-slate-300 space-y-1 pl-1 font-light">
+                    <li>&bull; 도와주는 것과 해주는 것 구별하기</li>
+                    <li>&bull; 바른 말 습관 코칭</li>
+                    <li>&bull; 식탁에서 만들어지는 평생 식습관</li>
+                  </ul>
+                </div>
+
+              </div>
+
+              <div class="pt-2 text-xs text-amber-200/90 font-light">
+                ※ 연세나무에서는 도서 《기질육아》의 원리에 기반하여 아이의 기질 평가 및 맞춤 부모 코칭 상담을 체계적으로 진행합니다.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 4. FEATURES: 연세나무 3대 핵심 가치 (병원 소개) -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'features') { %>
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+          <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Why Yonsei Tree</span>
+          <h2 class="text-2xl sm:text-4xl font-serif font-extrabold text-slate-900">
+            연세나무만의 3대 진료 전문성
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 font-light">
+            신뢰할 수 있는 학술적 깊이와 다학제 협진으로 정확한 진단과 따뜻한 치료를 약속드립니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition">
+            <div class="space-y-3">
+              <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xl">
+                🎓
+              </span>
+              <h3 class="text-lg font-bold font-serif text-slate-900">소아청소년 세부전문의 1:1 진료</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                정신건강의학과 전문의 취득 후 소아청소년 분과 세부 수련을 거친 세부전문의 원장단이 아이의 발달 단계와 기질을 면밀히 평가하여 최적화된 맞춤 치료를 진행합니다.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div class="flex items-center -space-x-2">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/doc_chajimin.jpg" alt="차지민 대표원장" title="차지민 원장 (하남미사)">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/doc_kimnamwook.jpg" alt="김남욱 대표원장" title="김남욱 원장 (하남미사)">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/doc_kimhyunjin.jpg" alt="김현진 대표원장" title="김현진 원장 (세종나성)">
+              </div>
+              <a href="/doctors" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                <span>원장단 프로필</span> &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition">
+            <div class="space-y-3">
+              <span class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-xl">
+                🤝
+              </span>
+              <h3 class="text-lg font-bold font-serif text-slate-900">보건복지부 1급 다학제 협진</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                보건복지부 공인 1급 임상심리전문가, 언어재활사 1급 치료사가 상주하여 정밀 종합심리평가부터 언어·놀이·인지치료까지 유기적으로 연계합니다.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div class="flex items-center -space-x-2">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/staff_jungjiyeon.jpg" alt="정지연 임상심리전문가" title="정지연 임상심리전문가">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/staff_leesunkyung.jpg" alt="이선경 정신건강임상심리사" title="이선경 정신건강임상심리사">
+                <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/staff_parkjiyeon.jpg" alt="박지연 언어치료사" title="박지연 언어치료사">
+              </div>
+              <a href="/doctors?filter=therapist" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1">
+                <span>치료사진 소개</span> &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition">
+            <div class="space-y-3">
+              <span class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl">
+                📺
+              </span>
+              <h3 class="text-lg font-bold font-serif text-slate-900">방송 및 대외 자문 공신력</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                SBS Plus '우리 아이가 달라졌어요 리턴즈' 김남욱 원장 현장 자문의 활동 및 학회 학술 연구를 통해 검증된 양육 솔루션을 제공합니다.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img class="h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs" src="/images/doctors/doc_kimnamwook.jpg" alt="김남욱 원장" title="김남욱 원장">
+                <span class="text-xs font-semibold text-slate-700">김남욱 대표원장</span>
+              </div>
+              <a href="/news" class="text-xs font-bold text-amber-700 hover:text-amber-900 flex items-center gap-1">
+                <span>방송 활동 보기</span> &rarr;
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 5. BANNERS: 제이민 스타일 4대 클리닉 바로가기 배너 카드 (중복 방지) -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'banners') { %>
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Clinical Programs & Team</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-extrabold text-slate-900 mt-1">연세나무 진료 클리닉 바로가기</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">상세 진료과목과 의료진 정보는 전용 페이지에서 자세히 확인하실 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <a href="/doctors" class="banner-card relative h-80 rounded-2xl overflow-hidden shadow-xs group block bg-slate-900">
+            <img src="/images/doctors/doc_chajimin.jpg" alt="의료진 소개"
+                 class="banner-bg-img absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-75 transition duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-jmin-dark via-jmin-dark/50 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white space-y-1">
+              <span class="text-[10px] font-bold text-amber-300 tracking-wider uppercase block">Medical Team</span>
+              <h3 class="text-xl font-bold font-serif leading-tight">의료진 소개</h3>
+              <p class="text-xs text-slate-300 pt-1 leading-snug">소아청소년 세부전문의 원장단 & 1급 치료사진</p>
+              <div class="pt-3 text-xs font-semibold text-white/90 group-hover:text-white flex items-center gap-1">
+                <span>프로필 보기</span> &rarr;
+              </div>
+            </div>
+          </a>
+
+          <a href="/subjects#sub-1" class="banner-card relative h-80 rounded-2xl overflow-hidden shadow-xs group block bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" alt="소아청소년 정신건강"
+                 class="banner-bg-img absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-85" />
+            <div class="absolute inset-0 bg-gradient-to-t from-jmin-dark via-jmin-dark/40 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white space-y-1">
+              <span class="text-[10px] font-bold text-amber-300 tracking-wider uppercase block">Child & Adolescent</span>
+              <h3 class="text-xl font-bold font-serif leading-tight">소아청소년 정신건강</h3>
+              <p class="text-xs text-slate-300 pt-1 leading-snug">집중력 향상(ADHD), 틱 클리닉, 언어발달</p>
+              <div class="pt-3 text-xs font-semibold text-white/90 group-hover:text-white flex items-center gap-1">
+                <span>클리닉 안내</span> &rarr;
+              </div>
+            </div>
+          </a>
+
+          <a href="/subjects#sub-3" class="banner-card relative h-80 rounded-2xl overflow-hidden shadow-xs group block bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=800&q=80" alt="성인 정신건강"
+                 class="banner-bg-img absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-85" />
+            <div class="absolute inset-0 bg-gradient-to-t from-jmin-dark via-jmin-dark/40 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white space-y-1">
+              <span class="text-[10px] font-bold text-amber-300 tracking-wider uppercase block">Adult Mental Care</span>
+              <h3 class="text-xl font-bold font-serif leading-tight">성인 정신건강</h3>
+              <p class="text-xs text-slate-300 pt-1 leading-snug">기분 개선(우울), 불안 조절(공황), 수면장애</p>
+              <div class="pt-3 text-xs font-semibold text-white/90 group-hover:text-white flex items-center gap-1">
+                <span>클리닉 안내</span> &rarr;
+              </div>
+            </div>
+          </a>
+
+          <a href="/subjects#sub-5" class="banner-card relative h-80 rounded-2xl overflow-hidden shadow-xs group block bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80" alt="검사 치료 프로그램"
+                 class="banner-bg-img absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-85" />
+            <div class="absolute inset-0 bg-gradient-to-t from-jmin-dark via-jmin-dark/40 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white space-y-1">
+              <span class="text-[10px] font-bold text-amber-300 tracking-wider uppercase block">Evaluation & Therapy</span>
+              <h3 class="text-xl font-bold font-serif leading-tight">검사 ∙ 치료 프로그램</h3>
+              <p class="text-xs text-slate-300 pt-1 leading-snug">종합심리평가(풀배터리), 언어·놀이치료</p>
+              <div class="pt-3 text-xs font-semibold text-white/90 group-hover:text-white flex items-center gap-1">
+                <span>프로그램 안내</span> &rarr;
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 6. GALLERY: 병원 둘러보기 (시설 사진 갤러리) -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'gallery') { %>
+      <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Interior & Atmosphere</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-extrabold text-slate-900 mt-1">병원 둘러보기</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">마음의 안정과 편안한 쉼을 전해드릴 수 있도록 정갈하게 꾸민 원내 공간입니다.</p>
+          </div>
+          <a href="/admin/gallery" class="text-xs text-slate-400 hover:text-slate-600">
+            [시설 사진 관리]
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <% (gallery || []).forEach(item => { %>
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs group hover:border-slate-300 transition">
+              <div class="h-48 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+                <% if (item.image) { %>
+                  <img src="<%= item.image %>" alt="<%= item.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <% } else { %>
+                  <div class="text-center p-4">
+                    <img src="/images/logo.jpg" alt="연세나무 마크" class="w-10 h-10 rounded-full mx-auto mb-2 opacity-50" />
+                    <p class="text-xs text-slate-400 font-medium"><%= item.category %></p>
+                  </div>
+                <% } %>
+                <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/90 text-slate-700 shadow-xs">
+                  <%= item.category %>
+                </span>
+              </div>
+              <div class="p-3.5">
+                <h4 class="text-xs sm:text-sm font-bold text-slate-800"><%= item.title %></h4>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 6.5 NON-COVERED: 비급여 항목 안내 (병원 둘러보기와 오시는 길 사이) -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'non-covered') { %>
+      <section id="non-covered" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-gradient-to-br from-warm-50 via-white to-warm-50/50 rounded-3xl border border-warm-200 p-6 sm:p-10 lg:p-12 shadow-xs space-y-8">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-warm-200/80 pb-6">
+            <div>
+              <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Non-Covered Medical Disclosure</span>
+              <h2 class="text-2xl sm:text-3xl font-serif font-extrabold text-slate-900 mt-1">비급여 항목 안내</h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">의료법 제45조에 의거하여 연세나무의 비급여 진료비용을 투명하게 고지합니다.</p>
+            </div>
+            <a href="/non-covered" class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-jmin-navy hover:bg-jmin-dark text-white rounded-full text-xs font-bold transition shadow-xs self-start md:self-auto">
+              <span>비급여 전체 항목 보기 (20개)</span> &rarr;
+            </a>
+          </div>
+
+          <!-- Quick Preview Cards (3 major categories) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl border border-warm-300/70 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">치료 및 평가</span>
+                <span class="text-xs text-slate-400 font-mono">4개 항목</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2.5 pt-1 divide-y divide-slate-100">
+                <li class="flex items-center justify-between pt-1">
+                  <span>언어치료</span>
+                  <strong class="font-mono text-slate-900">70,000 ~ 90,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>언어평가</span>
+                  <strong class="font-mono text-slate-900">150,000 ~ 250,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>신경발달중재치료(심리)</span>
+                  <strong class="font-mono text-slate-900">70,000 ~ 90,000원</strong>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-warm-300/70 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800">심리 및 발달 검사</span>
+                <span class="text-xs text-slate-400 font-mono">6개 항목</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2.5 pt-1 divide-y divide-slate-100">
+                <li class="flex items-center justify-between pt-1">
+                  <span>주의력검사(CAT 등)</span>
+                  <strong class="font-mono text-slate-900">150,000 ~ 250,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>영유아발달검사(DEP)</span>
+                  <strong class="font-mono text-slate-900">55,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>자율신경계이상검사</span>
+                  <strong class="font-mono text-slate-900">30,000원</strong>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-warm-300/70 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">제증명 발급 수수료</span>
+                <span class="text-xs text-slate-400 font-mono">10개 항목</span>
+              </div>
+              <ul class="text-xs text-slate-600 space-y-2.5 pt-1 divide-y divide-slate-100">
+                <li class="flex items-center justify-between pt-1">
+                  <span>일반 진단서</span>
+                  <strong class="font-mono text-slate-900">20,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>장애진단서(정신)</span>
+                  <strong class="font-mono text-slate-900">40,000원</strong>
+                </li>
+                <li class="flex items-center justify-between pt-2">
+                  <span>진료확인서 / 통원확인서</span>
+                  <strong class="font-mono text-slate-900">3,000원</strong>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="text-[11px] text-slate-500 bg-white/80 p-4 rounded-2xl border border-warm-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span>🌱 평가 및 치료는 대상자 및 세부항목, 치료 목표에 따라 비용이 달라질 수 있습니다.</span>
+            <a href="/non-covered" class="text-emerald-700 font-bold hover:underline shrink-0">공식 고지문 원본 및 전 항목 확인 &rarr;</a>
+          </div>
+
+        </div>
+
+      </section>
+    <% } %>
+
+    <!-- ============================================================ -->
+    <!-- 7. LOCATION: 오시는 길 & 진료시간 (통합 인포 블록) -->
+    <!-- ============================================================ -->
+    <% if (section.id === 'location') { %>
+      <section id="location" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
+            
+            <!-- Left: Directions (7 cols) -->
+            <div class="lg:col-span-7 p-6 sm:p-10 space-y-6">
+              <div>
+                <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Directions</span>
+                <h3 class="text-xl sm:text-2xl font-serif font-extrabold text-slate-900 mt-1">오시는 길 & 위치 안내</h3>
+                <p class="text-xs text-slate-500 mt-1">대중교통 및 자가용으로 편안하게 방문하실 수 있습니다.</p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      하남미사 클리닉
+                    </span>
+                    <a href="https://map.naver.com" target="_blank" rel="noopener" class="text-xs font-bold text-emerald-700 hover:underline">
+                      네이버 지도 길찾기 &rarr;
+                    </a>
+                  </div>
+                  <p class="text-xs text-slate-600"><strong>주소:</strong> 경기도 하남시 미사강변남로 103 (5호선 미사역 8번 출구 도보 3분)</p>
+                  <p class="text-xs text-slate-500"><strong>주차:</strong> 건물 지하 주차장 완비 (진료 환자 무료 주차권 지급)</p>
+                </div>
+
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+                      세종 클리닉
+                    </span>
+                    <a href="https://map.naver.com" target="_blank" rel="noopener" class="text-xs font-bold text-teal-700 hover:underline">
+                      네이버 지도 길찾기 &rarr;
+                    </a>
+                  </div>
+                  <p class="text-xs text-slate-600"><strong>주소:</strong> 세종특별자치시 나성북로 30 (어반아트리움 P1 파인앤에비뉴 인근)</p>
+                  <p class="text-xs text-slate-500"><strong>주차:</strong> 상가 지하 주차장 무료 주차 등록</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Clinic Hours (5 cols) -->
+            <div class="lg:col-span-5 p-6 sm:p-10 space-y-5 bg-slate-50/50">
+              <div>
+                <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Timetable</span>
+                <h3 class="text-xl sm:text-2xl font-serif font-extrabold text-slate-900 mt-1">진료시간 안내</h3>
+              </div>
+
+              <!-- 하남미사 클리닉 진료시간 -->
+              <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white text-xs">
+                <div class="p-2.5 bg-slate-100 font-bold text-slate-800 flex items-center justify-between border-b border-slate-200">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    하남미사 클리닉
+                  </span>
+                  <span class="text-[11px] font-semibold text-rose-600">토·일·공휴일 휴진</span>
+                </div>
+                <table class="w-full text-left border-collapse">
+                  <tbody class="divide-y divide-slate-100">
+                    <tr class="bg-slate-50/70">
+                      <td class="p-2.5 font-semibold text-slate-700 w-32">월 / 수 / 금 (야간)</td>
+                      <td class="p-2.5 text-slate-900 font-bold">09:30 ~ 19:30</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-700">화 / 목</td>
+                      <td class="p-2.5 text-slate-900 font-bold">09:30 ~ 18:30</td>
+                    </tr>
+                    <tr class="bg-rose-50/40">
+                      <td class="p-2.5 font-semibold text-rose-700">토 / 일 / 공휴일</td>
+                      <td class="p-2.5 text-rose-700 font-bold">휴진 (토요일 휴진)</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-700">점심시간</td>
+                      <td class="p-2.5 text-slate-500">13:00 ~ 14:00 (평일)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 세종 클리닉 진료시간 -->
+              <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white text-xs">
+                <div class="p-2.5 bg-slate-100 font-bold text-slate-800 flex items-center justify-between border-b border-slate-200">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+                    세종 클리닉
+                  </span>
+                  <span class="text-[11px] font-semibold text-rose-600">일·공휴일 휴진</span>
+                </div>
+                <table class="w-full text-left border-collapse">
+                  <tbody class="divide-y divide-slate-100">
+                    <tr class="bg-slate-50/70">
+                      <td class="p-2.5 font-semibold text-slate-700 w-32">평일 (월~금)</td>
+                      <td class="p-2.5 text-slate-900 font-bold">09:30 ~ 18:30</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-700">토요일</td>
+                      <td class="p-2.5 text-slate-900 font-bold">09:00 ~ 14:00 (점심시간 없음)</td>
+                    </tr>
+                    <tr class="bg-rose-50/40">
+                      <td class="p-2.5 font-semibold text-rose-700">일요일 / 공휴일</td>
+                      <td class="p-2.5 text-rose-700 font-bold">휴진</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-700">점심시간</td>
+                      <td class="p-2.5 text-slate-500">13:00 ~ 14:00 (평일)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600 text-[11px]">
+                ※ 원활한 진료를 위해 내원 전 예약을 권장해 드립니다.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom: J-Min Signature Phone Banner -->
+          <div class="bg-jmin-navy text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-slate-800">
+            <div class="text-center md:text-left space-y-1">
+              <span class="text-xs font-bold text-amber-300 tracking-wider uppercase">Contact Center</span>
+              <h4 class="text-xl sm:text-2xl font-serif font-bold text-white">상담문의</h4>
+              <p class="text-xs text-slate-300 font-light">빠르고 편안하게 상담을 도와드립니다.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+              <a href="tel:031-793-7575" class="flex items-center gap-2 group">
+                <span class="text-xs text-slate-300">하남미사 클리닉</span>
+                <span class="text-2xl sm:text-3xl font-extrabold text-amber-300 font-mono tracking-tight group-hover:underline">
+                  031-793-7575
+                </span>
+              </a>
+              <span class="hidden sm:inline text-slate-500">|</span>
+              <a href="tel:044-862-7575" class="flex items-center gap-2 group">
+                <span class="text-xs text-slate-300">세종 클리닉</span>
+                <span class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight group-hover:underline">
+                  044-862-7575
+                </span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    <% } %>
+
+  <% }) %>
+
+</main>
+
+<%- include('partials/footer') %>

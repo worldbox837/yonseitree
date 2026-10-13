@@ -1,0 +1,85 @@
+<%- include('../partials/head', { title: '게시글 & 공지 관리' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'posts' }) %>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+  
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Posts & Articles</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">게시글 & 공지사항 관리</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        병원 공지사항, 방송/언론보도 소식, 마음건강 칼럼을 작성, 수정 및 삭제합니다.
+      </p>
+    </div>
+    <a href="/admin/posts/new" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold transition shadow-xs flex items-center gap-1.5 self-start sm:self-auto">
+      <span>+ 새 게시글 작성</span>
+    </a>
+  </div>
+
+  <% if (typeof success !== 'undefined' && success) { %>
+    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+      <span>✅</span> <%= success %>
+    </div>
+  <% } %>
+
+  <!-- Posts Table -->
+  <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+            <th class="py-3.5 px-4 w-16 text-center">고정</th>
+            <th class="py-3.5 px-4 w-28">분류</th>
+            <th class="py-3.5 px-4">제목</th>
+            <th class="py-3.5 px-4 w-28 text-slate-400">작성일</th>
+            <th class="py-3.5 px-4 w-20 text-center text-slate-400">조회</th>
+            <th class="py-3.5 px-4 w-28 text-center">관리</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% posts.forEach(p => { %>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-3.5 px-4 text-center">
+                <% if (p.pinned) { %>
+                  <span class="inline-block text-base" title="상단 고정됨">📌</span>
+                <% } else { %>
+                  <span class="text-slate-300">-</span>
+                <% } %>
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded <%= p.category === '공지사항' ? 'bg-amber-100 text-amber-800' : (p.category === '언론보도' ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800') %>">
+                  <%= p.category %>
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-bold text-slate-900">
+                <a href="/posts/<%= p.id %>" target="_blank" class="hover:text-emerald-700 transition">
+                  <%= p.title %>
+                </a>
+              </td>
+              <td class="py-3.5 px-4 text-slate-500">
+                <%= p.date %>
+              </td>
+              <td class="py-3.5 px-4 text-center text-slate-500">
+                <%= p.views || 0 %>
+              </td>
+              <td class="py-3.5 px-4 text-center space-x-1 whitespace-nowrap">
+                <a href="/admin/posts/<%= p.id %>/edit" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                  수정
+                </a>
+                <form action="/admin/posts/<%= p.id %>/delete" method="POST" class="inline-block" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');">
+                  <button type="submit" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-xs font-bold transition">
+                    삭제
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<%- include('../partials/footer') %>

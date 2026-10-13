@@ -1,0 +1,107 @@
+<%- include('../partials/head', { title: '시설 사진 갤러리 관리' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'gallery' }) %>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+  
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Facility Tour Management</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">병원 시설 사진 갤러리 관리</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        첫 페이지 '병원 둘러보기' 섹션에 노출될 대기실, 진료실, 치료실 사진을 등록하고 관리합니다.
+      </p>
+    </div>
+    <a href="/#gallery" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
+      <span>첫 페이지에서 확인</span> &nearr;
+    </a>
+  </div>
+
+  <% if (typeof success !== 'undefined' && success) { %>
+    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+      <span>✅</span> <%= success %>
+    </div>
+  <% } %>
+
+  <!-- Add New Photo Box -->
+  <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+    <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+      <span class="text-2xl">📸</span>
+      <div>
+        <h2 class="text-base font-bold text-slate-900">새 시설 사진 등록하기</h2>
+        <p class="text-xs text-slate-500">원내 인테리어, 상담실, 언어치료실 등의 사진을 등록합니다.</p>
+      </div>
+    </div>
+
+    <form action="/admin/gallery" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
+      <div class="sm:col-span-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">사진 설명 / 공간명</label>
+        <input type="text" name="title" required placeholder="예: 쾌적하고 아늑한 대기 공간"
+               class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label class="block text-xs font-bold text-slate-700 mb-1">공간 구분</label>
+        <select name="category" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+          <option value="대기실">대기실</option>
+          <option value="진료실">진료실</option>
+          <option value="놀이치료실">놀이치료실</option>
+          <option value="언어치료실">언어치료실</option>
+          <option value="심리검사실">심리검사실</option>
+          <option value="기타">기타</option>
+        </select>
+      </div>
+
+      <div class="sm:col-span-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">사진 파일 선택</label>
+        <input type="file" name="galleryImage" accept="image/*" required
+               class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl p-1.5 bg-slate-50" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-xs">
+          사진 등록
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Gallery List Grid -->
+  <div>
+    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center justify-between">
+      <span>현재 등록된 사진 목록 (<%= gallery.length %>개)</span>
+      <span class="text-xs text-slate-400">삭제 시 첫 페이지에서도 즉시 제외됩니다</span>
+    </h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <% gallery.forEach(item => { %>
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs flex flex-col justify-between group">
+          <div class="h-44 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+            <% if (item.image) { %>
+              <img src="<%= item.image %>" alt="<%= item.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+            <% } else { %>
+              <span class="text-3xl">🌿</span>
+            <% } %>
+            <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/90 text-slate-700 shadow-xs">
+              <%= item.category %>
+            </span>
+          </div>
+
+          <div class="p-4 flex items-center justify-between gap-2 border-t border-slate-100">
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 truncate"><%= item.title %></h4>
+            </div>
+            <form action="/admin/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('이 사진을 삭제하시겠습니까?');">
+              <button type="submit" class="px-2.5 py-1 text-[11px] font-bold text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                삭제
+              </button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+</main>
+
+<%- include('../partials/footer') %>

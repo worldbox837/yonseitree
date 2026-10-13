@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' + settings.hospitalName : settings.hospitalName + ' - 소아청소년 & 성인 정신건강의학과' %></title>
+  <meta name="description" content="아이마다 타고난 바탕이 다릅니다. 기질을 알면 육아가 달라집니다. 연세나무정신건강의학과.">
+  <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+  
+  <!-- Pretendard & Noto Sans Korean Web Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jmin: {
+              navy: '#193048',       // 제이민 시그니처 딥 네이비
+              dark: '#112233',       // 헤더 및 푸터 다크 톤
+              accent: '#2b5876',     // 버튼 및 하이라이트 블루
+              gold: '#b89562',       // 고급스러운 포인트 골드
+              goldlight: '#f5efe6',  // 골드 틴트 배경
+              light: '#f8fafc',      // 클린 배경
+              border: '#e2e8f0',     // 섬세한 보더
+              gray: '#64748b',       // 서브 텍스트
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            serif: ['"Noto Serif KR"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      word-break: keep-all;
+      color: #333333;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* J-Min Dropdown hover transitions */
+    .nav-item:hover .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Banner zoom effect */
+    .banner-card:hover .banner-bg-img {
+      transform: scale(1.06);
+    }
+    .banner-bg-img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen selection:bg-jmin-navy selection:text-white">

@@ -1,0 +1,90 @@
+<%- include('../partials/head', { title: isEdit ? '게시글 수정' : '새 게시글 작성' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'posts' }) %>
+
+<main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+  
+  <div class="border-b border-slate-200 pb-4 flex items-center justify-between">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Post Form</span>
+      <h1 class="text-2xl font-extrabold text-slate-900 mt-1">
+        <%= isEdit ? '게시글 수정' : '새 게시글 작성' %>
+      </h1>
+    </div>
+    <a href="/admin/posts" class="text-xs font-bold text-slate-500 hover:text-slate-800">
+      &larr; 목록으로 돌아가기
+    </a>
+  </div>
+
+  <form action="<%= isEdit ? '/admin/posts/' + post.id : '/admin/posts' %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-6">
+
+    <!-- 카테고리 & 상단 고정 -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">분류 / 카테고리</label>
+        <select name="category" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+          <option value="공지사항" <%= (post && post.category === '공지사항') ? 'selected' : '' %>>공지사항</option>
+          <option value="언론보도" <%= (post && post.category === '언론보도') ? 'selected' : '' %>>방송 및 언론보도</option>
+          <option value="마음건강 칼럼" <%= (post && post.category === '마음건강 칼럼') ? 'selected' : '' %>>마음건강 칼럼</option>
+        </select>
+      </div>
+
+      <div class="sm:col-span-2 pt-5">
+        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+          <input type="checkbox" name="pinned" value="1" <%= (post && post.pinned) ? 'checked' : '' %>
+                 class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500" />
+          <span class="text-xs font-bold text-slate-800">목록 상단에 고정 표시 (중요 공지)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 제목 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1">제목</label>
+      <input type="text" name="title" value="<%= (post && post.title) || '' %>" required placeholder="제목을 입력하세요"
+             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+    </div>
+
+    <!-- 대표 이미지 첨부 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1.5">대표 사진 첨부 (선택사항)</label>
+      
+      <% if (post && post.image) { %>
+        <div class="flex items-center gap-4 mb-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+          <img src="<%= post.image %>" alt="첨부 이미지" class="w-20 h-14 rounded-lg object-cover border border-slate-200" />
+          <div class="text-xs">
+            <span class="font-bold text-slate-700 block">현재 첨부된 사진</span>
+            <label class="inline-flex items-center gap-1.5 text-rose-600 mt-1 cursor-pointer">
+              <input type="checkbox" name="removeImage" value="1" class="rounded text-rose-600" />
+              <span>사진 삭제</span>
+            </label>
+          </div>
+        </div>
+      <% } %>
+
+      <input type="file" name="postImage" accept="image/*"
+             class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl p-2 bg-slate-50" />
+      <p class="text-[11px] text-slate-400 mt-1">게시글 본문 상단 및 목록 썸네일로 활용됩니다 (최대 10MB)</p>
+    </div>
+
+    <!-- 내용 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1">본문 내용</label>
+      <textarea name="content" rows="12" required placeholder="본문 내용을 입력하세요."
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs leading-relaxed focus:ring-2 focus:ring-emerald-500 focus:outline-none"><%= (post && post.content) || '' %></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+      <a href="/admin/posts" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+        취소
+      </a>
+      <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-xs">
+        <%= isEdit ? '수정 저장하기' : '게시글 등록하기' %>
+      </button>
+    </div>
+
+  </form>
+
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,149 @@
+<%- include('partials/head', { title: '오시는 길 & 진료시간' }) %>
+<%- include('partials/header') %>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-16">
+  
+  <!-- Page Header (J-Min Style) -->
+  <div class="text-center max-w-3xl mx-auto space-y-4">
+    <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Location & Timetable</span>
+    <h1 class="text-3xl sm:text-5xl font-serif font-extrabold text-slate-900 tracking-tight">오시는 길 & 진료시간</h1>
+    <p class="text-sm sm:text-base text-slate-500 font-light leading-relaxed">
+      연세나무정신건강의학과 하남미사 클리닉 및 세종 클리닉의 상세 위치와 진료 일정을 안내합니다.
+    </p>
+  </div>
+
+  <!-- Branch 1: 하남미사 클리닉 -->
+  <section id="hanam" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+      <div class="flex items-center gap-4">
+        <span class="w-12 h-12 rounded-2xl bg-jmin-navy text-white flex items-center justify-center font-bold text-2xl">
+          🏥
+        </span>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-slate-900">하남미사 클리닉</h2>
+          <p class="text-xs text-slate-500">진료원장: 차지민 원장 &bull; 김남욱 원장 (소아청소년 세부전문의)</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="tel:031-793-7575" class="px-5 py-2.5 bg-jmin-navy hover:bg-jmin-dark text-white rounded-full text-xs font-bold transition shadow-xs">
+          📞 031-793-7575
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Clinic Hours -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span>⏰</span> 진료시간표
+        </h3>
+        <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+          <table class="w-full text-left border-collapse">
+            <tbody class="divide-y divide-slate-100">
+              <tr class="bg-slate-50/70">
+                <td class="p-3.5 font-semibold text-slate-700 w-36">월 / 수 / 금 (야간)</td>
+                <td class="p-3.5 text-slate-900 font-bold">09:30 ~ 19:30</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold text-slate-700">화 / 목</td>
+                <td class="p-3.5 text-slate-900 font-bold">09:30 ~ 18:30</td>
+              </tr>
+              <tr class="bg-rose-50/50">
+                <td class="p-3.5 font-semibold text-rose-700">토요일 / 일요일 / 공휴일</td>
+                <td class="p-3.5 text-rose-700 font-bold">휴진 (토요일 휴진)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold text-slate-700">점심시간</td>
+                <td class="p-3.5 text-slate-500">13:00 ~ 14:00 (평일)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Directions & Parking -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span>🗺️</span> 위치 및 교통 안내
+        </h3>
+        <div class="space-y-3 text-xs sm:text-sm text-slate-600 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <p><strong>주소:</strong> 경기도 하남시 미사강변남로 103 (망월동 1100)</p>
+          <p><strong>지하철:</strong> 5호선 미사역 8번 출구에서 도보 약 3분</p>
+          <p><strong>주차:</strong> 건물 지하 주차장 완비 (진료 환자 무료 주차권 지원)</p>
+        </div>
+        <a href="https://map.naver.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition shadow-xs">
+          <span>네이버 지도에서 하남미사 클리닉 길찾기</span> &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Branch 2: 세종 클리닉 -->
+  <section id="sejong" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+      <div class="flex items-center gap-4">
+        <span class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center font-bold text-2xl">
+          🏥
+        </span>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-slate-900">세종 클리닉</h2>
+          <p class="text-xs text-slate-500">진료원장: 김현진 원장 (정신건강의학과 전문의 / 소아청소년 세부전문의)</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="tel:044-862-7575" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-full text-xs font-bold transition shadow-xs">
+          📞 044-862-7575
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Clinic Hours -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span>⏰</span> 진료시간표
+        </h3>
+        <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+          <table class="w-full text-left border-collapse">
+            <tbody class="divide-y divide-slate-100">
+              <tr class="bg-slate-50/70">
+                <td class="p-3.5 font-semibold text-slate-700 w-36">평일 (월~금)</td>
+                <td class="p-3.5 text-slate-900 font-bold">09:30 ~ 18:30</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold text-slate-700">토요일</td>
+                <td class="p-3.5 text-slate-900 font-bold">09:00 ~ 14:00 (점심시간 없음)</td>
+              </tr>
+              <tr class="bg-rose-50/50">
+                <td class="p-3.5 font-semibold text-rose-700">일요일 / 공휴일</td>
+                <td class="p-3.5 text-rose-700 font-bold">휴진</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold text-slate-700">점심시간</td>
+                <td class="p-3.5 text-slate-500">13:00 ~ 14:00 (평일)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Directions & Parking -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span>🗺️</span> 위치 및 교통 안내
+        </h3>
+        <div class="space-y-3 text-xs sm:text-sm text-slate-600 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <p><strong>주소:</strong> 세종특별자치시 나성북로 30 (어반아트리움 P1 파인앤에비뉴 인근)</p>
+          <p><strong>주차:</strong> 상가 지하 주차장 완비 (진료 시 무료 주차 등록)</p>
+          <p><strong>예약 안내:</strong> 소아청소년 및 성인 클리닉 사전 유선 예약 가능</p>
+        </div>
+        <a href="https://map.naver.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition shadow-xs">
+          <span>네이버 지도에서 세종 클리닉 길찾기</span> &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%- include('partials/footer') %>

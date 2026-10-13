@@ -1,0 +1,48 @@
+<%- include('partials/head', { title: post.title }) %>
+<%- include('partials/header') %>
+
+<main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+  
+  <div class="bg-white rounded-3xl border border-warm-200 p-6 sm:p-12 shadow-xs space-y-8">
+    
+    <!-- Post Header -->
+    <div class="border-b border-slate-100 pb-6 space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-bold px-3 py-1 rounded-full <%= post.category === '공지사항' ? 'bg-amber-100 text-amber-800' : (post.category === '언론보도' ? 'bg-rose-100 text-rose-800' : 'bg-brand-100 text-brand-800') %>">
+          <%= post.category %>
+        </span>
+        <span class="text-xs text-slate-400">작성일: <%= post.date %></span>
+        <span class="text-xs text-slate-400">&bull; 조회수: <%= post.views || 0 %></span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-snug">
+        <%= post.title %>
+      </h1>
+    </div>
+
+    <!-- Attached Image (if any) -->
+    <% if (post.image) { %>
+      <div class="rounded-2xl overflow-hidden border border-slate-200">
+        <img src="<%= post.image %>" alt="<%= post.title %>" class="w-full max-h-[500px] object-cover" />
+      </div>
+    <% } %>
+
+    <!-- Content Body -->
+    <div class="prose max-w-none text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line py-4">
+      <%= post.content %>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="border-t border-slate-100 pt-6 flex items-center justify-between">
+      <a href="/posts" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+        &larr; 목록으로 돌아가기
+      </a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-xs font-bold text-brand-700 hover:underline">
+        공식 블로그에서 더 보기 &rarr;
+      </a>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

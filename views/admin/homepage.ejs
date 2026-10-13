@@ -1,0 +1,215 @@
+<%- include('../partials/head', { title: '첫 페이지 배치 & 사진 설정' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'homepage' }) %>
+
+<main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+  
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Homepage Configuration</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">첫 페이지 배치 & 사진 설정</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        메인 히어로 이미지 등록, 안내 문구 수정 및 각 섹션의 노출 순서를 자유롭게 설정합니다.
+      </p>
+    </div>
+    <a href="/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
+      <span>홈페이지 실시간 확인</span> &nearr;
+    </a>
+  </div>
+
+  <% if (typeof success !== 'undefined' && success) { %>
+    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+      <span>✅</span> <%= success %>
+    </div>
+  <% } %>
+
+  <form action="/admin/homepage" method="POST" enctype="multipart/form-data" class="space-y-10">
+
+    <!-- 1. 메인 히어로 비주얼 및 사진 등록 -->
+    <div id="hero-section" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <span class="text-2xl">🖼️</span>
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">1. 메인 히어로 비주얼 & 사진 등록</h2>
+          <p class="text-xs text-slate-500">첫 화면에 가장 크게 노출되는 대표 배너의 사진과 문구를 설정합니다.</p>
+        </div>
+      </div>
+
+      <!-- Current Image Preview / Upload -->
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-2">메인 히어로 배경 사진 등록</label>
+        
+        <% if (settings.hero && settings.hero.backgroundImage) { %>
+          <div class="mb-4 relative rounded-2xl overflow-hidden border border-slate-200 max-h-60 bg-slate-100 flex items-center justify-center">
+            <img src="<%= settings.hero.backgroundImage %>" alt="등록된 배경 이미지" class="w-full h-full object-cover" />
+            <div class="absolute top-3 right-3 flex items-center gap-2">
+              <span class="text-xs bg-slate-900/80 text-white px-2.5 py-1 rounded-md font-medium">현재 등록된 사진</span>
+            </div>
+          </div>
+        <% } %>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <input type="file" name="heroImage" accept="image/*"
+                 class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl p-2 bg-slate-50" />
+          <% if (settings.hero && settings.hero.backgroundImage) { %>
+            <label class="inline-flex items-center gap-1.5 text-xs text-rose-600 shrink-0 cursor-pointer select-none">
+              <input type="checkbox" name="removeHeroImage" value="1" class="rounded text-rose-600 focus:ring-rose-500" />
+              <span>사진 삭제 (기본 숲 그라데이션 사용)</span>
+            </label>
+          <% } %>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-1.5">권장 규격: 1920x800 이상 고화질 이미지 (JPG, PNG, WebP 지원, 최대 10MB)</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">상단 배지 문구</label>
+          <input type="text" name="heroBadge" value="<%= (settings.hero && settings.hero.badgeText) || '' %>"
+                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">대표 버튼 1 문구</label>
+          <input type="text" name="heroBtnText1" value="<%= (settings.hero && settings.hero.btnText1) || '진료과목 안내' %>"
+                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">메인 큰 제목 (줄바꿈 가능)</label>
+        <textarea name="heroMainTitle" rows="2"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none"><%= (settings.hero && settings.hero.mainTitle) || '' %></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">서브 설명 문구</label>
+        <textarea name="heroSubTitle" rows="2"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none"><%= (settings.hero && settings.hero.subTitle) || '' %></textarea>
+      </div>
+    </div>
+
+    <!-- 2. 상단 긴급 안내 배너 설정 -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">📢</span>
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">2. 상단 긴급 공지 띠배너</h2>
+            <p class="text-xs text-slate-500">초진 조기마감 등 환자가 첫 화면에서 즉시 확인해야 하는 안내문입니다.</p>
+          </div>
+        </div>
+        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+          <input type="checkbox" name="urgentEnabled" value="1" <%= (settings.urgentNotice && settings.urgentNotice.enabled) ? 'checked' : '' %>
+                 class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500" />
+          <span class="text-xs font-bold text-slate-800">배너 노출 켜기</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">배지 라벨</label>
+          <input type="text" name="urgentBadge" value="<%= (settings.urgentNotice && settings.urgentNotice.badge) || '진료 안내' %>"
+                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-bold text-slate-700 mb-1">공지 안내 문구</label>
+          <input type="text" name="urgentText" value="<%= (settings.urgentNotice && settings.urgentNotice.text) || '' %>"
+                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 첫 페이지 섹션 배치 순서 및 노출 설정 [조건 3 핵심] -->
+    <div id="order-section" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🔀</span>
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">3. 첫 페이지 섹션 배치 순서 & 노출 여부</h2>
+            <p class="text-xs text-slate-500">첫 페이지에 표시될 각 섹션의 순서 번호(1~10)를 변경하거나 노출 여부를 토글합니다.</p>
+          </div>
+        </div>
+        <span class="text-xs text-slate-400">숫자가 작을수록 상단에 노출</span>
+      </div>
+
+      <div class="border border-slate-200 rounded-2xl overflow-hidden">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <th class="py-3 px-4 w-16 text-center">노출</th>
+              <th class="py-3 px-4 w-28 text-center">순서 번호</th>
+              <th class="py-3 px-4">섹션 명칭</th>
+              <th class="py-3 px-4 hidden sm:table-cell text-slate-400">설명</th>
+              <th class="py-3 px-4 w-24 text-center">순서 조절</th>
+            </tr>
+          </thead>
+          <tbody id="section-rows" class="divide-y divide-slate-100">
+            <% 
+              const sections = (settings.sections || []).sort((a, b) => a.order - b.order);
+              sections.forEach((sec, idx) => { 
+            %>
+              <tr class="hover:bg-slate-50 transition" data-id="<%= sec.id %>">
+                <td class="py-3 px-4 text-center">
+                  <input type="checkbox" name="visible_<%= sec.id %>" value="1" <%= sec.visible ? 'checked' : '' %>
+                         class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500" />
+                </td>
+                <td class="py-3 px-4 text-center">
+                  <input type="number" name="order_<%= sec.id %>" value="<%= sec.order %>" min="1" max="20"
+                         class="section-order-input w-16 text-center py-1.5 px-2 rounded-lg border border-slate-300 font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                </td>
+                <td class="py-3 px-4 font-bold text-slate-900">
+                  <%= sec.name %>
+                  <input type="hidden" name="section_ids[]" value="<%= sec.id %>" />
+                </td>
+                <td class="py-3 px-4 text-slate-500 hidden sm:table-cell">
+                  <% if (sec.id === 'hero') { %>메인 비주얼 히어로 (J-Min 전폭 비주얼 & 로고 마크)<% } %>
+                  <% if (sec.id === 'philosophy') { %>병원 철학 & 기질육아 부모 위안 메시지<% } %>
+                  <% if (sec.id === 'book') { %>원장단 저서 《기질육아》 도서 소개 & 4장 목차<% } %>
+                  <% if (sec.id === 'features') { %>소아 세부전문의, 다학제 협진 등 3대 핵심 가치<% } %>
+                  <% if (sec.id === 'banners') { %>시그니처 4열 클리닉 바로가기 배너 카드<% } %>
+                  <% if (sec.id === 'gallery') { %>원내 대기실·상담실 시설 사진 갤러리<% } %>
+                  <% if (sec.id === 'location') { %>오시는 길, 주차 및 지점별 진료시간 안내<% } %>
+                </td>
+                <td class="py-3 px-4 text-center space-x-1">
+                  <button type="button" onclick="moveRow(this, -1)" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs" title="위로">▲</button>
+                  <button type="button" onclick="moveRow(this, 1)" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs" title="아래로">▼</button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Submit Button Bar -->
+    <div class="sticky bottom-4 z-30 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-slate-300 shadow-xl flex items-center justify-between">
+      <span class="text-xs text-slate-500">수정 후 [저장하기]를 누르면 첫 페이지에 즉시 적용됩니다.</span>
+      <button type="submit" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition shadow-md">
+        설정 저장하기
+      </button>
+    </div>
+
+  </form>
+
+</main>
+
+<script>
+  function moveRow(btn, direction) {
+    const row = btn.closest('tr');
+    const tbody = row.parentElement;
+    if (direction === -1 && row.previousElementSibling) {
+      tbody.insertBefore(row, row.previousElementSibling);
+    } else if (direction === 1 && row.nextElementSibling) {
+      tbody.insertBefore(row.nextElementSibling, row);
+    }
+    // Re-index order numbers
+    const rows = tbody.querySelectorAll('tr');
+    rows.forEach((r, idx) => {
+      const orderInput = r.querySelector('.section-order-input');
+      if (orderInput) {
+        orderInput.value = idx + 1;
+      }
+    });
+  }
+</script>
+
+<%- include('../partials/footer') %>

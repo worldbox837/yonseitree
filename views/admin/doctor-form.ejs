@@ -1,0 +1,119 @@
+<%- include('../partials/head', { title: isEdit ? '의료진 정보 수정' : '신규 의료진 등록' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'doctors' }) %>
+
+<main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+  
+  <div class="border-b border-slate-200 pb-4 flex items-center justify-between">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Doctor & Therapist Form</span>
+      <h1 class="text-2xl font-extrabold text-slate-900 mt-1">
+        <%= isEdit ? '의료진 정보 수정' : '신규 의료진 / 치료사 등록' %>
+      </h1>
+    </div>
+    <a href="/admin/doctors" class="text-xs font-bold text-slate-500 hover:text-slate-800">
+      &larr; 목록으로 돌아가기
+    </a>
+  </div>
+
+  <form action="<%= isEdit ? '/admin/doctors/' + doctor.id : '/admin/doctors' %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-6">
+
+    <!-- 구분 & 지점 & 노출 순서 -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">의료진 구분</label>
+        <select name="type" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+          <option value="doctor" <%= (doctor && doctor.type === 'doctor') ? 'selected' : '' %>>의사 (원장단)</option>
+          <option value="therapist" <%= (doctor && doctor.type === 'therapist') ? 'selected' : '' %>>전문 치료사 (심리/언어/인지)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">소속 지점</label>
+        <select name="branch" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+          <option value="hanam" <%= (doctor && doctor.branch === 'hanam') ? 'selected' : '' %>>하남미사 클리닉</option>
+          <option value="sejong" <%= (doctor && doctor.branch === 'sejong') ? 'selected' : '' %>>세종 클리닉</option>
+          <option value="all" <%= (doctor && doctor.branch === 'all') ? 'selected' : '' %>>공통 / 협진</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">노출 순서 (작을수록 앞)</label>
+        <input type="number" name="order" value="<%= (doctor && doctor.order) || 1 %>" min="1" max="99" required
+               class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+      </div>
+    </div>
+
+    <!-- 이름 & 직함 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">이름</label>
+        <input type="text" name="name" value="<%= (doctor && doctor.name) || '' %>" required placeholder="예: 김남욱"
+               class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold text-slate-900" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">직책 / 직함</label>
+        <input type="text" name="role" value="<%= (doctor && doctor.role) || '' %>" required placeholder="예: 대표원장, 임상심리전문가, 언어재활사"
+               class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+      </div>
+    </div>
+
+    <!-- 전문의 / 자격 상세 타이틀 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1">전문의 / 자격 상세 타이틀</label>
+      <input type="text" name="title" value="<%= (doctor && doctor.title) || '' %>" required placeholder="예: 정신건강의학과 전문의 / 소아청소년정신건강의학과 전문의"
+             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+    </div>
+
+    <!-- 프로필 사진 업로드 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1.5">프로필 사진 등록</label>
+      
+      <% if (doctor && doctor.image) { %>
+        <div class="flex items-center gap-4 mb-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+          <img src="<%= doctor.image %>" alt="<%= doctor.name %>" class="w-16 h-16 rounded-xl object-cover border border-slate-200" />
+          <div class="text-xs">
+            <span class="font-bold text-slate-700 block">현재 등록된 사진</span>
+            <label class="inline-flex items-center gap-1.5 text-rose-600 mt-1 cursor-pointer">
+              <input type="checkbox" name="removeImage" value="1" class="rounded text-rose-600" />
+              <span>사진 삭제 (기본 아바타 사용)</span>
+            </label>
+          </div>
+        </div>
+      <% } %>
+
+      <input type="file" name="doctorImage" accept="image/*"
+             class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl p-2 bg-slate-50" />
+      <p class="text-[11px] text-slate-400 mt-1">권장 규격: 정사각 비율 (600x600 이상 JPG, PNG, WebP)</p>
+    </div>
+
+    <!-- 진료 철학 / 한 줄 소개 -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1">진료 철학 / 한 줄 소개</label>
+      <input type="text" name="intro" value="<%= (doctor && doctor.intro) || '' %>" placeholder="예: 아이들의 작은 목소리에도 귀 기울이며 따뜻한 성장을 돕겠습니다."
+             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+    </div>
+
+    <!-- 주요 약력 (한 줄에 하나씩) -->
+    <div>
+      <label class="block text-xs font-bold text-slate-700 mb-1">주요 약력 및 활동 (한 줄에 하나씩 작성)</label>
+      <textarea name="career" rows="6" placeholder="소아청소년정신의학 세부전문의&#10;정신건강의학과 전문의&#10;대한소아청소년정신의학회 정회원"
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs leading-relaxed focus:ring-2 focus:ring-emerald-500 focus:outline-none"><%= (doctor && doctor.career) ? doctor.career.join('\n') : '' %></textarea>
+      <p class="text-[11px] text-slate-400 mt-1">Enter(줄바꿈)로 구분하여 작성하시면 홈페이지에 깔끔한 글머리 기호 목록으로 자동 표시됩니다.</p>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+      <a href="/admin/doctors" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+        취소
+      </a>
+      <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-xs">
+        <%= isEdit ? '수정 저장하기' : '의료진 등록 완료' %>
+      </button>
+    </div>
+
+  </form>
+
+</main>
+
+<%- include('../partials/footer') %>

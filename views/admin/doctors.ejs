@@ -1,0 +1,91 @@
+<%- include('../partials/head', { title: '의사 & 치료사 관리' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'doctors' }) %>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+  
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Medical Staff Management</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">의사 & 치료사 관리</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        의료진 및 전문 치료사진(임상심리사, 언어재활사)을 등록, 수정 및 삭제합니다.
+      </p>
+    </div>
+    <a href="/admin/doctors/new" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold transition shadow-xs flex items-center gap-1.5 self-start sm:self-auto">
+      <span>+ 신규 의료진 등록</span>
+    </a>
+  </div>
+
+  <% if (typeof success !== 'undefined' && success) { %>
+    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+      <span>✅</span> <%= success %>
+    </div>
+  <% } %>
+
+  <!-- Doctor List Table -->
+  <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+            <th class="py-3.5 px-4 w-16 text-center">순서</th>
+            <th class="py-3.5 px-4 w-20">사진</th>
+            <th class="py-3.5 px-4">이름 / 직책</th>
+            <th class="py-3.5 px-4">구분 / 지점</th>
+            <th class="py-3.5 px-4 hidden md:table-cell">전문 자격 및 상세</th>
+            <th class="py-3.5 px-4 w-32 text-center">관리</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% doctors.forEach(doc => { %>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-3.5 px-4 text-center font-bold text-slate-500">
+                <%= doc.order || 0 %>
+              </td>
+              <td class="py-3.5 px-4">
+                <% if (doc.image) { %>
+                  <img src="<%= doc.image %>" alt="<%= doc.name %>" class="w-12 h-12 rounded-xl object-cover border border-slate-200" />
+                <% } else { %>
+                  <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xl">
+                    <%= doc.type === 'doctor' ? '👨‍⚕️' : '👩‍⚕️' %>
+                  </div>
+                <% } %>
+              </td>
+              <td class="py-3.5 px-4 font-bold text-slate-900">
+                <span class="text-sm"><%= doc.name %></span>
+                <span class="text-xs font-semibold text-slate-500 ml-1"><%= doc.role %></span>
+              </td>
+              <td class="py-3.5 px-4 space-y-1">
+                <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded <%= doc.type === 'doctor' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800' %>">
+                  <%= doc.type === 'doctor' ? '의사(원장)' : '치료사' %>
+                </span>
+                <br>
+                <span class="inline-block text-[10px] text-slate-500">
+                  <%= doc.branch === 'hanam' ? '하남미사 클리닉' : (doc.branch === 'sejong' ? '세종 클리닉' : '공통') %>
+                </span>
+              </td>
+              <td class="py-3.5 px-4 text-slate-600 hidden md:table-cell">
+                <p class="font-medium text-slate-700 truncate max-w-sm"><%= doc.title %></p>
+                <p class="text-[11px] text-slate-400 truncate max-w-sm"><%= doc.intro || '' %></p>
+              </td>
+              <td class="py-3.5 px-4 text-center space-x-1 whitespace-nowrap">
+                <a href="/admin/doctors/<%= doc.id %>/edit" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                  수정
+                </a>
+                <form action="/admin/doctors/<%= doc.id %>/delete" method="POST" class="inline-block" onsubmit="return confirm('<%= doc.name %> 의료진 정보를 삭제하시겠습니까?');">
+                  <button type="submit" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-xs font-bold transition">
+                    삭제
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<%- include('../partials/footer') %>

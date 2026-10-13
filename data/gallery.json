@@ -1,0 +1,30 @@
+[
+  {
+    "id": "gal-1",
+    "title": "따뜻하고 아늑한 대기 공간",
+    "category": "대기실",
+    "image": "",
+    "order": 1
+  },
+  {
+    "id": "gal-2",
+    "title": "편안한 심층 상담실",
+    "category": "진료실",
+    "image": "",
+    "order": 2
+  },
+  {
+    "id": "gal-3",
+    "title": "전문 아동 놀이치료실",
+    "category": "치료실",
+    "image": "",
+    "order": 3
+  },
+  {
+    "id": "gal-4",
+    "title": "1:1 맞춤 언어치료실",
+    "category": "치료실",
+    "image": "",
+    "order": 4
+  }
+]

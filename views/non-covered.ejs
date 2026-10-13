@@ -1,0 +1,238 @@
+<%- include('partials/head', { title: '비급여 항목 안내' }) %>
+<%- include('partials/header') %>
+
+<main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
+  
+  <!-- J-Min Style Page Sub-Header -->
+  <div class="text-center max-w-3xl mx-auto space-y-4">
+    <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Non-Covered Medical Expense Disclosure</span>
+    <h1 class="text-3xl sm:text-5xl font-serif font-extrabold text-slate-900 tracking-tight">연세나무 비급여 항목 안내</h1>
+    <p class="text-sm sm:text-base text-slate-500 font-light leading-relaxed">
+      의료법 제45조 및 동법 시행규칙 제42조에 따라 연세나무정신건강의학과의 비급여 진료비용을 투명하고 정확하게 고지합니다.
+    </p>
+  </div>
+
+  <!-- Legal Disclosure Notice Card (Matching original announcement) -->
+  <div class="bg-warm-50 border border-warm-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+    <div class="flex items-center gap-2.5 text-emerald-800 font-bold text-sm sm:text-base">
+      <span class="text-lg">🌱</span>
+      <span>비급여 진료비 고지 안내</span>
+    </div>
+    <div class="text-xs sm:text-sm text-slate-700 space-y-2 leading-relaxed">
+      <ul class="list-disc list-inside space-y-1 text-slate-600 font-light pl-1">
+        <li>의료법 제 45조 제1항 및 2항</li>
+        <li>동법 시행규칙 제 42조의 제 1항 및 제 2항</li>
+        <li><strong>&lt;비급여 진료비고지&gt;</strong>에 의거하여 비급여진료비용을 고지합니다.</li>
+      </ul>
+      <div class="pt-2 text-xs text-slate-500 bg-white/70 p-3 rounded-xl border border-warm-200">
+        ※ 평가 및 치료는 대상자 및 세부항목, 치료 목표에 따라 비용이 달라질 수 있습니다.<br class="hidden sm:inline">
+        ※ 정확한 비용 및 진료 예약에 관한 문의는 하남미사 클리닉(031-793-7575) 또는 세종 클리닉(044-862-7575)으로 문의해 주시기 바랍니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Toolbar -->
+  <div class="space-y-4">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+          전체 보기 (20)
+        </button>
+        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          치료 및 평가
+        </button>
+        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          심리 및 발달 검사
+        </button>
+        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          제증명 수수료
+        </button>
+      </div>
+
+      <!-- Live Search Box -->
+      <div class="w-full sm:w-64">
+        <div class="relative">
+          <input type="text" id="itemSearch" oninput="searchItems(this.value)" placeholder="항목명 검색 (예: 언어, 진단서)"
+                 class="w-full pl-9 pr-4 py-2 rounded-full border border-slate-300 text-xs focus:ring-2 focus:ring-jmin-navy focus:outline-none bg-white placeholder-slate-400" />
+          <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- View Mode Switch: Table vs Original Photo -->
+    <div class="flex items-center justify-end gap-2 text-xs">
+      <span class="text-slate-400">보기 모드:</span>
+      <button onclick="setViewMode('table')" id="btnViewTable" class="px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition">
+        📋 상세 표
+      </button>
+      <button onclick="setViewMode('photo')" id="btnViewPhoto" class="px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition">
+        🖼️ 병원 원본 고지서
+      </button>
+    </div>
+  </div>
+
+  <!-- View 1: Responsive Table View -->
+  <div id="tableView" class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+            <th class="py-4 px-6 w-16 text-center">번호</th>
+            <th class="py-4 px-6 w-36">분류</th>
+            <th class="py-4 px-6">비급여 항목 명칭</th>
+            <th class="py-4 px-6 text-right w-52">금액 (단위: 원)</th>
+          </tr>
+        </thead>
+        <tbody id="feeTableBody" class="divide-y divide-slate-100 text-slate-700">
+          <% (nonCovered.items || []).forEach((item, idx) => { %>
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="<%= item.category %>" data-name="<%= item.name.toLowerCase() %>">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                <%= idx + 1 %>
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  <%= item.category === '치료 및 평가' ? 'bg-emerald-100 text-emerald-800' : (item.category === '심리 및 발달 검사' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-700') %>">
+                  <%= item.category %>
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                <%= item.name %>
+                <% if (item.desc) { %>
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5"><%= item.desc %></span>
+                <% } %>
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                <% if (item.unit === '장당') { %>
+                  <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+                <% } %>
+                <%= item.price %>
+                <% if (item.unit === '원') { %>
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State for Search -->
+    <div id="noResults" class="hidden p-12 text-center text-slate-400 text-xs space-y-2">
+      <span class="text-3xl block">🔍</span>
+      <p>일치하는 비급여 항목을 찾을 수 없습니다.</p>
+    </div>
+  </div>
+
+  <!-- View 2: Original Certificate Image View (Initially Hidden) -->
+  <div id="photoView" class="hidden bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-6 text-center">
+    <div class="max-w-2xl mx-auto space-y-2">
+      <h3 class="text-lg font-bold text-slate-900 font-serif">연세나무정신건강의학과 공식 비급여 항목 안내문</h3>
+      <p class="text-xs text-slate-500">원내에 비치 및 게시된 공식 비급여 진료비용 고지 원본입니다.</p>
+    </div>
+
+    <div class="max-w-xl mx-auto bg-slate-50 p-2 sm:p-4 rounded-2xl border border-slate-200 shadow-inner">
+      <img src="/images/non-covered.jpg" alt="연세나무 비급여 항목 안내 공식 고지서" class="w-full h-auto rounded-xl shadow-md mx-auto object-contain" />
+    </div>
+
+    <div class="pt-4 flex items-center justify-center gap-3">
+      <a href="/images/non-covered.jpg" target="_blank" download="연세나무_비급여항목안내.jpg" class="px-5 py-2.5 bg-jmin-navy text-white rounded-full text-xs font-bold hover:bg-jmin-dark transition shadow-xs flex items-center gap-1.5">
+        <span>💾 고화질 원본 이미지 저장</span>
+      </a>
+      <button onclick="setViewMode('table')" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-full text-xs font-bold hover:bg-slate-200 transition">
+        표 보기로 돌아가기
+      </button>
+    </div>
+  </div>
+
+  <!-- Contact Consultation Callout -->
+  <div class="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+    <div class="text-center md:text-left space-y-2">
+      <span class="text-xs font-bold text-amber-300 tracking-wider uppercase">Inquiry & Guidance</span>
+      <h4 class="text-xl sm:text-2xl font-serif font-bold">진료 및 비급여 항목 문의</h4>
+      <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed max-w-xl">
+        각 항목별 적합한 평가와 치료 계획은 전문의의 진료와 면담 후 개별 맞춤으로 결정됩니다. 궁금하신 점은 클리닉으로 편안하게 문의해 주시기 바랍니다.
+      </p>
+    </div>
+    <div class="flex items-center gap-3 shrink-0">
+      <a href="/location" class="px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-md">
+        진료시간 & 오시는 길 &rarr;
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  let activeCategory = 'all';
+  let activeSearchTerm = '';
+
+  function filterCategory(cat, evt) {
+    activeCategory = cat;
+    const btns = document.querySelectorAll('.cat-filter-btn');
+    btns.forEach(b => {
+      b.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+    });
+    if (evt && evt.currentTarget) {
+      evt.currentTarget.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    }
+    applyFilters();
+  }
+
+  function searchItems(term) {
+    activeSearchTerm = term.trim().toLowerCase();
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const rows = document.querySelectorAll('.fee-row');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const rowCat = row.getAttribute('data-category');
+      const rowName = row.getAttribute('data-name');
+
+      const matchesCat = (activeCategory === 'all' || rowCat === activeCategory);
+      const matchesSearch = (!activeSearchTerm || rowName.includes(activeSearchTerm));
+
+      if (matchesCat && matchesSearch) {
+        row.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    const noResults = document.getElementById('noResults');
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+  }
+
+  function setViewMode(mode) {
+    const tableView = document.getElementById('tableView');
+    const photoView = document.getElementById('photoView');
+    const btnTable = document.getElementById('btnViewTable');
+    const btnPhoto = document.getElementById('btnViewPhoto');
+
+    if (mode === 'photo') {
+      tableView.classList.add('hidden');
+      photoView.classList.remove('hidden');
+      btnPhoto.className = 'px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition';
+      btnTable.className = 'px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition';
+    } else {
+      photoView.classList.add('hidden');
+      tableView.classList.remove('hidden');
+      btnTable.className = 'px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition';
+      btnPhoto.className = 'px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition';
+    }
+  }
+</script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,136 @@
+<%- include('../partials/head', { title: '관리자 대시보드' }) %>
+<%- include('../partials/admin-nav', { activeMenu: 'dashboard' }) %>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+  
+  <!-- Dashboard Top Welcome -->
+  <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div>
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Welcome Admin</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">연세나무 관리자 대시보드</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        첫 페이지 배치 순서, 사진 등록, 의료진 및 게시글을 쉽고 직관적으로 관리할 수 있습니다.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="/" target="_blank" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1.5">
+        <span>홈페이지 실시간 확인</span> &nearr;
+      </a>
+    </div>
+  </div>
+
+  <!-- Key Metrics 4-Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Card 1 -->
+    <a href="/admin/doctors" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-emerald-300 transition shadow-xs group">
+      <div class="flex items-center justify-between mb-3">
+        <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-lg">
+          👨‍⚕️
+        </span>
+        <span class="text-xs text-slate-400 group-hover:text-emerald-600">관리하기 &rarr;</span>
+      </div>
+      <div class="text-2xl font-black text-slate-900"><%= doctorsCount %>명</div>
+      <p class="text-xs text-slate-500 mt-0.5">등록된 의사 및 치료사진</p>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="/admin/posts" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-emerald-300 transition shadow-xs group">
+      <div class="flex items-center justify-between mb-3">
+        <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-lg">
+          📝
+        </span>
+        <span class="text-xs text-slate-400 group-hover:text-blue-600">관리하기 &rarr;</span>
+      </div>
+      <div class="text-2xl font-black text-slate-900"><%= postsCount %>개</div>
+      <p class="text-xs text-slate-500 mt-0.5">공지사항 & 칼럼 게시글</p>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="/admin/gallery" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-emerald-300 transition shadow-xs group">
+      <div class="flex items-center justify-between mb-3">
+        <span class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-lg">
+          🖼️
+        </span>
+        <span class="text-xs text-slate-400 group-hover:text-purple-600">관리하기 &rarr;</span>
+      </div>
+      <div class="text-2xl font-black text-slate-900"><%= galleryCount %>장</div>
+      <p class="text-xs text-slate-500 mt-0.5">첫 페이지 시설 갤러리 사진</p>
+    </a>
+
+    <!-- Card 4 -->
+    <a href="/admin/homepage" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-emerald-300 transition shadow-xs group">
+      <div class="flex items-center justify-between mb-3">
+        <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-lg">
+          🎨
+        </span>
+        <span class="text-xs text-slate-400 group-hover:text-amber-600">설정하기 &rarr;</span>
+      </div>
+      <div class="text-2xl font-black text-slate-900"><%= activeSectionsCount %> / <%= totalSectionsCount %></div>
+      <p class="text-xs text-slate-500 mt-0.5">첫 페이지 활성 섹션 수</p>
+    </a>
+  </div>
+
+  <!-- Quick Management Feature Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Quick Panel: 첫 페이지 설정 바로가기 -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🎨</span>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">첫 페이지 배치 & 사진 설정</h3>
+            <p class="text-xs text-slate-500">메인 히어로 이미지 등록, 문구 변경 및 섹션 순서 조절</p>
+          </div>
+        </div>
+        <a href="/admin/homepage" class="text-xs font-bold text-emerald-700 hover:underline">바로가기 &rarr;</a>
+      </div>
+      <p class="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl leading-relaxed">
+        방문자가 가장 먼저 보는 첫 페이지의 상단 배너, 메인 타이틀, 사진을 언제든 교체하고, 섹션들의 위아래 배치 순서를 자유롭게 바꿀 수 있습니다.
+      </p>
+      <div class="pt-2 flex flex-wrap gap-2">
+        <a href="/admin/homepage#hero-section" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
+          히어로 사진 등록
+        </a>
+        <a href="/admin/homepage#order-section" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
+          섹션 순서 변경
+        </a>
+        <a href="/admin/gallery" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
+          시설 사진 업로드
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Panel: 지점별 진료 상태 빠른 제어 -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🏢</span>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">지점별 실시간 진료 상태</h3>
+            <p class="text-xs text-slate-500">하남미사점 및 세종점의 초진/예약 안내 문구</p>
+          </div>
+        </div>
+        <a href="/admin/branches" class="text-xs font-bold text-emerald-700 hover:underline">상세 설정 &rarr;</a>
+      </div>
+
+      <div class="space-y-3">
+        <% (settings.branches || []).forEach(b => { %>
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-slate-900"><%= b.name %></span>
+              <p class="text-slate-500 text-[11px] truncate max-w-xs mt-0.5"><%= b.statusMessage %></p>
+            </div>
+            <span class="font-bold px-2.5 py-1 rounded-full <%= b.statusClass === 'amber' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800' %>">
+              <%= b.statusBadge %>
+            </span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('../partials/footer') %>
