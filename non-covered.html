@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비급여 항목 안내 | 연세나무정신건강의학과</title>
+  <meta name="description" content="아이마다 타고난 바탕이 다릅니다. 기질을 알면 육아가 달라집니다. 연세나무정신건강의학과.">
+  <link rel="icon" type="image/jpeg" href="./images/logo.jpg">
+  
+  <!-- Pretendard & Noto Sans Korean Web Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jmin: {
+              navy: '#193048',       // 제이민 시그니처 딥 네이비
+              dark: '#112233',       // 헤더 및 푸터 다크 톤
+              accent: '#2b5876',     // 버튼 및 하이라이트 블루
+              gold: '#b89562',       // 고급스러운 포인트 골드
+              goldlight: '#f5efe6',  // 골드 틴트 배경
+              light: '#f8fafc',      // 클린 배경
+              border: '#e2e8f0',     // 섬세한 보더
+              gray: '#64748b',       // 서브 텍스트
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            serif: ['"Noto Serif KR"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      word-break: keep-all;
+      color: #333333;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* J-Min Dropdown hover transitions */
+    .nav-item:hover .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Banner zoom effect */
+    .banner-card:hover .banner-bg-img {
+      transform: scale(1.06);
+    }
+    .banner-bg-img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen selection:bg-jmin-navy selection:text-white">
+
+<!-- Top Utility Bar (J-Min Style) -->
+<div class="hidden md:block bg-slate-50 border-b border-slate-200 text-xs text-slate-500 py-2 px-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3 text-[11px]">
+      <span class="text-emerald-800 font-bold">하남미사 클리닉</span>
+      <span class="text-slate-300">&bull;</span>
+      <span class="text-teal-800 font-bold">세종 클리닉</span>
+      <span class="text-slate-300">|</span>
+      <span class="text-slate-600 font-medium">소아청소년 세부전문의 &bull; 성인 전문 클리닉</span>
+    </div>
+    <div class="flex items-center gap-4 text-[11px]">
+      <a href="location.html" class="hover:text-jmin-navy transition">오시는 길 &bull; 진료시간</a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">공식 네이버 블로그</a>
+      <a href="/admin" class="hover:text-slate-800 transition">관리자</a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Sticky Header (J-Min Style) -->
+<header class="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-slate-200 shadow-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Logo: J-Min Style Hospital Emblem & Clean Typography -->
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <img src="./images/logo.jpg" alt="연세나무정신건강의학과 마크" class="w-12 h-12 rounded-xl object-contain shadow-xs border border-slate-100 group-hover:scale-105 transition duration-200 bg-white" />
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xl sm:text-2xl font-bold text-jmin-dark tracking-tight leading-none font-serif">
+              연세나무<span class="font-normal text-slate-700">정신건강의학과의원</span>
+            </span>
+          </div>
+          <span class="block text-[10px] tracking-widest text-slate-400 uppercase font-sans mt-1">
+            YONSEI TREE PSYCHIATRIC CLINIC
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Mega Navigation Bar (J-Min Style Dropdown) -->
+      <nav class="hidden xl:flex items-center gap-1 text-sm font-semibold text-slate-700">
+        
+        <!-- Menu 1: 병원소개 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="index.html#intro" class="hover:text-jmin-navy transition flex items-center gap-1">
+            병원소개 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-48 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="index.html#intro" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">원장 인사말</a>
+            <a href="doctors.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">의료진 소개</a>
+            <a href="index.html#gallery" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">병원 둘러보기</a>
+            <a href="non-covered.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">비급여 항목 안내</a>
+            <a href="location.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">오시는 길</a>
+            <a href="location.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">진료시간 안내</a>
+          </div>
+        </div>
+
+        <!-- Menu 2: 소아청소년 정신건강 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            소아청소년 정신건강 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-52 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">집중력 향상(ADHD) 클리닉</a>
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">틱 & 뚜렛 클리닉</a>
+            <a href="subjects.html#sub-1" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">언어 및 발달지연 클리닉</a>
+            <a href="subjects.html#sub-6" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">학습향상 & 양육상담</a>
+          </div>
+        </div>
+
+        <!-- Menu 3: 성인 정신건강 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            성인 정신건강 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-52 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-3" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">기분 개선(우울증) 클리닉</a>
+            <a href="subjects.html#sub-3" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">불안 조절(공황장애) 클리닉</a>
+            <a href="subjects.html#sub-4" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">수면 개선(불면증) 클리닉</a>
+            <a href="subjects.html#sub-4" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">스트레스 & 번아웃 클리닉</a>
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">성인 ADHD 클리닉</a>
+          </div>
+        </div>
+
+        <!-- Menu 4: 검사 ∙ 치료 프로그램 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            검사 ∙ 치료 프로그램 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-56 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-5" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">종합심리평가 (Full Battery)</a>
+            <a href="subjects.html#sub-5" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">전산화 주의력검사 (CAT)</a>
+            <a href="subjects.html#sub-1" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">1:1 언어치료 & 놀이치료</a>
+            <a href="subjects.html#sub-6" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">인지학습 & 부모코칭</a>
+          </div>
+        </div>
+
+        <!-- Menu 5: 소통공간 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="posts.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            소통공간 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-44 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="posts.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">공지사항</a>
+            <a href="index.html#media" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">방송 & 언론보도</a>
+            <a href="posts.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">마음건강 칼럼</a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Right Contact Action -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="location.html" class="px-5 py-2.5 rounded-full bg-jmin-navy hover:bg-jmin-dark text-white text-xs font-bold transition flex items-center gap-2 shadow-xs">
+          <span>진료안내 & 오시는 길</span> &rarr;
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="flex items-center gap-2 xl:hidden">
+        <button id="mobile-menu-btn" type="button" class="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none" aria-label="메뉴 열기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu (J-Min Style Accordion) -->
+  <div id="mobile-menu" class="hidden xl:hidden border-t border-slate-200 bg-white px-5 pt-3 pb-8 space-y-4 shadow-xl">
+    <div class="grid grid-cols-2 gap-2 pb-3 border-b border-slate-100">
+      <a href="location.html#hanam" class="text-center py-2.5 px-3 bg-slate-50 text-slate-800 rounded-xl text-xs font-bold border border-slate-200">
+        하남미사 클리닉
+      </a>
+      <a href="location.html#sejong" class="text-center py-2.5 px-3 bg-slate-50 text-slate-800 rounded-xl text-xs font-bold border border-slate-200">
+        세종 클리닉
+      </a>
+    </div>
+    
+    <div class="space-y-3 text-sm font-semibold text-slate-800">
+      <div>
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">병원소개</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="index.html#intro" class="py-1.5 hover:text-jmin-navy">원장 인사말</a>
+          <a href="doctors.html" class="py-1.5 hover:text-jmin-navy">의료진 소개</a>
+          <a href="index.html#gallery" class="py-1.5 hover:text-jmin-navy">병원 둘러보기</a>
+          <a href="non-covered.html" class="py-1.5 hover:text-jmin-navy font-semibold text-emerald-800">비급여 항목 안내</a>
+          <a href="location.html" class="py-1.5 hover:text-jmin-navy col-span-2">진료시간 & 오시는길</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">소아청소년 정신건강</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">집중력 향상(ADHD)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">틱 클리닉</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">언어 및 발달지연</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">학습 및 양육코칭</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">성인 정신건강</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">기분 개선(우울)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">불안 조절(공황)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">수면 개선(불면증)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">스트레스 & 번아웃</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">검사·치료 & 소통</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">종합심리평가</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">언어·놀이치료</a>
+          <a href="posts.html" class="py-1.5 hover:text-jmin-navy">공지사항</a>
+          <a href="index.html#media" class="py-1.5 hover:text-jmin-navy">방송 출연 & 자문</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+      <a href="/admin" class="text-xs text-slate-400 hover:text-slate-600">⚙️ 관리자 로그인</a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-xs text-emerald-700 font-bold">📗 네이버 블로그</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
+
+
+<main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
+  
+  <!-- J-Min Style Page Sub-Header -->
+  <div class="text-center max-w-3xl mx-auto space-y-4">
+    <span class="text-xs font-bold text-jmin-gold tracking-widest uppercase">Non-Covered Medical Expense Disclosure</span>
+    <h1 class="text-3xl sm:text-5xl font-serif font-extrabold text-slate-900 tracking-tight">연세나무 비급여 항목 안내</h1>
+    <p class="text-sm sm:text-base text-slate-500 font-light leading-relaxed">
+      의료법 제45조 및 동법 시행규칙 제42조에 따라 연세나무정신건강의학과의 비급여 진료비용을 투명하고 정확하게 고지합니다.
+    </p>
+  </div>
+
+  <!-- Legal Disclosure Notice Card (Matching original announcement) -->
+  <div class="bg-warm-50 border border-warm-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+    <div class="flex items-center gap-2.5 text-emerald-800 font-bold text-sm sm:text-base">
+      <span class="text-lg">🌱</span>
+      <span>비급여 진료비 고지 안내</span>
+    </div>
+    <div class="text-xs sm:text-sm text-slate-700 space-y-2 leading-relaxed">
+      <ul class="list-disc list-inside space-y-1 text-slate-600 font-light pl-1">
+        <li>의료법 제 45조 제1항 및 2항</li>
+        <li>동법 시행규칙 제 42조의 제 1항 및 제 2항</li>
+        <li><strong>&lt;비급여 진료비고지&gt;</strong>에 의거하여 비급여진료비용을 고지합니다.</li>
+      </ul>
+      <div class="pt-2 text-xs text-slate-500 bg-white/70 p-3 rounded-xl border border-warm-200">
+        ※ 평가 및 치료는 대상자 및 세부항목, 치료 목표에 따라 비용이 달라질 수 있습니다.<br class="hidden sm:inline">
+        ※ 정확한 비용 및 진료 예약에 관한 문의는 하남미사 클리닉(031-793-7575) 또는 세종 클리닉(044-862-7575)으로 문의해 주시기 바랍니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Toolbar -->
+  <div class="space-y-4">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+          전체 보기 (20)
+        </button>
+        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          치료 및 평가
+        </button>
+        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          심리 및 발달 검사
+        </button>
+        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+          제증명 수수료
+        </button>
+      </div>
+
+      <!-- Live Search Box -->
+      <div class="w-full sm:w-64">
+        <div class="relative">
+          <input type="text" id="itemSearch" oninput="searchItems(this.value)" placeholder="항목명 검색 (예: 언어, 진단서)"
+                 class="w-full pl-9 pr-4 py-2 rounded-full border border-slate-300 text-xs focus:ring-2 focus:ring-jmin-navy focus:outline-none bg-white placeholder-slate-400" />
+          <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- View Mode Switch: Table vs Original Photo -->
+    <div class="flex items-center justify-end gap-2 text-xs">
+      <span class="text-slate-400">보기 모드:</span>
+      <button onclick="setViewMode('table')" id="btnViewTable" class="px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition">
+        📋 상세 표
+      </button>
+      <button onclick="setViewMode('photo')" id="btnViewPhoto" class="px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition">
+        🖼️ 병원 원본 고지서
+      </button>
+    </div>
+  </div>
+
+  <!-- View 1: Responsive Table View -->
+  <div id="tableView" class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+            <th class="py-4 px-6 w-16 text-center">번호</th>
+            <th class="py-4 px-6 w-36">분류</th>
+            <th class="py-4 px-6">비급여 항목 명칭</th>
+            <th class="py-4 px-6 text-right w-52">금액 (단위: 원)</th>
+          </tr>
+        </thead>
+        <tbody id="feeTableBody" class="divide-y divide-slate-100 text-slate-700">
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="언어치료">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                1
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-emerald-100 text-emerald-800">
+                  치료 및 평가
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                언어치료
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">1:1 맞춤 언어치료 세션</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                70,000 ~ 90,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="언어평가">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                2
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-emerald-100 text-emerald-800">
+                  치료 및 평가
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                언어평가
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">전문 언어재활사 심층 언어발달 평가</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                150,000 ~ 250,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="주의력검사">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                3
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                주의력검사
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">전산화 종합주의력검사(CAT) 등</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                150,000 ~ 250,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="영유아발달검사(dep)">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                4
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                영유아발달검사(DEP)
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">영유아 발달선별검사</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                55,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="영유아발달검사(k-cdi)">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                5
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                영유아발달검사(K-CDI)
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">한국판 아동발달검사</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                50,000 ~ 130,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="자율신경계이상검사">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                6
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                자율신경계이상검사
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">자율신경 균형도 및 스트레스 측정</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                30,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="우울척도">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                7
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                우울척도
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">임상 우울 척도 평가</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                25,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="이화방어기제검사">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                8
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-teal-100 text-teal-800">
+                  심리 및 발달 검사
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                이화방어기제검사
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">자아 방어기제 검사</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                30,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="psychoeducation/play evaluation">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                9
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-emerald-100 text-emerald-800">
+                  치료 및 평가
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                psychoeducation/play evaluation
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">심리교육 및 놀이평가</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                10,000 ~ 50,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="신경발달중재치료(심리)">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                10
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-emerald-100 text-emerald-800">
+                  치료 및 평가
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                신경발달중재치료(심리)
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">신경발달 심리 중재치료</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                70,000 ~ 90,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="진단서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                11
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                진단서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">일반 진단서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                20,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애진단서(신체)">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                12
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                장애진단서(신체)
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">신체 장애진단서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                15,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애진단서(정신)">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                13
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                장애진단서(정신)
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">정신 장애진단서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                40,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="영문진단서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                14
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                영문진단서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">영문 진단서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                40,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="병사용진단서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                15
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                병사용진단서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">병사용 진단서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                20,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="통원확인서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                16
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                통원확인서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">통원 진료 확인서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                3,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="진료확인서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                17
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                진료확인서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료 확인서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                3,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애인증명서">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                18
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                장애인증명서
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">장애인 증명서</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                1,000
+                
+                  <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="제증명수수료/진료기록사본/1~5 매">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                19
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                제증명수수료/진료기록사본/1~5 매
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료기록 사본 (1~5매)</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                  <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+                
+                1,000
+                
+              </td>
+            </tr>
+          
+            <tr class="fee-row hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="제증명수수료/진료기록사본/6 매 이상">
+              <td class="py-4 px-6 text-center font-mono text-slate-400 text-[11px]">
+                20
+              </td>
+              <td class="py-4 px-6">
+                <span class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full
+                  bg-slate-100 text-slate-700">
+                  제증명 발급 수수료
+                </span>
+              </td>
+              <td class="py-4 px-6 font-bold text-slate-900 text-sm">
+                제증명수수료/진료기록사본/6 매 이상
+                
+                  <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료기록 사본 (6매 이상)</span>
+                
+              </td>
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+                
+                  <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+                
+                100
+                
+              </td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State for Search -->
+    <div id="noResults" class="hidden p-12 text-center text-slate-400 text-xs space-y-2">
+      <span class="text-3xl block">🔍</span>
+      <p>일치하는 비급여 항목을 찾을 수 없습니다.</p>
+    </div>
+  </div>
+
+  <!-- View 2: Original Certificate Image View (Initially Hidden) -->
+  <div id="photoView" class="hidden bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-6 text-center">
+    <div class="max-w-2xl mx-auto space-y-2">
+      <h3 class="text-lg font-bold text-slate-900 font-serif">연세나무정신건강의학과 공식 비급여 항목 안내문</h3>
+      <p class="text-xs text-slate-500">원내에 비치 및 게시된 공식 비급여 진료비용 고지 원본입니다.</p>
+    </div>
+
+    <div class="max-w-xl mx-auto bg-slate-50 p-2 sm:p-4 rounded-2xl border border-slate-200 shadow-inner">
+      <img src="./images/non-covered.jpg" alt="연세나무 비급여 항목 안내 공식 고지서" class="w-full h-auto rounded-xl shadow-md mx-auto object-contain" />
+    </div>
+
+    <div class="pt-4 flex items-center justify-center gap-3">
+      <a href="./images/non-covered.jpg" target="_blank" download="연세나무_비급여항목안내.jpg" class="px-5 py-2.5 bg-jmin-navy text-white rounded-full text-xs font-bold hover:bg-jmin-dark transition shadow-xs flex items-center gap-1.5">
+        <span>💾 고화질 원본 이미지 저장</span>
+      </a>
+      <button onclick="setViewMode('table')" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-full text-xs font-bold hover:bg-slate-200 transition">
+        표 보기로 돌아가기
+      </button>
+    </div>
+  </div>
+
+  <!-- Contact Consultation Callout -->
+  <div class="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+    <div class="text-center md:text-left space-y-2">
+      <span class="text-xs font-bold text-amber-300 tracking-wider uppercase">Inquiry & Guidance</span>
+      <h4 class="text-xl sm:text-2xl font-serif font-bold">진료 및 비급여 항목 문의</h4>
+      <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed max-w-xl">
+        각 항목별 적합한 평가와 치료 계획은 전문의의 진료와 면담 후 개별 맞춤으로 결정됩니다. 궁금하신 점은 클리닉으로 편안하게 문의해 주시기 바랍니다.
+      </p>
+    </div>
+    <div class="flex items-center gap-3 shrink-0">
+      <a href="location.html" class="px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-md">
+        진료시간 & 오시는 길 &rarr;
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  let activeCategory = 'all';
+  let activeSearchTerm = '';
+
+  function filterCategory(cat, evt) {
+    activeCategory = cat;
+    const btns = document.querySelectorAll('.cat-filter-btn');
+    btns.forEach(b => {
+      b.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+    });
+    if (evt && evt.currentTarget) {
+      evt.currentTarget.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+    }
+    applyFilters();
+  }
+
+  function searchItems(term) {
+    activeSearchTerm = term.trim().toLowerCase();
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const rows = document.querySelectorAll('.fee-row');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const rowCat = row.getAttribute('data-category');
+      const rowName = row.getAttribute('data-name');
+
+      const matchesCat = (activeCategory === 'all' || rowCat === activeCategory);
+      const matchesSearch = (!activeSearchTerm || rowName.includes(activeSearchTerm));
+
+      if (matchesCat && matchesSearch) {
+        row.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    const noResults = document.getElementById('noResults');
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+  }
+
+  function setViewMode(mode) {
+    const tableView = document.getElementById('tableView');
+    const photoView = document.getElementById('photoView');
+    const btnTable = document.getElementById('btnViewTable');
+    const btnPhoto = document.getElementById('btnViewPhoto');
+
+    if (mode === 'photo') {
+      tableView.classList.add('hidden');
+      photoView.classList.remove('hidden');
+      btnPhoto.className = 'px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition';
+      btnTable.className = 'px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition';
+    } else {
+      photoView.classList.add('hidden');
+      tableView.classList.remove('hidden');
+      btnTable.className = 'px-3 py-1 rounded-lg font-bold bg-slate-200 text-slate-800 transition';
+      btnPhoto.className = 'px-3 py-1 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition';
+    }
+  }
+</script>
+
+<!-- J-Min Style Floating Side Quick Menu (Right Fixed) -->
+<div class="hidden md:flex fixed right-5 top-1/2 -translate-y-1/2 z-40 flex-col bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden text-center text-[11px] font-semibold text-slate-700 w-20 divide-y divide-slate-100">
+  <a href="tel:031-793-7575" class="py-3 px-1 hover:bg-slate-50 transition group flex flex-col items-center">
+    <span class="text-base mb-1 group-hover:scale-110 transition">📞</span>
+    <span class="text-[10px] text-slate-500">전화상담</span>
+    <span class="text-[9px] font-bold text-jmin-navy mt-0.5">하남/세종</span>
+  </a>
+  <a href="location.html" class="py-3 px-1 hover:bg-slate-50 transition group flex flex-col items-center">
+    <span class="text-base mb-1 group-hover:scale-110 transition">⏰</span>
+    <span class="text-[10px] text-slate-500">진료시간</span>
+    <span class="text-[9px] font-bold text-slate-700 mt-0.5">안내보기</span>
+  </a>
+  <a href="location.html" class="py-3 px-1 hover:bg-slate-50 transition group flex flex-col items-center">
+    <span class="text-base mb-1 group-hover:scale-110 transition">🗺️</span>
+    <span class="text-[10px] text-slate-500">오시는 길</span>
+    <span class="text-[9px] font-bold text-slate-700 mt-0.5">약도·주차</span>
+  </a>
+  <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="py-3 px-1 hover:bg-slate-50 transition group flex flex-col items-center bg-emerald-50/50">
+    <span class="text-base mb-1 group-hover:scale-110 transition">📗</span>
+    <span class="text-[10px] text-emerald-800">네이버</span>
+    <span class="text-[9px] font-bold text-emerald-700 mt-0.5">블로그</span>
+  </a>
+  <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="py-2.5 px-1 hover:bg-slate-100 transition text-[10px] text-slate-400 hover:text-slate-700 flex flex-col items-center">
+    <span class="text-xs mb-0.5">▲</span>
+    <span>TOP</span>
+  </button>
+</div>
+
+<!-- Main Footer (J-Min Style Deep Navy) -->
+<footer class="mt-auto bg-jmin-dark text-slate-300 pt-16 pb-24 md:pb-16 border-t border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
+      
+      <!-- Brand & Info (5 cols) -->
+      <div class="lg:col-span-5 space-y-4">
+        <div class="flex items-center gap-3">
+          <img src="./images/logo.jpg" alt="연세나무 마크" class="w-10 h-10 rounded-xl object-contain bg-white p-0.5 border border-slate-700" />
+          <div>
+            <h4 class="text-lg font-bold text-white tracking-tight">연세나무정신건강의학과</h4>
+            <p class="text-[11px] text-slate-400">YONSEI TREE PSYCHIATRIC CLINIC</p>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+          아이마다 타고난 바탕이 다릅니다. 부모님의 탓이 아닙니다. 연세나무정신건강의학과가 아이의 기질을 이해하고 덜 싸우며 더 사랑할 수 있도록 따뜻한 위안이 되어 드리겠습니다.
+        </p>
+
+        <div class="pt-2 flex items-center gap-3">
+          <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 hover:bg-emerald-900 transition">
+            <span>📗 공식 네이버 블로그</span> &rarr;
+          </a>
+          <a href="/admin" class="text-xs text-slate-500 hover:text-slate-300 transition">
+            ⚙️ 관리자 모드
+          </a>
+        </div>
+      </div>
+
+      <!-- Hanam Branch (4 cols) -->
+      <div class="lg:col-span-4 space-y-2 text-xs text-slate-400">
+        <div class="text-white font-bold text-sm flex items-center gap-2 mb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          하남미사 클리닉
+        </div>
+        <p><strong>대표전화:</strong> <a href="tel:031-793-7575" class="text-white font-bold hover:underline">031-793-7575</a></p>
+        <p><strong>주소:</strong> 경기도 하남시 미사강변남로 103 (미사역 8번 출구)</p>
+        <p><strong>진료원장:</strong> 차지민 원장 &bull; 김남욱 원장 (소아청소년 세부전문의)</p>
+        <p class="text-slate-400 pt-1">
+          월·수·금 09:30~19:30 (야간) | 화·목 09:30~18:30 (토·일·공휴일 휴진)
+        </p>
+      </div>
+
+      <!-- Sejong Branch (3 cols) -->
+      <div class="lg:col-span-3 space-y-2 text-xs text-slate-400">
+        <div class="text-white font-bold text-sm flex items-center gap-2 mb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          세종 클리닉
+        </div>
+        <p><strong>대표전화:</strong> <a href="tel:044-862-7575" class="text-white font-bold hover:underline">044-862-7575</a></p>
+        <p><strong>주소:</strong> 세종특별자치시 나성북로 30 (어반아트리움 인근)</p>
+        <p><strong>진료원장:</strong> 김현진 원장 (소아청소년 세부전문의)</p>
+        <p class="text-slate-400 pt-1">
+          평일 09:30~18:30 | 토 09:00~14:00 (일·공휴일 휴진)
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Policies -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>&copy; 2026 연세나무정신건강의학과. All rights reserved.</p>
+      <div class="flex items-center gap-4 text-[11px]">
+        <a href="#" class="hover:text-slate-300">개인정보처리방침</a>
+        <span class="text-slate-700">|</span>
+        <a href="#" class="hover:text-slate-300">환자의 권리와 의무</a>
+        <span class="text-slate-700">|</span>
+        <a href="non-covered.html" class="hover:text-slate-300">비급여 진료비 안내</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Sticky Bottom Floating Action Bar -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-t border-slate-200 px-3 py-2 shadow-2xl">
+  <div class="grid grid-cols-4 gap-2 text-center text-[11px] font-bold">
+    <a href="tel:031-793-7575" class="py-2 rounded-xl bg-jmin-navy text-white flex flex-col items-center justify-center shadow-xs">
+      <span class="text-base mb-0.5">📞</span>
+      <span>하남 전화</span>
+    </a>
+    <a href="tel:044-862-7575" class="py-2 rounded-xl bg-slate-800 text-white flex flex-col items-center justify-center shadow-xs">
+      <span class="text-base mb-0.5">📱</span>
+      <span>세종 전화</span>
+    </a>
+    <a href="location.html" class="py-2 rounded-xl bg-slate-100 text-slate-700 flex flex-col items-center justify-center">
+      <span class="text-base mb-0.5">🗺️</span>
+      <span>오시는길</span>
+    </a>
+    <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="py-2 rounded-xl bg-emerald-50 text-emerald-800 flex flex-col items-center justify-center">
+      <span class="text-base mb-0.5">📗</span>
+      <span>블로그</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
+
