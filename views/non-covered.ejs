@@ -36,17 +36,17 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
       
       <!-- Category Filter Tabs -->
-      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
-          전체 보기 (20)
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+          전체 보기 (<%= (nonCovered.items || []).length %>)
         </button>
-        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           치료 및 평가
         </button>
-        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           심리 및 발달 검사
         </button>
-        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           제증명 수수료
         </button>
       </div>
@@ -74,9 +74,11 @@
     </div>
   </div>
 
-  <!-- View 1: Responsive Table View -->
-  <div id="tableView" class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
-    <div class="overflow-x-auto">
+  <!-- View 1: Responsive Table / Mobile Card View -->
+  <div id="tableView" class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    
+    <!-- Desktop Table View (>= 768px) -->
+    <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-left text-xs border-collapse">
         <thead>
           <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
@@ -104,7 +106,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5"><%= item.desc %></span>
                 <% } %>
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 <% if (item.unit === '장당') { %>
                   <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
                 <% } %>
@@ -117,6 +119,47 @@
           <% }) %>
         </tbody>
       </table>
+    </div>
+
+    <!-- Mobile Card List View (< 768px: Automatically fits any smartphone model without horizontal scroll) -->
+    <div class="md:hidden divide-y divide-slate-100">
+      <% (nonCovered.items || []).forEach((item, idx) => { %>
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="<%= item.category %>" data-name="<%= item.name.toLowerCase() %>">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              <%= item.category === '치료 및 평가' ? 'bg-emerald-100 text-emerald-800' : (item.category === '심리 및 발달 검사' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-700') %>">
+              <%= item.category %>
+            </span>
+            <span class="text-xs font-mono text-slate-400">#<%= idx + 1 %></span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              <%= item.name %>
+            </h3>
+            <% if (item.desc) { %>
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                <%= item.desc %>
+              </p>
+            <% } %>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              <% if (item.unit === '장당') { %>
+                <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+              <% } %>
+              <%= item.price %>
+              <% if (item.unit === '원') { %>
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              <% } %>
+            </div>
+          </div>
+
+        </div>
+      <% }) %>
     </div>
 
     <!-- Empty State for Search -->
@@ -173,10 +216,10 @@
     activeCategory = cat;
     const btns = document.querySelectorAll('.cat-filter-btn');
     btns.forEach(b => {
-      b.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+      b.className = 'cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
     });
     if (evt && evt.currentTarget) {
-      evt.currentTarget.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+      evt.currentTarget.className = 'cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
     }
     applyFilters();
   }

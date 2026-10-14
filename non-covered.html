@@ -308,17 +308,17 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
       
       <!-- Category Filter Tabs -->
-      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+        <button onclick="filterCategory('all', event)" data-cat="all" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition">
           전체 보기 (20)
         </button>
-        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('치료 및 평가', event)" data-cat="치료 및 평가" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           치료 및 평가
         </button>
-        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('심리 및 발달 검사', event)" data-cat="심리 및 발달 검사" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           심리 및 발달 검사
         </button>
-        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <button onclick="filterCategory('제증명 발급 수수료', event)" data-cat="제증명 발급 수수료" class="cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
           제증명 수수료
         </button>
       </div>
@@ -346,9 +346,11 @@
     </div>
   </div>
 
-  <!-- View 1: Responsive Table View -->
-  <div id="tableView" class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
-    <div class="overflow-x-auto">
+  <!-- View 1: Responsive Table / Mobile Card View -->
+  <div id="tableView" class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+    
+    <!-- Desktop Table View (>= 768px) -->
+    <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-left text-xs border-collapse">
         <thead>
           <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
@@ -376,7 +378,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">1:1 맞춤 언어치료 세션</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 70,000 ~ 90,000
                 
@@ -401,7 +403,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">전문 언어재활사 심층 언어발달 평가</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 150,000 ~ 250,000
                 
@@ -426,7 +428,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">전산화 종합주의력검사(CAT) 등</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 150,000 ~ 250,000
                 
@@ -451,7 +453,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">영유아 발달선별검사</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 55,000
                 
@@ -476,7 +478,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">한국판 아동발달검사</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 50,000 ~ 130,000
                 
@@ -501,7 +503,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">자율신경 균형도 및 스트레스 측정</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 30,000
                 
@@ -526,7 +528,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">임상 우울 척도 평가</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 25,000
                 
@@ -551,7 +553,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">자아 방어기제 검사</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 30,000
                 
@@ -576,7 +578,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">심리교육 및 놀이평가</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 10,000 ~ 50,000
                 
@@ -601,7 +603,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">신경발달 심리 중재치료</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 70,000 ~ 90,000
                 
@@ -626,7 +628,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">일반 진단서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 20,000
                 
@@ -651,7 +653,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">신체 장애진단서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 15,000
                 
@@ -676,7 +678,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">정신 장애진단서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 40,000
                 
@@ -701,7 +703,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">영문 진단서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 40,000
                 
@@ -726,7 +728,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">병사용 진단서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 20,000
                 
@@ -751,7 +753,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">통원 진료 확인서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 3,000
                 
@@ -776,7 +778,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료 확인서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 3,000
                 
@@ -801,7 +803,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">장애인 증명서</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                 1,000
                 
@@ -826,7 +828,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료기록 사본 (1~5매)</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                   <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
                 
@@ -851,7 +853,7 @@
                   <span class="block text-[11px] text-slate-400 font-normal mt-0.5">진료기록 사본 (6매 이상)</span>
                 
               </td>
-              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark">
+              <td class="py-4 px-6 text-right font-mono font-extrabold text-sm text-jmin-dark whitespace-nowrap">
                 
                   <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
                 
@@ -862,6 +864,691 @@
           
         </tbody>
       </table>
+    </div>
+
+    <!-- Mobile Card List View (< 768px: Automatically fits any smartphone model without horizontal scroll) -->
+    <div class="md:hidden divide-y divide-slate-100">
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="언어치료">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-emerald-100 text-emerald-800">
+              치료 및 평가
+            </span>
+            <span class="text-xs font-mono text-slate-400">#1</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              언어치료
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                1:1 맞춤 언어치료 세션
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              70,000 ~ 90,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="언어평가">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-emerald-100 text-emerald-800">
+              치료 및 평가
+            </span>
+            <span class="text-xs font-mono text-slate-400">#2</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              언어평가
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                전문 언어재활사 심층 언어발달 평가
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              150,000 ~ 250,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="주의력검사">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#3</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              주의력검사
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                전산화 종합주의력검사(CAT) 등
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              150,000 ~ 250,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="영유아발달검사(dep)">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#4</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              영유아발달검사(DEP)
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                영유아 발달선별검사
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              55,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="영유아발달검사(k-cdi)">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#5</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              영유아발달검사(K-CDI)
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                한국판 아동발달검사
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              50,000 ~ 130,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="자율신경계이상검사">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#6</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              자율신경계이상검사
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                자율신경 균형도 및 스트레스 측정
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              30,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="우울척도">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#7</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              우울척도
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                임상 우울 척도 평가
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              25,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="심리 및 발달 검사" data-name="이화방어기제검사">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-teal-100 text-teal-800">
+              심리 및 발달 검사
+            </span>
+            <span class="text-xs font-mono text-slate-400">#8</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              이화방어기제검사
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                자아 방어기제 검사
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              30,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="psychoeducation/play evaluation">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-emerald-100 text-emerald-800">
+              치료 및 평가
+            </span>
+            <span class="text-xs font-mono text-slate-400">#9</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              psychoeducation/play evaluation
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                심리교육 및 놀이평가
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              10,000 ~ 50,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="치료 및 평가" data-name="신경발달중재치료(심리)">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-emerald-100 text-emerald-800">
+              치료 및 평가
+            </span>
+            <span class="text-xs font-mono text-slate-400">#10</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              신경발달중재치료(심리)
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                신경발달 심리 중재치료
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              70,000 ~ 90,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="진단서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#11</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              진단서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                일반 진단서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              20,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애진단서(신체)">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#12</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              장애진단서(신체)
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                신체 장애진단서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              15,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애진단서(정신)">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#13</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              장애진단서(정신)
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                정신 장애진단서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              40,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="영문진단서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#14</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              영문진단서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                영문 진단서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              40,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="병사용진단서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#15</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              병사용진단서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                병사용 진단서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              20,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="통원확인서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#16</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              통원확인서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                통원 진료 확인서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              3,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="진료확인서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#17</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              진료확인서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                진료 확인서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              3,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="장애인증명서">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#18</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              장애인증명서
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                장애인 증명서
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+              1,000
+              
+                <span class="text-xs font-normal text-slate-500 ml-0.5">원</span>
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="제증명수수료/진료기록사본/1~5 매">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#19</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              제증명수수료/진료기록사본/1~5 매
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                진료기록 사본 (1~5매)
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+                <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+              
+              1,000
+              
+            </div>
+          </div>
+
+        </div>
+      
+        <div class="fee-row p-4 space-y-2.5 hover:bg-slate-50/80 transition" data-category="제증명 발급 수수료" data-name="제증명수수료/진료기록사본/6 매 이상">
+          
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full
+              bg-slate-100 text-slate-700">
+              제증명 발급 수수료
+            </span>
+            <span class="text-xs font-mono text-slate-400">#20</span>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              제증명수수료/진료기록사본/6 매 이상
+            </h3>
+            
+              <p class="text-xs text-slate-500 font-light mt-1 leading-relaxed break-keep">
+                진료기록 사본 (6매 이상)
+              </p>
+            
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-400 font-medium">비용</span>
+            <div class="font-mono font-extrabold text-sm sm:text-base text-jmin-dark">
+              
+                <span class="text-xs font-normal text-slate-500 mr-1">장당</span>
+              
+              100
+              
+            </div>
+          </div>
+
+        </div>
+      
     </div>
 
     <!-- Empty State for Search -->
@@ -918,10 +1605,10 @@
     activeCategory = cat;
     const btns = document.querySelectorAll('.cat-filter-btn');
     btns.forEach(b => {
-      b.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+      b.className = 'cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
     });
     if (evt && evt.currentTarget) {
-      evt.currentTarget.className = 'cat-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
+      evt.currentTarget.className = 'cat-filter-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold bg-jmin-navy text-white shadow-xs transition';
     }
     applyFilters();
   }
