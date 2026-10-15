@@ -79,8 +79,7 @@
       "statusClass": "",
       "statusMessage": "",
       "hours": {
-        "weekday": "월 / 수 / 금 : 09:30 ~ 19:30 (야간진료)",
-        "tuesdayThursday": "화 / 목 : 09:30 ~ 18:30",
+        "weekday": "월~금 : 09:00 ~ 18:30",
         "saturday": "토요일 : 휴진",
         "lunch": "점심시간 : 13:00 ~ 14:00",
         "holiday": "토요일, 일요일 및 공휴일 휴진"
@@ -97,7 +96,7 @@
       "statusClass": "",
       "statusMessage": "",
       "hours": {
-        "weekday": "평일 : 09:30 ~ 18:30",
+        "weekday": "평일 : 09:00 ~ 18:30",
         "saturday": "토요일 : 09:00 ~ 14:00",
         "lunch": "점심시간 : 13:00 ~ 14:00",
         "holiday": "일요일 및 공휴일 휴진"
