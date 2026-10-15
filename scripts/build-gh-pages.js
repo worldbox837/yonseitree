@@ -117,6 +117,9 @@ async function build() {
     }, path.join(ROOT_DIR, `${post.id}.html`));
   }
 
+  // 8. Ensure CNAME for custom domain
+  fs.writeFileSync(path.join(ROOT_DIR, 'CNAME'), 'yonseitree.co.kr\n', 'utf8');
+
   console.log('GitHub Pages static build completed successfully!');
 }
 
