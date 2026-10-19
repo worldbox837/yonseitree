@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[영상출연] 정신과 의사가 알려주는 아스퍼거 증후군의 모든 것 (정신과의사 뇌부자들) | 연세나무정신건강의학과</title>
+  <meta name="description" content="아이마다 타고난 바탕이 다릅니다. 기질을 알면 육아가 달라집니다. 연세나무정신건강의학과.">
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  
+  <!-- Pretendard & Noto Sans Korean Web Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jmin: {
+              navy: '#193048',       // 제이민 시그니처 딥 네이비
+              dark: '#112233',       // 헤더 및 푸터 다크 톤
+              accent: '#2b5876',     // 버튼 및 하이라이트 블루
+              gold: '#b89562',       // 고급스러운 포인트 골드
+              goldlight: '#f5efe6',  // 골드 틴트 배경
+              light: '#f8fafc',      // 클린 배경
+              border: '#e2e8f0',     // 섬세한 보더
+              gray: '#64748b',       // 서브 텍스트
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            serif: ['"Noto Serif KR"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      word-break: keep-all;
+      color: #333333;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* J-Min Dropdown hover transitions */
+    .nav-item:hover .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Banner zoom effect */
+    .banner-card:hover .banner-bg-img {
+      transform: scale(1.06);
+    }
+    .banner-bg-img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen selection:bg-jmin-navy selection:text-white">
+
+<!-- Top Utility Bar (J-Min Style) -->
+<div class="hidden md:block bg-slate-50 border-b border-slate-200 text-xs text-slate-500 py-2 px-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3 text-[11px]">
+      <span class="text-emerald-800 font-bold">하남미사 클리닉</span>
+      <span class="text-slate-300">&bull;</span>
+      <span class="text-teal-800 font-bold">세종 클리닉</span>
+      <span class="text-slate-300">|</span>
+      <span class="text-slate-600 font-medium">소아청소년 세부전문의 &bull; 성인 전문 클리닉</span>
+    </div>
+    <div class="flex items-center gap-4 text-[11px]">
+      <a href="location.html" class="hover:text-jmin-navy transition">오시는 길 &bull; 진료시간</a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">공식 네이버 블로그</a>
+      <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="hover:text-slate-800 transition">관리자</a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Sticky Header (J-Min Style) -->
+<header class="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-slate-200 shadow-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Logo: J-Min Style Hospital Emblem & Clean Typography -->
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <img src="./images/logo.png" alt="연세나무정신건강의학과 마크" class="w-12 h-12 rounded-xl object-contain shadow-xs border border-slate-100 group-hover:scale-105 transition duration-200 bg-white" />
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xl sm:text-2xl font-bold text-jmin-dark tracking-tight leading-none font-serif">
+              연세나무<span class="font-normal text-slate-700">정신건강의학과의원</span>
+            </span>
+          </div>
+          <span class="block text-[10px] tracking-widest text-slate-400 uppercase font-sans mt-1">
+            YONSEI TREE PSYCHIATRIC CLINIC
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Mega Navigation Bar (J-Min Style Dropdown) -->
+      <nav class="hidden xl:flex items-center gap-1 text-sm font-semibold text-slate-700">
+        
+        <!-- Menu 1: 병원소개 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="index.html#intro" class="hover:text-jmin-navy transition flex items-center gap-1">
+            병원소개 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-48 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="index.html#intro" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">원장 인사말</a>
+            <a href="doctors.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">의료진 소개</a>
+            <a href="index.html#gallery" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">병원 둘러보기</a>
+            <a href="non-covered.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">비급여 항목 안내</a>
+            <a href="location.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">오시는 길</a>
+            <a href="location.html" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">진료시간 안내</a>
+          </div>
+        </div>
+
+        <!-- Menu 2: 소아청소년 정신건강 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            소아청소년 정신건강 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-52 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">집중력 향상(ADHD) 클리닉</a>
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">틱 & 뚜렛 클리닉</a>
+            <a href="subjects.html#sub-1" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">언어 및 발달지연 클리닉</a>
+            <a href="subjects.html#sub-6" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">학습향상 & 양육상담</a>
+          </div>
+        </div>
+
+        <!-- Menu 3: 성인 정신건강 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            성인 정신건강 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-52 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-3" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">기분 개선(우울증) 클리닉</a>
+            <a href="subjects.html#sub-3" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">불안 조절(공황장애) 클리닉</a>
+            <a href="subjects.html#sub-4" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">수면 개선(불면증) 클리닉</a>
+            <a href="subjects.html#sub-4" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">스트레스 & 번아웃 클리닉</a>
+            <a href="subjects.html#sub-2" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">성인 ADHD 클리닉</a>
+          </div>
+        </div>
+
+        <!-- Menu 4: 검사 ∙ 치료 프로그램 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="subjects.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            검사 ∙ 치료 프로그램 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-56 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="subjects.html#sub-5" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">종합심리평가 (Full Battery)</a>
+            <a href="subjects.html#sub-5" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">전산화 주의력검사 (CAT)</a>
+            <a href="subjects.html#sub-1" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">1:1 언어치료 & 놀이치료</a>
+            <a href="subjects.html#sub-6" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">인지학습 & 부모코칭</a>
+          </div>
+        </div>
+
+        <!-- Menu 5: 소통공간 -->
+        <div class="relative nav-item py-7 px-3">
+          <a href="posts.html" class="hover:text-jmin-navy transition flex items-center gap-1">
+            소통공간 <span class="text-[10px] text-slate-400">▾</span>
+          </a>
+          <div class="nav-dropdown absolute top-full left-0 w-44 bg-white border border-slate-200 rounded-xl shadow-xl py-2 text-xs font-normal">
+            <a href="posts.html?filter=공지사항" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">공지사항</a>
+            <a href="posts.html?filter=언론보도" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">방송 & 언론보도</a>
+            <a href="posts.html?filter=마음건강 칼럼" class="block px-4 py-2 hover:bg-slate-50 hover:text-jmin-navy hover:font-bold">마음건강 칼럼</a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Right Contact Action -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="location.html" class="px-5 py-2.5 rounded-full bg-jmin-navy hover:bg-jmin-dark text-white text-xs font-bold transition flex items-center gap-2 shadow-xs">
+          <span>진료안내 & 오시는 길</span> &rarr;
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="flex items-center gap-2 xl:hidden">
+        <button id="mobile-menu-btn" type="button" class="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none" aria-label="메뉴 열기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu (J-Min Style Accordion) -->
+  <div id="mobile-menu" class="hidden xl:hidden border-t border-slate-200 bg-white px-5 pt-3 pb-8 space-y-4 shadow-xl">
+    <div class="grid grid-cols-2 gap-2 pb-3 border-b border-slate-100">
+      <a href="location.html#hanam" class="text-center py-2.5 px-3 bg-slate-50 text-slate-800 rounded-xl text-xs font-bold border border-slate-200">
+        하남미사 클리닉
+      </a>
+      <a href="location.html#sejong" class="text-center py-2.5 px-3 bg-slate-50 text-slate-800 rounded-xl text-xs font-bold border border-slate-200">
+        세종 클리닉
+      </a>
+    </div>
+    
+    <div class="space-y-3 text-sm font-semibold text-slate-800">
+      <div>
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">병원소개</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="index.html#intro" class="py-1.5 hover:text-jmin-navy">원장 인사말</a>
+          <a href="doctors.html" class="py-1.5 hover:text-jmin-navy">의료진 소개</a>
+          <a href="index.html#gallery" class="py-1.5 hover:text-jmin-navy">병원 둘러보기</a>
+          <a href="non-covered.html" class="py-1.5 hover:text-jmin-navy font-semibold text-emerald-800">비급여 항목 안내</a>
+          <a href="location.html" class="py-1.5 hover:text-jmin-navy col-span-2">진료시간 & 오시는길</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">소아청소년 정신건강</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">집중력 향상(ADHD)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">틱 클리닉</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">언어 및 발달지연</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">학습 및 양육코칭</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">성인 정신건강</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">기분 개선(우울)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">불안 조절(공황)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">수면 개선(불면증)</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">스트레스 & 번아웃</a>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">검사·치료 & 소통</div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-normal pl-2">
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">종합심리평가</a>
+          <a href="subjects.html" class="py-1.5 hover:text-jmin-navy">언어·놀이치료</a>
+          <a href="posts.html?filter=공지사항" class="py-1.5 hover:text-jmin-navy">공지사항</a>
+          <a href="posts.html?filter=언론보도" class="py-1.5 hover:text-jmin-navy">방송 & 언론보도</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+      <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="text-xs text-slate-400 hover:text-slate-600">⚙️ 관리자 로그인</a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-xs text-emerald-700 font-bold">📗 네이버 블로그</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
+
+
+<main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+  
+  <div class="bg-white rounded-3xl border border-warm-200 p-6 sm:p-12 shadow-xs space-y-8">
+    
+    <!-- Post Header -->
+    <div class="border-b border-slate-100 pb-6 space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-bold px-3 py-1 rounded-full bg-rose-100 text-rose-800">
+          언론보도
+        </span>
+        <span class="text-xs text-slate-400">작성일: 2024-05-08</span>
+        <span class="text-xs text-slate-400">&bull; 조회수: 980</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-snug">
+        [영상출연] 정신과 의사가 알려주는 아스퍼거 증후군의 모든 것 (정신과의사 뇌부자들)
+      </h1>
+    </div>
+
+    <!-- Attached Media (YouTube Video or Image) -->
+    
+      <div class="space-y-3">
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-950">
+          <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/sqDG8zu9EZA" title="[영상출연] 정신과 의사가 알려주는 아스퍼거 증후군의 모든 것 (정신과의사 뇌부자들)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        
+          <div class="flex justify-end">
+            <a href="https://youtu.be/sqDG8zu9EZA?si=dQukU7psnzjbvL3k" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              <span>유튜브 공식 영상 바로보기 &rarr;</span>
+            </a>
+          </div>
+        
+      </div>
+    
+
+    <!-- Content Body -->
+    <div class="prose max-w-none text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line py-4">
+      유튜브 채널 &#39;정신과의사 뇌부자들&#39;에 출연하여 아스퍼거 증후군(자폐스펙트럼장애)의 주요 임상 특징과 진단 기준에 대해 심층 설명해 드렸습니다.
+
+사회적 상호작용의 어려움, 특정 관심사 몰입, 감각 반응의 차이 등 일상에서 관찰되는 모습을 짚어보고, 조기 발견과 개별 맞춤 치료의 중요성을 전달해 드립니다.
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="border-t border-slate-100 pt-6 flex items-center justify-between">
+      <a href="posts.html" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+        &larr; 목록으로 돌아가기
+      </a>
+      <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="text-xs font-bold text-brand-700 hover:underline">
+        공식 블로그에서 더 보기 &rarr;
+      </a>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- J-Min Style Floating Side Quick Menu (Right Fixed) -->
+<div class="hidden md:flex fixed right-5 top-1/2 -translate-y-1/2 z-40 flex-col bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden text-center text-[11px] font-semibold text-slate-700 w-20 divide-y divide-slate-100">
+  <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="py-3.5 px-1 hover:bg-emerald-50 transition group flex flex-col items-center">
+    <span class="text-lg mb-1 group-hover:scale-110 transition">📗</span>
+    <span class="text-[11px] font-bold text-slate-800">하남미사</span>
+    <span class="text-[9px] font-bold text-emerald-700 mt-0.5">블로그</span>
+  </a>
+  <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="py-3.5 px-1 hover:bg-slate-50 transition text-slate-500 hover:text-slate-900 flex flex-col items-center group w-full" aria-label="맨 위로 가기">
+    <span class="text-base mb-1 group-hover:-translate-y-0.5 transition">▲</span>
+    <span class="text-[11px] font-bold text-slate-800">맨 위로</span>
+    <span class="text-[9px] font-bold text-slate-400 mt-0.5">TOP</span>
+  </button>
+</div>
+
+<footer class="mt-auto bg-jmin-dark text-slate-300 py-16 border-t border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
+      
+      <!-- Brand & Info (5 cols) -->
+      <div class="lg:col-span-5 space-y-4">
+        <div class="flex items-center gap-3">
+          <img src="./images/logo.png" alt="연세나무 마크" class="w-10 h-10 rounded-xl object-contain bg-white p-0.5 border border-slate-700" />
+          <div>
+            <h4 class="text-lg font-bold text-white tracking-tight">연세나무정신건강의학과</h4>
+            <p class="text-[11px] text-slate-400">YONSEI TREE PSYCHIATRIC CLINIC</p>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+          아이마다 타고난 바탕이 다릅니다. 부모님의 탓이 아닙니다. 연세나무정신건강의학과가 아이의 기질을 이해하고 덜 싸우며 더 사랑할 수 있도록 따뜻한 위안이 되어 드리겠습니다.
+        </p>
+
+        <div class="pt-2 flex items-center gap-3">
+          <a href="https://blog.naver.com/yonseitree" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 hover:bg-emerald-900 transition">
+            <span>📗 공식 네이버 블로그</span> &rarr;
+          </a>
+          <a href="javascript:alert('관리자 기능은 로컬 Express 서버에서 지원됩니다.')" class="text-xs text-slate-500 hover:text-slate-300 transition">
+            ⚙️ 관리자 모드
+          </a>
+        </div>
+      </div>
+
+      <!-- Hanam Branch (4 cols) -->
+      <div class="lg:col-span-4 space-y-2 text-xs text-slate-400">
+        <div class="text-white font-bold text-sm flex items-center gap-2 mb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          하남미사 클리닉
+        </div>
+        <p><strong>대표전화:</strong> <a href="tel:031-795-5272" class="text-white font-bold hover:underline">031-795-5272</a></p>
+        <p><strong>주소:</strong> 경기도 하남시 미사강변남로 103 (미사역 8번 출구)</p>
+        <p><strong>진료원장:</strong> 차지민 원장 &bull; 김남욱 원장 (소아청소년 세부전문의)</p>
+        <p class="text-slate-400 pt-1">
+          평일 09:00~18:30 (토·일·공휴일 휴진)
+        </p>
+      </div>
+
+      <!-- Sejong Branch (3 cols) -->
+      <div class="lg:col-span-3 space-y-2 text-xs text-slate-400">
+        <div class="text-white font-bold text-sm flex items-center gap-2 mb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          세종 클리닉
+        </div>
+        <p><strong>대표전화:</strong> <a href="tel:0507-1320-5272" class="text-white font-bold hover:underline">0507-1320-5272</a></p>
+        <p><strong>주소:</strong> 세종특별자치시 나성북로 30 (어반아트리움 인근)</p>
+        <p><strong>진료원장:</strong> 김현진 원장 (소아청소년 세부전문의)</p>
+        <p class="text-slate-400 pt-1">
+          평일 09:00~18:30 (토·일·공휴일 휴진)
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Policies -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>&copy; 2026 연세나무정신건강의학과. All rights reserved.</p>
+      <div class="flex items-center gap-4 text-[11px]">
+        <a href="#" class="hover:text-slate-300">개인정보처리방침</a>
+        <span class="text-slate-700">|</span>
+        <a href="#" class="hover:text-slate-300">환자의 권리와 의무</a>
+        <span class="text-slate-700">|</span>
+        <a href="non-covered.html" class="hover:text-slate-300">비급여 진료비 안내</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+

@@ -41,5 +41,41 @@
     "youtubeId": "7i1fBX5T3hU",
     "link": "https://youtu.be/7i1fBX5T3hU?si=ijjHHmSiEydad17A",
     "views": 750
+  },
+  {
+    "id": "post-5",
+    "category": "언론보도",
+    "title": "[영상출연] 정신과 의사가 알려주는 아스퍼거 증후군의 모든 것 (정신과의사 뇌부자들)",
+    "content": "유튜브 채널 '정신과의사 뇌부자들'에 출연하여 아스퍼거 증후군(자폐스펙트럼장애)의 주요 임상 특징과 진단 기준에 대해 심층 설명해 드렸습니다.\n\n사회적 상호작용의 어려움, 특정 관심사 몰입, 감각 반응의 차이 등 일상에서 관찰되는 모습을 짚어보고, 조기 발견과 개별 맞춤 치료의 중요성을 전달해 드립니다.",
+    "date": "2024-05-08",
+    "pinned": true,
+    "image": "/images/youtube_asperger_neobujadeul.jpg",
+    "youtubeId": "sqDG8zu9EZA",
+    "link": "https://youtu.be/sqDG8zu9EZA?si=dQukU7psnzjbvL3k",
+    "views": 980
+  },
+  {
+    "id": "post-6",
+    "category": "언론보도",
+    "title": "[영상출연] 넷플릭스 드라마 '정신병동에도 아침이 와요' 현실 리뷰 (정신과의사 뇌부자들)",
+    "content": "화제의 넷플릭스 오리지널 시리즈 '정신병동에도 아침이 와요'를 정신건강의학과 전문의의 시선으로 현실감 있게 리뷰하였습니다.\n\n실제 대학병원 정신과 병동의 임상 환경과 환자분들의 회복 여정, 그리고 의국 생활의 생생한 이야기를 나누며 정신질환에 대한 편견을 낮추고 따뜻한 공감과 치유의 메시지를 전합니다.",
+    "date": "2024-04-30",
+    "pinned": true,
+    "image": "/images/youtube_daily_dose_of_sunshine.jpg",
+    "youtubeId": "U9UXBPHt22c",
+    "link": "https://youtu.be/U9UXBPHt22c?si=sOKoO5Dv9G7hamMf",
+    "views": 1240
+  },
+  {
+    "id": "post-7",
+    "category": "언론보도",
+    "title": "[영상자문] 대중매체 속 자폐스펙트럼장애 (발달장애e야기 소톡)",
+    "content": "발달장애 전문 채널 '발달장애이야기_발달장애e야기'의 [소톡3] 시리즈 전문가 패널로 참여하였습니다.\n\n대중매체 속에서 다루어지는 자폐스펙트럼장애 묘사의 명암과 실제 임상 현장의 진단, 그리고 당사자와 가족들을 위한 실질적인 지원 방안에 대한 전문 자문을 전달해 드렸습니다.",
+    "date": "2024-03-20",
+    "pinned": false,
+    "image": "/images/youtube_autism_spectrum.jpg",
+    "youtubeId": "MtE3D28fCZc",
+    "link": "https://youtu.be/MtE3D28fCZc",
+    "views": 850
   }
 ]
