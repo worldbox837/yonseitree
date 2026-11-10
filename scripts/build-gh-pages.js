@@ -28,6 +28,15 @@ function copyRecursive(src, dest) {
 }
 copyRecursive(path.join(PUBLIC_DIR, 'images'), rootImagesDir);
 
+// Copy static standalone pages and assets from public/ to root
+['growth-test.html', 'book_cover.jpg'].forEach(file => {
+  const src = path.join(PUBLIC_DIR, file);
+  const dest = path.join(ROOT_DIR, file);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, dest);
+  }
+});
+
 // Prepare data
 const settings = db.getSettings();
 const doctors = db.getDoctors();

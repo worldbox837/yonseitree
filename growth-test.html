@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ko" class="text-[18px]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아이 성장단계 진단 테스트 (몰입 · 조절 · 지속)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          },
+          fontSize: {
+            // 기본 폰트 크기를 +2pt 상향 조정한 비례 스케일
+            xs: ['0.825rem', { lineHeight: '1.25rem' }],   // ~14.8px
+            sm: ['0.95rem', { lineHeight: '1.45rem' }],    // ~17px
+            base: ['1.075rem', { lineHeight: '1.65rem' }], // ~19.3px
+            lg: ['1.225rem', { lineHeight: '1.85rem' }],   // ~22px
+            xl: ['1.4rem', { lineHeight: '2.05rem' }],     // ~25px
+            '2xl': ['1.7rem', { lineHeight: '2.3rem' }],   // ~30.6px
+            '3xl': ['2.1rem', { lineHeight: '2.6rem' }],   // ~37.8px
+          },
+          colors: {
+            flow: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            },
+            control: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+            sustain: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      font-size: 18px; /* 기본 브라우저 16px 대비 2pt 상향 */
+    }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      word-break: keep-all;
+    }
+    /* 인쇄 최적화 스타일 */
+    @media print {
+      html {
+        font-size: 15px !important;
+      }
+      body {
+        background-color: white !important;
+        color: #111827 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-shadow-none {
+        box-shadow: none !important;
+        border: 1px solid #e5e7eb !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900 text-base">
+
+  <!-- 상단 네비게이션 헤더 -->
+  <header class="bg-white/85 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-sm shrink-0">
+          <i data-lucide="compass" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="font-bold text-slate-900 tracking-tight text-lg sm:text-xl">아이 성장단계 자가진단</span>
+          <span class="hidden sm:inline-block ml-2 text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">몰입 · 조절 · 지속 (1~5점 척도)</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <div id="headerStepBadge" class="hidden text-xs sm:text-sm font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full">
+          진행률 <span id="progressText" class="text-emerald-600 font-bold">0/15</span>
+        </div>
+        <a href="index.html" class="text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-900 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors flex items-center gap-1.5 shrink-0" title="연세나무정신과 홈페이지로 이동">
+          <i data-lucide="home" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">연세나무 홈</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="flex-grow max-w-3xl w-full mx-auto px-4 py-8">
+
+    <!-- 1. 시작 화면 (Intro) -->
+    <section id="viewIntro" class="space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-100/50 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-100/50 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-xs sm:text-sm font-semibold mb-4">
+          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+          자녀 발달 & 학습 태도 5단계 정밀 진단
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          우리 아이는 지금<br class="sm:hidden" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600">어느 성장 단계</span>에 있을까요?
+        </h1>
+
+        <p class="mt-3.5 text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+          학습량이나 선행학습의 속도를 아이에게 맞추려면 현재 아이가 <span class="font-bold text-slate-900">[몰입, 조절, 지속]</span> 중 어느 단계에 머물러 있는지 파악하는 것이 중요합니다.
+        </p>
+
+        <!-- 3단계 소개 카드 -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 my-8 text-left">
+          <!-- 몰입 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50/70 border border-emerald-100 hover:border-emerald-300 transition-all">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold text-sm mb-2.5">1</div>
+            <div class="font-bold text-slate-900 flex items-center gap-1.5 text-base">
+              몰입 단계
+              <span class="text-xs text-emerald-700 font-normal">(주로 미취학)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+              놀이와 흥미에 푹 빠져 호기심을 발산하고 깊이 경험하는 시기
+            </p>
+          </div>
+
+          <!-- 조절 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-blue-50/70 border border-blue-100 hover:border-blue-300 transition-all">
+            <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center font-bold text-sm mb-2.5">2</div>
+            <div class="font-bold text-slate-900 flex items-center gap-1.5 text-base">
+              조절 단계
+              <span class="text-xs text-blue-700 font-normal">(초등 저학년)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+              놀이를 멈추고 규칙을 지키며 공부 태도와 습관을 형성하는 시기
+            </p>
+          </div>
+
+          <!-- 지속 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-purple-50/70 border border-purple-100 hover:border-purple-300 transition-all">
+            <div class="w-8 h-8 rounded-lg bg-purple-500 text-white flex items-center justify-center font-bold text-sm mb-2.5">3</div>
+            <div class="font-bold text-slate-900 flex items-center gap-1.5 text-base">
+              지속 단계
+              <span class="text-xs text-purple-700 font-normal">(초등 고학년)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+              어려움 앞에서도 포기하지 않고 스스로 끈기 있게 관리하는 시기
+            </p>
+          </div>
+        </div>
+
+        <!-- 아동 기본 정보 입력 (선택) -->
+        <div class="max-w-md mx-auto bg-slate-50 rounded-2xl p-5 border border-slate-200 text-left mb-6 space-y-3.5">
+          <div>
+            <label for="childName" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">아이 이름 (또는 애칭)</label>
+            <input type="text" id="childName" placeholder="예: 민우 (미입력 시 '아이'로 표기)"
+                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm sm:text-base" />
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-bold text-slate-700 mb-1.5">현재 연령대</label>
+            <div class="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+              <label class="flex items-center justify-center p-2.5 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/60 has-[:checked]:text-emerald-800 font-semibold text-center">
+                <input type="radio" name="childAge" value="preschool" class="hidden" checked>
+                미취학<br class="sm:hidden"/>(4~7세)
+              </label>
+              <label class="flex items-center justify-center p-2.5 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/60 has-[:checked]:text-blue-800 font-semibold text-center">
+                <input type="radio" name="childAge" value="lower_elem" class="hidden">
+                초등 저학년<br class="sm:hidden"/>(1~3)
+              </label>
+              <label class="flex items-center justify-center p-2.5 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50/60 has-[:checked]:text-purple-800 font-semibold text-center">
+                <input type="radio" name="childAge" value="upper_elem" class="hidden">
+                초등 고학년<br class="sm:hidden"/>이상
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="startTest()"
+                class="w-full sm:w-auto px-9 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-base sm:text-lg shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2">
+          <span>진단 테스트 시작하기 (1~5점 척도 평가)</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+
+        <p class="text-xs sm:text-sm text-slate-400 mt-4">
+          총 15문항 · 각 문항별 1점(전혀 아니다) ~ 5점(매우 그렇다) 5단계 체크
+        </p>
+      </div>
+    </section>
+
+
+    <!-- 2. 테스트 질문 화면 (Survey) -->
+    <section id="viewSurvey" class="hidden space-y-6">
+      
+      <!-- 진행 바 & 안내 -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 sticky top-20 z-20 backdrop-blur-md bg-white/95">
+        <div class="flex items-center justify-between text-xs sm:text-sm text-slate-600 font-semibold mb-2">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+            평가 진행 상황
+          </span>
+          <span id="progressBarCount" class="text-emerald-700 font-bold">0 / 15 문항 완료 (0%)</span>
+        </div>
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+          <div id="surveyProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300 w-0"></div>
+        </div>
+
+        <!-- 척도 범례 안내 바 -->
+        <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-5 text-center text-[13px] sm:text-xs text-slate-500 font-medium">
+          <div><span class="font-bold text-slate-700">1점</span> 전혀 아니다</div>
+          <div><span class="font-bold text-slate-700">2점</span> 대체로 아니다</div>
+          <div><span class="font-bold text-slate-700">3점</span> 보통이다</div>
+          <div><span class="font-bold text-slate-700">4점</span> 대체로 그렇다</div>
+          <div><span class="font-bold text-slate-700">5점</span> 매우 그렇다</div>
+        </div>
+      </div>
+
+      <!-- 질문 섹션 목록 (동적 생성) -->
+      <div id="surveySections" class="space-y-6"></div>
+
+      <!-- 제출 및 하단 버튼 -->
+      <div class="flex items-center justify-between pt-4 pb-12">
+        <button onclick="goToIntro()" class="px-4 py-3 text-sm sm:text-base font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-colors">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          처음으로
+        </button>
+        <button onclick="calculateAndShowResult()"
+                class="px-8 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base sm:text-lg shadow-md shadow-emerald-600/25 active:scale-[0.98] transition-all flex items-center gap-2">
+          <span>진단 결과 분석하기</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- 3. 결과 화면 (Result) -->
+    <section id="viewResult" class="hidden space-y-6 pb-12">
+
+      <!-- 인쇄 & 공유 상단 툴바 -->
+      <div class="no-print flex items-center justify-between bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-sm">
+        <button onclick="resetTest()" class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i> 다시 진단하기
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="copyShareText()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-semibold flex items-center gap-1.5">
+            <i data-lucide="share-2" class="w-4 h-4"></i> 결과 복사
+          </button>
+          <button onclick="window.print()" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="printer" class="w-4 h-4"></i> 인쇄 / PDF 저장
+          </button>
+        </div>
+      </div>
+
+      <!-- 메인 결과 리포트 카드 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/90 print-shadow-none space-y-8">
+        
+        <!-- 리포트 헤더 -->
+        <div class="border-b border-slate-100 pb-6 text-center">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs sm:text-sm font-bold mb-2.5">
+            성장단계 종합 진단 리포트 (1~5점 정밀 척도)
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <span id="resultChildName" class="text-emerald-600">아이</span>의 현재 성장단계 분석
+          </h2>
+          <p id="resultDiagnosisSummary" class="text-sm sm:text-base text-slate-600 mt-2 font-medium">
+            <!-- 요약 문구 동적 삽입 -->
+          </p>
+        </div>
+
+        <!-- 3개 영역 점수 요약 카드 (총 25점 만점 및 평균 5.0점 만점 병기) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          
+          <!-- 몰입 점수 -->
+          <div class="p-5 sm:p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50/40 relative overflow-hidden flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800">1단계 · 몰입</span>
+              <span class="text-xs text-slate-500 font-medium">미취학</span>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span id="scoreFlow" class="text-3xl sm:text-4xl font-black text-emerald-700">0</span>
+                  <span class="text-slate-400 font-semibold text-sm">/ 25점</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-slate-500">평균</span>
+                  <span id="avgFlow" class="text-base sm:text-lg font-bold text-emerald-800 ml-1">0.0</span>
+                  <span class="text-xs text-slate-400">/ 5.0</span>
+                </div>
+              </div>
+              <div class="w-full bg-emerald-200/60 rounded-full h-2.5 mt-2.5 overflow-hidden">
+                <div id="barFlow" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+            <p id="levelFlow" class="text-xs sm:text-sm font-semibold text-emerald-900 mt-3 pt-2.5 border-t border-emerald-100">
+              -
+            </p>
+          </div>
+
+          <!-- 조절 점수 -->
+          <div class="p-5 sm:p-6 rounded-2xl border-2 border-blue-100 bg-blue-50/40 relative overflow-hidden flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-800">2단계 · 조절</span>
+              <span class="text-xs text-slate-500 font-medium">초등 저학년</span>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span id="scoreControl" class="text-3xl sm:text-4xl font-black text-blue-700">0</span>
+                  <span class="text-slate-400 font-semibold text-sm">/ 25점</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-slate-500">평균</span>
+                  <span id="avgControl" class="text-base sm:text-lg font-bold text-blue-800 ml-1">0.0</span>
+                  <span class="text-xs text-slate-400">/ 5.0</span>
+                </div>
+              </div>
+              <div class="w-full bg-blue-200/60 rounded-full h-2.5 mt-2.5 overflow-hidden">
+                <div id="barControl" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+            <p id="levelControl" class="text-xs sm:text-sm font-semibold text-blue-900 mt-3 pt-2.5 border-t border-blue-100">
+              -
+            </p>
+          </div>
+
+          <!-- 지속 점수 -->
+          <div class="p-5 sm:p-6 rounded-2xl border-2 border-purple-100 bg-purple-50/40 relative overflow-hidden flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-800">3단계 · 지속</span>
+              <span class="text-xs text-slate-500 font-medium">초등 고학년</span>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span id="scoreSustain" class="text-3xl sm:text-4xl font-black text-purple-700">0</span>
+                  <span class="text-slate-400 font-semibold text-sm">/ 25점</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-slate-500">평균</span>
+                  <span id="avgSustain" class="text-base sm:text-lg font-bold text-purple-800 ml-1">0.0</span>
+                  <span class="text-xs text-slate-400">/ 5.0</span>
+                </div>
+              </div>
+              <div class="w-full bg-purple-200/60 rounded-full h-2.5 mt-2.5 overflow-hidden">
+                <div id="barSustain" class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+            <p id="levelSustain" class="text-xs sm:text-sm font-semibold text-purple-900 mt-3 pt-2.5 border-t border-purple-100">
+              -
+            </p>
+          </div>
+        </div>
+
+        <!-- 레이더 차트 & 종합 판정 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center p-6 bg-slate-50 rounded-2xl border border-slate-200/80">
+          <!-- 레이더 차트 캔버스 -->
+          <div class="w-full max-w-[300px] mx-auto aspect-square flex items-center justify-center">
+            <canvas id="growthRadarChart"></canvas>
+          </div>
+          <!-- 판정 및 핵심 솔루션 박스 -->
+          <div class="space-y-3.5">
+            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold" id="badgeTargetPhase">
+              <!-- 타겟 단계 뱃지 -->
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug" id="titleTargetPhase">
+              <!-- 판정 타이틀 -->
+            </h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed" id="descTargetPhase">
+              <!-- 판정 설명 -->
+            </p>
+            <div class="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 space-y-1.5 shadow-xs">
+              <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                부모님 핵심 지도 포인트
+              </div>
+              <div id="corePointText" class="text-slate-600 leading-relaxed pl-5">
+                <!-- 핵심 포인트 -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 상세 영역별 맞춤 솔루션 안내 -->
+        <div class="space-y-4">
+          <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-amber-500"></i>
+            단계별 심층 솔루션 & 실천 가이드
+          </h3>
+
+          <div id="solutionsList" class="space-y-4">
+            <!-- 솔루션 카드 동적 렌더링 -->
+          </div>
+        </div>
+
+        <!-- 1~3점 항목 집중 보완 Action Tip -->
+        <div id="lowScoreFeedbackBox" class="p-6 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
+          <h4 class="font-bold text-amber-900 text-base sm:text-lg flex items-center gap-2">
+            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600"></i>
+            아이가 더 보완하면 좋은 구체적 체크 포인트 (1~3점 문항)
+          </h4>
+          <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
+            아래 항목들은 이번 진단에서 1~3점으로 평가된 항목들입니다. 아이에게 조급해하지 마시고 아래 가이드를 일상 속에서 하나씩 시도해 보세요.
+          </p>
+          <ul id="lowScoreItemsList" class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2">
+            <!-- 점수 낮은 항목들 및 조언 삽입 -->
+          </ul>
+        </div>
+
+        <!-- 도서 원문 핵심 가이드 안내 배너 -->
+        <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white text-xs sm:text-sm leading-relaxed space-y-2.5 shadow-sm">
+          <div class="font-bold text-base text-emerald-400 flex items-center gap-2">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            성장단계 원칙 기억하기
+          </div>
+          <p class="text-slate-300 space-y-1">
+            • <strong class="text-white">몰입 단계:</strong> 얼마나 빨리 공부를 시작하느냐가 아니라 얼마나 깊이 몰입해본 경험이 있느냐입니다.<br>
+            • <strong class="text-white">조절 단계:</strong> 공부의 양이나 난이도보다 공부를 스스로 멈추고 시작하는 습관과 태도입니다.<br>
+            • <strong class="text-white">지속 단계:</strong> 타고난 능력보다 결과를 두려워하지 않고 다시 해보는 의식적인 노력과 꾸준함입니다.
+          </p>
+        </div>
+
+        <!-- 더 많은 정보는 기질육아에서 확인하세요 & 교보문고 바로구매 카드 -->
+        <div class="p-6 sm:p-7 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <!-- 은은한 배경 글로우 이펙트 -->
+          <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="flex items-center gap-5 text-left w-full sm:w-auto">
+            <!-- 첨부 디자인 기반 책 표지 썸네일 -->
+            <a href="https://product.kyobobook.co.kr/detail/S000221433606" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="shrink-0 group block"
+               title="교보문고에서 기질육아 책 상세보기">
+              <div class="w-20 sm:w-24 rounded-lg overflow-hidden shadow-xl border border-amber-200/40 bg-amber-50 transition-transform duration-200 group-hover:scale-105 group-hover:shadow-amber-400/30">
+                <img src="./book_cover.jpg" 
+                     alt="기질육아 도서 표지" 
+                     class="w-full h-auto object-cover block"
+                     onerror="this.onerror=null; this.src='https://product.kyobobook.co.kr/detail/S000221433606';">
+              </div>
+            </a>
+
+            <!-- 책 소개 및 문구 -->
+            <div class="space-y-1.5 flex-1">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 text-xs font-bold">
+                <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i> 베스트셀러 도서
+              </div>
+              <h4 class="text-base sm:text-xl font-extrabold text-white leading-snug">
+                더 많은 정보는 <span class="text-amber-400">기질육아</span>에서 확인하세요
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+                학습 동기 · 사회성 · 좋은 생활 습관까지<br class="hidden sm:inline" />
+                <span class="text-slate-100 font-semibold">“기질을 알면 덜 싸우고 더 잘 키웁니다”</span>
+              </p>
+              <div class="text-[11px] sm:text-xs text-slate-400 pt-0.5">
+                소아정신과 전문의 차지민 · 김남욱 지음 | 저녁달
+              </div>
+            </div>
+          </div>
+
+          <!-- 교보문고 바로구매 옐로우 버튼 (첨부 디자인 스타일) -->
+          <div class="w-full sm:w-auto shrink-0">
+            <a href="https://product.kyobobook.co.kr/detail/S000221433606" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 active:bg-amber-500 text-slate-950 font-black text-sm sm:text-base shadow-lg shadow-amber-400/20 active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 group">
+              <span>교보문고 [바로구매]</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="no-print bg-white border-t border-slate-200 py-6 text-center text-xs sm:text-sm text-slate-400">
+    <div class="max-w-3xl mx-auto px-4">
+      <p>기질 기반 자녀 성장단계 자가진단 시스템 · [몰입 · 조절 · 지속] 1~5점 척도 평가</p>
+      <p class="mt-1">※ 본 테스트는 학습 태도와 성장 단계를 파악하고 부모의 지원 방향을 돕기 위한 자가진단 도구입니다.</p>
+    </div>
+  </footer>
+
+  <!-- 알림 토스트 -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
+    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastMessage">복사되었습니다.</span>
+  </div>
+
+  <script>
+    // 15개 문항 데이터 정의
+    const CHECKLIST_DATA = [
+      {
+        id: "flow",
+        title: "몰입 단계 자가 진단",
+        subTitle: "주로 미취학",
+        theme: "emerald",
+        badgeBg: "bg-emerald-50",
+        badgeText: "text-emerald-700",
+        border: "border-emerald-200",
+        quote: "이 단계에서 중요한 것은 얼마나 빨리 공부를 시작하느냐가 아니라 얼마나 깊이 몰입해본 경험이 있느냐입니다.",
+        items: [
+          {
+            id: "f1",
+            text: "좋아하는 놀이를 시작하면 꽤 오랫동안 집중해서 한다.",
+            tip: "충분히 몰입할 수 있도록 놀이를 중간에 끊지 말고 아이만의 몰입 시간을 지켜주세요."
+          },
+          {
+            id: "f2",
+            text: "블록, 그림, 만들기, 역할놀이 등 한 활동에 빠져드는 경험이 있다.",
+            tip: "다양한 매체(자연물, 블록, 그리기 등)를 통해 스스로 주도하여 푹 빠져드는 기쁨을 마련해 주세요."
+          },
+          {
+            id: "f3",
+            text: "새로운 것에 대한 호기심이 많고 이것저것 탐색하려는 모습을 보인다.",
+            tip: "엉뚱한 질문을 하더라도 정답을 바로 주기보다 '왜 그렇게 생각했어?'라며 호기심의 불씨를 지펴주세요."
+          },
+          {
+            id: "f4",
+            text: "“이거 재미있다”, “또 하고 싶다” 같은 말을 자주 한다.",
+            tip: "결과에 대한 칭찬보다 '재미와 즐거움' 그 자체가 행동의 가장 강력한 원동력이 됩니다."
+          },
+          {
+            id: "f5",
+            text: "공부라는 말보다 놀이와 활동 속에서 배우는 것이 더 자연스럽다.",
+            tip: "학습지 주입보다 일상 대화, 보드게임, 신체 활동 속에서 자연스럽게 개념을 경험하게 해주세요."
+          }
+        ]
+      },
+      {
+        id: "control",
+        title: "조절 단계 자가 진단",
+        subTitle: "주로 초등 저학년",
+        theme: "blue",
+        badgeBg: "bg-blue-50",
+        badgeText: "text-blue-700",
+        border: "border-blue-200",
+        quote: "이 단계에서 중요한 것은 공부의 양이나 난이도보다 공부를 하는 습관과 태도입니다.",
+        items: [
+          {
+            id: "c1",
+            text: "재미있는 활동을 하다가도 약속된 시간에 멈출 수 있다.",
+            tip: "갑자기 멈추라 하지 말고 '5분 뒤 정리하자'처럼 전환 예고를 주거나 시각적 모래시계/타이머를 활용하세요."
+          },
+          {
+            id: "c2",
+            text: "해야 할 일을 먼저 하고, 그다음에 좋아하는 활동을 할 수 있다.",
+            tip: "'할 일 먼저(First) -> 놀이 나중에(Then)' 규칙을 가족의 자연스러운 루틴으로 세워주세요."
+          },
+          {
+            id: "c3",
+            text: "숙제나 공부를 시작하는 데 큰 저항 없이 자리에 앉는다.",
+            tip: "시작 문턱을 확 낮춰주세요. '책상에 앉아 교재 딱 한 장만 펼쳐보기'처럼 가볍게 시작하도록 돕습니다."
+          },
+          {
+            id: "c4",
+            text: "부모가 정해준 기본적인 규칙을 비교적 잘 따른다.",
+            tip: "부모가 일방적으로 지시하기보다 아이와 머리를 맞대고 합의한 2~3가지 핵심 규칙만 우선 지켜보게 하세요."
+          },
+          {
+            id: "c5",
+            text: "“조금만 더 하고 끝내자”는 말을 이해하고 받아들인다.",
+            tip: "조금 더 버텨낸 아이의 작은 인내심을 즉시 구체적으로 알아봐 주고 칭찬해 주세요."
+          }
+        ]
+      },
+      {
+        id: "sustain",
+        title: "지속 단계 자가 진단",
+        subTitle: "주로 초등 고학년",
+        theme: "purple",
+        badgeBg: "bg-purple-50",
+        badgeText: "text-purple-700",
+        border: "border-purple-200",
+        quote: "이 단계에서 중요한 것은 의식적인 노력과 꾸준함입니다. 즉, 자기주도적 학습의 완성입니다.",
+        items: [
+          {
+            id: "s1",
+            text: "공부가 재미없어도 해야 할 일은 해내려고 한다.",
+            tip: "재미없음을 인정해 주고, '그럼에도 해내려고 노력하는 너의 책임감이 정말 멋지다'고 격려해 주세요."
+          },
+          {
+            id: "s2",
+            text: "목표를 정하고 일정 기간 꾸준히 노력하는 경험이 있다.",
+            tip: "일주일 단위의 작고 달성 가능한 목표를 세우고, 달성 시 스티커나 체크표로 성취감을 시각화해 주세요."
+          },
+          {
+            id: "s3",
+            text: "어려운 문제를 만나도 쉽게 포기하지 않는다.",
+            tip: "정답을 곧장 알려주지 말고, '어디까지 해결했어?', '힌트 하나만 같이 찾아볼까?'로 끈기를 응원하세요."
+          },
+          {
+            id: "s4",
+            text: "결과가 좋지 않으면 “다음에는 더 해봐야지”라고 생각한다.",
+            tip: "점수가 아닌 '노력과 과정'에 초점을 맞추어 실패를 배움의 과정으로 여기는 성장 마인드셋을 길러주세요."
+          },
+          {
+            id: "s5",
+            text: "공부를 부모가 아니라 스스로 관리하려는 모습이 조금씩 보인다.",
+            tip: "아이의 플래너와 학습 계획을 믿고 맡겨주며, 부모는 감시자가 아닌 든든한 페이스메이커로 머물러 주세요."
+          }
+        ]
+      }
+    ];
+
+    // 1~5점 점수 저장 맵 (기본값 null)
+    let scoreMap = {};
+    let radarChartInstance = null;
+
+    const SCALE_LABELS = {
+      1: "전혀 아니다",
+      2: "대체로 아니다",
+      3: "보통이다",
+      4: "대체로 그렇다",
+      5: "매우 그렇다"
+    };
+
+    // 초기화
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderSurveyQuestions();
+    });
+
+    // 화면 전환 함수들
+    function goToIntro() {
+      document.getElementById("viewIntro").classList.remove("hidden");
+      document.getElementById("viewSurvey").classList.add("hidden");
+      document.getElementById("viewResult").classList.add("hidden");
+      document.getElementById("headerStepBadge").classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startTest() {
+      document.getElementById("viewIntro").classList.add("hidden");
+      document.getElementById("viewSurvey").classList.remove("hidden");
+      document.getElementById("viewResult").classList.add("hidden");
+      document.getElementById("headerStepBadge").classList.remove("hidden");
+      updateProgressBar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function resetTest() {
+      scoreMap = {};
+      renderSurveyQuestions();
+      updateProgressBar();
+      goToIntro();
+    }
+
+    // 설문 문항 동적 렌더링 (1~5점 척도 버튼식 UI)
+    function renderSurveyQuestions() {
+      const container = document.getElementById("surveySections");
+      container.innerHTML = "";
+
+      CHECKLIST_DATA.forEach((section, sIdx) => {
+        const secDiv = document.createElement("div");
+        secDiv.className = "bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90";
+
+        let colorInfo = {
+          emerald: { bg: "bg-emerald-500", text: "text-emerald-700", light: "bg-emerald-50 text-emerald-800 border-emerald-200", activeBtn: "bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-300" },
+          blue: { bg: "bg-blue-500", text: "text-blue-700", light: "bg-blue-50 text-blue-800 border-blue-200", activeBtn: "bg-blue-600 text-white border-blue-600 ring-2 ring-blue-300" },
+          purple: { bg: "bg-purple-500", text: "text-purple-700", light: "bg-purple-50 text-purple-800 border-purple-200", activeBtn: "bg-purple-600 text-white border-purple-600 ring-2 ring-purple-300" }
+        }[section.theme];
+
+        let itemsHtml = section.items.map((item, idx) => {
+          const currentVal = scoreMap[item.id] || null;
+
+          let buttonsHtml = [1, 2, 3, 4, 5].map(score => {
+            const isSelected = currentVal === score;
+            const btnClass = isSelected
+              ? colorInfo.activeBtn + " font-black shadow-sm"
+              : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300 font-bold";
+
+            return `
+              <button type="button"
+                      onclick="selectScore('${item.id}', ${score}, '${section.theme}')"
+                      class="flex-1 py-2.5 sm:py-3 px-1 rounded-xl border text-sm sm:text-base transition-all duration-150 flex flex-col items-center justify-center gap-0.5 ${btnClass}">
+                <span class="text-base sm:text-lg leading-none">${score}점</span>
+                <span class="text-[10.5px] sm:text-xs font-normal opacity-95 leading-tight text-center mt-0.5">${SCALE_LABELS[score]}</span>
+              </button>
+            `;
+          }).join("");
+
+          return `
+            <div id="item_card_${item.id}" class="p-4 sm:p-5 rounded-2xl border ${currentVal ? 'border-slate-300 bg-white' : 'border-slate-200 bg-slate-50/50'} transition-all space-y-3">
+              <div class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                <p class="font-bold text-slate-900 text-base sm:text-lg leading-snug flex-1">
+                  ${item.text}
+                </p>
+              </div>
+
+              <!-- 1~5점 선택 버튼 그룹 -->
+              <div class="grid grid-cols-5 gap-1.5 sm:gap-2 pt-1" id="btnGroup_${item.id}">
+                ${buttonsHtml}
+              </div>
+
+              <!-- 선택된 점수 안내 텍스트 -->
+              <div class="text-right text-xs sm:text-sm font-semibold h-4 text-slate-500" id="selectedLabel_${item.id}">
+                ${currentVal ? `<span class="${colorInfo.text}">선택: ${currentVal}점 (${SCALE_LABELS[currentVal]})</span>` : '<span class="text-slate-400">점수를 선택해 주세요</span>'}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        secDiv.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl ${colorInfo.bg} text-white flex items-center justify-center font-extrabold text-sm sm:text-base shadow-xs">${sIdx + 1}</span>
+              <h3 class="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight">${section.title}</h3>
+            </div>
+            <span class="text-xs sm:text-sm font-bold px-3 py-1 rounded-full border ${colorInfo.light}">
+              ${section.subTitle}
+            </span>
+          </div>
+
+          <div class="p-3.5 sm:p-4 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-600 mb-5 border border-slate-200/60 leading-relaxed flex items-start gap-2.5">
+            <i data-lucide="info" class="w-4 h-4 text-slate-400 mt-1 shrink-0"></i>
+            <span>${section.quote}</span>
+          </div>
+
+          <div class="space-y-3">
+            ${itemsHtml}
+          </div>
+        `;
+
+        container.appendChild(secDiv);
+      });
+
+      lucide.createIcons();
+    }
+
+    // 1~5점 점수 선택 핸들러
+    function selectScore(itemId, score, theme) {
+      scoreMap[itemId] = score;
+
+      const colorActive = {
+        emerald: "bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-300",
+        blue: "bg-blue-600 text-white border-blue-600 ring-2 ring-blue-300",
+        purple: "bg-purple-600 text-white border-purple-600 ring-2 ring-purple-300"
+      }[theme];
+
+      const textColor = {
+        emerald: "text-emerald-700",
+        blue: "text-blue-700",
+        purple: "text-purple-700"
+      }[theme];
+
+      // 버튼 스타일 업데이트
+      const group = document.getElementById(`btnGroup_${itemId}`);
+      if (group) {
+        const buttons = group.querySelectorAll("button");
+        buttons.forEach((btn, idx) => {
+          const val = idx + 1;
+          if (val === score) {
+            btn.className = `flex-1 py-2.5 sm:py-3 px-1 rounded-xl border text-sm sm:text-base transition-all duration-150 flex flex-col items-center justify-center gap-0.5 ${colorActive} font-black shadow-sm`;
+          } else {
+            btn.className = "flex-1 py-2.5 sm:py-3 px-1 rounded-xl border text-sm sm:text-base transition-all duration-150 flex flex-col items-center justify-center gap-0.5 bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300 font-bold";
+          }
+        });
+      }
+
+      // 카드 테두리 및 텍스트 갱신
+      const card = document.getElementById(`item_card_${itemId}`);
+      if (card) {
+        card.className = "p-4 sm:p-5 rounded-2xl border border-slate-300 bg-white transition-all space-y-3";
+      }
+
+      const label = document.getElementById(`selectedLabel_${itemId}`);
+      if (label) {
+        label.innerHTML = `<span class="${textColor}">선택: <strong>${score}점</strong> (${SCALE_LABELS[score]})</span>`;
+      }
+
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const total = 15;
+      const completedCount = Object.keys(scoreMap).length;
+      const percent = Math.round((completedCount / total) * 100);
+
+      document.getElementById("progressText").textContent = `${completedCount}/${total}`;
+      document.getElementById("progressBarCount").textContent = `${completedCount} / ${total} 문항 완료 (${percent}%)`;
+      document.getElementById("surveyProgressBar").style.width = `${percent}%`;
+    }
+
+    // 결과 계산 및 표출
+    function calculateAndShowResult() {
+      const answeredCount = Object.keys(scoreMap).length;
+      if (answeredCount < 15) {
+        // 미답변 문항이 있는 경우 안내
+        const unanswered = [];
+        CHECKLIST_DATA.forEach(sec => {
+          sec.items.forEach(it => {
+            if (!scoreMap[it.id]) unanswered.push(it.text);
+          });
+        });
+        alert(`아직 점수를 선택하지 않은 문항이 ${15 - answeredCount}개 있습니다.\n모든 문항(1~5점)을 체크해 주시면 보다 정확한 진단 결과를 얻을 수 있습니다.`);
+        return;
+      }
+
+      const rawName = document.getElementById("childName").value.trim();
+      const childName = rawName || "아이";
+
+      // 3개 영역 점수 계산 (각 문항 1~5점, 영역당 5문항 -> 5~25점)
+      const flowIds = ["f1", "f2", "f3", "f4", "f5"];
+      const controlIds = ["c1", "c2", "c3", "c4", "c5"];
+      const sustainIds = ["s1", "s2", "s3", "s4", "s5"];
+
+      const flowTotal = flowIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+      const controlTotal = controlIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+      const sustainTotal = sustainIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+
+      const flowAvg = (flowTotal / 5).toFixed(1);
+      const controlAvg = (controlTotal / 5).toFixed(1);
+      const sustainAvg = (sustainTotal / 5).toFixed(1);
+
+      // 화면에 표시
+      document.getElementById("resultChildName").textContent = childName;
+      
+      document.getElementById("scoreFlow").textContent = flowTotal;
+      document.getElementById("avgFlow").textContent = flowAvg;
+      document.getElementById("barFlow").style.width = `${(flowTotal / 25) * 100}%`;
+
+      document.getElementById("scoreControl").textContent = controlTotal;
+      document.getElementById("avgControl").textContent = controlAvg;
+      document.getElementById("barControl").style.width = `${(controlTotal / 25) * 100}%`;
+
+      document.getElementById("scoreSustain").textContent = sustainTotal;
+      document.getElementById("avgSustain").textContent = sustainAvg;
+      document.getElementById("barSustain").style.width = `${(sustainTotal / 25) * 100}%`;
+
+      // 각 단계별 텍스트 레벨
+      document.getElementById("levelFlow").textContent = getLevelDescription(flowTotal);
+      document.getElementById("levelControl").textContent = getLevelDescription(controlTotal);
+      document.getElementById("levelSustain").textContent = getLevelDescription(sustainTotal);
+
+      // 종합 진단 로직 (평균 점수 기반 분석)
+      const diagnosis = evaluateGrowthStages(childName, parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg), flowTotal, controlTotal, sustainTotal);
+
+      document.getElementById("resultDiagnosisSummary").innerHTML = diagnosis.summary;
+      
+      const badgeElem = document.getElementById("badgeTargetPhase");
+      badgeElem.className = `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold ${diagnosis.badgeClass}`;
+      badgeElem.innerHTML = `<i data-lucide="${diagnosis.icon}" class="w-4 h-4"></i> ${diagnosis.badgeText}`;
+
+      document.getElementById("titleTargetPhase").textContent = diagnosis.title;
+      document.getElementById("descTargetPhase").textContent = diagnosis.desc;
+      document.getElementById("corePointText").innerHTML = diagnosis.corePoint;
+
+      // 상세 솔루션 목록 생성
+      renderDetailedSolutions(flowTotal, controlTotal, sustainTotal, flowAvg, controlAvg, sustainAvg, childName);
+
+      // 1~3점 낮은 점수 문항 집중 피드백 렌더링
+      renderLowScoreFeedback(childName);
+
+      // 레이더 차트 렌더링 (5.0 만점 기준)
+      renderRadarChart(parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg));
+
+      // 화면 전환
+      document.getElementById("viewIntro").classList.add("hidden");
+      document.getElementById("viewSurvey").classList.add("hidden");
+      document.getElementById("viewResult").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      lucide.createIcons();
+
+      // 축하 색종이 이펙트
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function getLevelDescription(totalScore) {
+      if (totalScore >= 21) return "매우 우수 (경험과 습관이 탄탄함)";
+      if (totalScore >= 16) return "보통 이상 (안정적으로 형성 중)";
+      if (totalScore >= 11) return "보통 이하 (기본 경험 보완 권장)";
+      return "초기 형성 (집중적인 관심과 지원 필요)";
+    }
+
+    // 종합 진단 로직 함수 (평균 점수 기준)
+    function evaluateGrowthStages(name, fAvg, cAvg, sAvg, fTot, cTot, sTot) {
+      // 발달 흐름: 몰입 -> 조절 -> 지속
+      // 1. 몰입 부족 (몰입 평균 < 3.2점)
+      if (fAvg < 3.2) {
+        return {
+          badgeClass: "bg-emerald-100 text-emerald-800",
+          icon: "sparkles",
+          badgeText: "1단계 몰입 경험 집중 권장",
+          title: `${name}에게 지금 가장 필요한 것은 [깊은 몰입의 즐거움]입니다`,
+          summary: `${name}는 아직 좋아하는 것에 푹 빠져 호기심을 발산하는 경험이 더 필요한 단계입니다. (몰입 평균: ${fAvg}점)`,
+          desc: "공부의 진도나 정답 맞히기보다, 아이가 좋아하는 놀이나 활동에 온전히 빠져드는 경험을 먼저 충분히 쌓아주어야 합니다. 스스로 재미있어서 끝까지 파고드는 '몰입의 맛'을 알아야 다음 단계인 자기조절도 가능해집니다.",
+          corePoint: "공부를 강요하지 마세요. 블록, 그림, 만들기, 자연 관찰 등 아이가 좋아하는 놀이를 방해받지 않고 끝까지 해볼 수 있는 자유 시간과 지지적 환경을 최우선으로 선물해 주세요."
+        };
+      }
+      
+      // 2. 몰입은 양호하나 조절 부족 (몰입 >= 3.2, 조절 < 3.2)
+      if (cAvg < 3.2) {
+        return {
+          badgeClass: "bg-blue-100 text-blue-800",
+          icon: "sliders-horizontal",
+          badgeText: "2단계 조절 습관 형성 집중 권장",
+          title: `${name}에게 지금 가장 필요한 것은 [약속과 조절의 습관]입니다`,
+          summary: `${name}는 좋아하는 일에 몰입하는 힘은 우수하나, 스스로 멈추고 전환하는 '자기조절력'을 배울 최적의 시기입니다. (조절 평균: ${cAvg}점)`,
+          desc: "하고 싶은 놀이에서 '해야 할 일'로 주의를 부드럽게 옮기는 연습이 필요합니다. 이 단계에서 중요한 것은 많은 양의 공부가 아니라, 약속된 시간에 자리에 앉고 멈출 수 있는 태도와 습관입니다.",
+          corePoint: "시각적 타이머를 활용하여 '5분 후 정리 시간'을 미리 예고하고, '할 일 먼저 끝내고 좋아하는 놀이하기' 규칙을 온 가족이 일관성 있게 지켜주세요."
+        };
+      }
+
+      // 3. 몰입과 조절은 양호하나 지속 부족 (몰입 >= 3.2, 조절 >= 3.2, 지속 < 3.2)
+      if (sAvg < 3.2) {
+        return {
+          badgeClass: "bg-purple-100 text-purple-800",
+          icon: "trending-up",
+          badgeText: "3단계 지속과 회복탄력성 집중 권장",
+          title: `${name}에게 지금 가장 필요한 것은 [끈기와 도전의 성취감]입니다`,
+          summary: `${name}는 몰입과 기본 조절 규칙이 잘 잡혀 있으며, 이제 지루함과 어려움을 이겨내는 '지속력'을 키울 시기입니다. (지속 평균: ${sAvg}점)`,
+          desc: "초등 고학년 및 자기주도 학습으로 도약하기 위한 핵심 열쇠는 '어려운 문제에 부딪혔을 때 쉽게 포기하지 않는 태도'입니다. 실패를 겪어도 다시 해보려는 의식적인 노력을 북돋워주어야 합니다.",
+          corePoint: "결과 점수보다 '포기하지 않고 끝까지 고민해 본 태도'를 구체적으로 칭찬해 주세요. 작은 목표를 스스로 세우고 달성하는 성공 경험을 선물해야 합니다."
+        };
+      }
+
+      // 4. 균형 성장 (세 항목 모두 3.2점 이상)
+      return {
+        badgeClass: "bg-teal-100 text-teal-800",
+        icon: "award",
+        badgeText: "안정적 자기주도 성장 궤도 진입",
+        title: `${name}는 [몰입 · 조절 · 지속]의 3박자가 훌륭하게 균형을 이루고 있습니다`,
+        summary: `${name}는 좋아하는 것에 깊이 빠져들고, 규칙을 지키며, 끈기 있게 지속할 수 있는 튼튼한 학습 엔진을 갖추었습니다.`,
+        desc: "자기주도 학습의 3가지 핵심 축이 고르게 발달되어 있습니다. 이제 부모의 일방적인 지시보다는 아이의 선택권과 자율성을 더욱 넓혀줄 때입니다.",
+        corePoint: "아이가 스스로 학습 계획을 세우고 점검할 수 있도록 믿고 맡겨주세요. 부모는 감시자가 아닌 멘토로서 아이의 장기적인 관심사와 호기심을 지지해 주면 더욱 큰 성장을 이룰 것입니다."
+      };
+    }
+
+    // 상세 솔루션 렌더링
+    function renderDetailedSolutions(fTot, cTot, sTot, fAvg, cAvg, sAvg, name) {
+      const container = document.getElementById("solutionsList");
+      container.innerHTML = "";
+
+      const solutions = [
+        {
+          stage: "1단계 · 몰입 (Flow)",
+          score: `${fTot}점 / 25점`,
+          avg: `${fAvg} / 5.0`,
+          color: "emerald",
+          status: fAvg >= 4.0 ? "매우 우수" : (fAvg >= 3.2 ? "양호" : "집중 지원 필요"),
+          principles: "공부의 양보다 '몰입의 질'이 평생 공부력을 결정합니다.",
+          guide: fAvg < 3.2
+            ? `현재 ${name}는 호기심을 스스로 발현하고 깊이 파고드는 경험이 부족할 수 있습니다. 공부나 과제 지시를 잠시 멈추고, 아이가 흥미로워하는 주제(자연, 그림, 레고, 역할놀이 등)를 마음껏 탐색하도록 방해받지 않는 시간과 환경을 만들어 주세요.`
+            : `${name}는 좋아하는 활동에 푹 빠져드는 좋은 집중력과 에너지를 갖고 있습니다. 이 에너지가 점차 다양한 학습 영역으로 자연스럽게 전이될 수 있도록 흥미로운 독서와 일상 속 열린 질문을 자주 건네보세요.`
+        },
+        {
+          stage: "2단계 · 조절 (Self-Control)",
+          score: `${cTot}점 / 25점`,
+          avg: `${cAvg} / 5.0`,
+          color: "blue",
+          status: cAvg >= 4.0 ? "매우 우수" : (cAvg >= 3.2 ? "양호" : "집중 지원 필요"),
+          principles: "공부의 난이도보다 '공부하는 습관과 멈춤의 기술'이 핵심입니다.",
+          guide: cAvg < 3.2
+            ? `${name}에게 숙제나 공부를 시작하는 일, 재미있는 놀이를 스스로 멈추는 일은 아직 매우 버거울 수 있습니다. 아이를 탓하지 마시고, 15분 단위의 '작은 시간 약속'부터 시작해 약속을 지켰을 때 즉각적인 격려와 인정을 아끼지 마세요.`
+            : `${name}는 부모와의 규칙을 존중하고 스스로 행동을 멈추고 시작하는 조절력이 훌륭히 자리 잡고 있습니다. 앞으로는 아이가 직접 일과표나 체크리스트를 만들어보게 함으로써 조절의 주도권을 조금씩 넘겨주세요.`
+        },
+        {
+          stage: "3단계 · 지속 (Sustained Effort)",
+          score: `${sTot}점 / 25점`,
+          avg: `${sAvg} / 5.0`,
+          color: "purple",
+          status: sAvg >= 4.0 ? "매우 우수" : (sAvg >= 3.2 ? "양호" : "집중 지원 필요"),
+          principles: "재미가 없어도 해내는 힘, '의식적인 노력과 회복탄력성'이 자기주도의 완성입니다.",
+          guide: sAvg < 3.2
+            ? `어려운 과제를 만나면 쉽게 포기하거나 회피할 수 있습니다. 이때 '왜 안 해?'라고 다그치기보다, 문제를 잘게 쪼개어(예: 5문제 중 1문제만 풀기) 아주 작은 성공을 맛보게 하고 '틀려도 괜찮아, 다음엔 더 잘할 수 있어'라는 회복탄력성을 심어주세요.`
+            : `${name}는 재미없는 과제라도 목표를 위해 인내하고 꾸준히 지속할 수 있는 내면의 힘이 탄탄합니다. 장기적인 목표(한 달 프로젝트, 책 한 권 완독 등)에 도전하게 하여 더 큰 성취감을 경험하게 도와주세요.`
+        }
+      ];
+
+      solutions.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-2";
+        div.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-base font-extrabold text-slate-800">${item.stage}</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs sm:text-sm font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-md">
+                ${item.score} (평균 ${item.avg})
+              </span>
+              <span class="text-xs sm:text-sm px-2.5 py-0.5 rounded-full font-bold ${item.status === '집중 지원 필요' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-50 text-emerald-800'}">
+                ${item.status}
+              </span>
+            </div>
+          </div>
+          <div class="text-xs sm:text-sm text-slate-500 font-medium italic">“${item.principles}”</div>
+          <p class="text-sm sm:text-base text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+            ${item.guide}
+          </p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // 1~3점 낮은 점수 문항 집중 피드백
+    function renderLowScoreFeedback(childName) {
+      const listElem = document.getElementById("lowScoreItemsList");
+      const boxElem = document.getElementById("lowScoreFeedbackBox");
+      listElem.innerHTML = "";
+
+      let lowItems = [];
+
+      CHECKLIST_DATA.forEach(section => {
+        section.items.forEach(item => {
+          const s = scoreMap[item.id] || 0;
+          if (s <= 3) {
+            lowItems.push({
+              sectionId: section.id,
+              sectionTitle: section.title.split(' ')[0],
+              theme: section.theme,
+              text: item.text,
+              score: s,
+              tip: item.tip
+            });
+          }
+        });
+      });
+
+      if (lowItems.length === 0) {
+        boxElem.className = "p-6 bg-emerald-50/70 border border-emerald-200 rounded-2xl space-y-2";
+        boxElem.innerHTML = `
+          <div class="font-bold text-emerald-900 text-base sm:text-lg flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+            모든 평가 항목에서 4~5점의 우수한 평가를 받았습니다!
+          </div>
+          <p class="text-xs sm:text-sm text-emerald-800 leading-relaxed">
+            ${childName}는 [몰입], [조절], [지속]의 전 문항에서 고르게 긍정적인 태도를 보여주고 있습니다. 지금처럼 아이의 자율성과 흥미를 지지해 주시면서 장기적인 목표를 함께 응원해 주세요.
+          </p>
+        `;
+      } else {
+        boxElem.classList.remove("hidden");
+        lowItems.forEach(it => {
+          const badgeClass = {
+            emerald: "bg-emerald-100 text-emerald-800 border border-emerald-200/70",
+            blue: "bg-blue-100 text-blue-800 border border-blue-200/70",
+            purple: "bg-purple-100 text-purple-800 border border-purple-200/70"
+          }[it.theme] || "bg-slate-100 text-slate-700";
+
+          const li = document.createElement("li");
+          li.className = "p-4 bg-white rounded-xl border border-amber-200/70 shadow-xs space-y-2";
+          li.innerHTML = `
+            <div class="font-bold text-slate-800 text-sm sm:text-base flex items-start justify-between gap-2.5">
+              <div class="flex items-start gap-2 flex-1">
+                <span class="text-xs px-2.5 py-0.5 rounded-md font-bold shrink-0 mt-0.5 ${badgeClass}">${it.sectionTitle}</span>
+                <span class="leading-snug text-slate-900">${it.text}</span>
+              </div>
+              <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${it.score <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700'} shrink-0">
+                ${it.score}점 (${SCALE_LABELS[it.score]})
+              </span>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-700 leading-relaxed flex items-start gap-1.5">
+              <span class="text-emerald-700 font-bold shrink-0">부모 실천 Tip:</span>
+              <span class="flex-1">${it.tip}</span>
+            </div>
+          `;
+          listElem.appendChild(li);
+        });
+      }
+    }
+
+    // Radar 차트 렌더링 (5.0점 만점 기준)
+    function renderRadarChart(flowAvg, controlAvg, sustainAvg) {
+      const ctx = document.getElementById("growthRadarChart").getContext("2d");
+
+      if (radarChartInstance) {
+        radarChartInstance.destroy();
+      }
+
+      radarChartInstance = new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["1. 몰입 단계", "2. 조절 단계", "3. 지속 단계"],
+          datasets: [{
+            label: "평균 평점 (5.0점 만점)",
+            data: [flowAvg, controlAvg, sustainAvg],
+            backgroundColor: "rgba(16, 185, 129, 0.25)",
+            borderColor: "rgba(16, 185, 129, 0.95)",
+            pointBackgroundColor: ["#10b981", "#3b82f6", "#8b5cf6"],
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(16, 185, 129, 1)",
+            borderWidth: 3,
+            pointRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            r: {
+              min: 0,
+              max: 5,
+              ticks: {
+                stepSize: 1,
+                display: true,
+                backdropColor: "transparent",
+                color: "#94a3b8",
+                font: { size: 10 }
+              },
+              pointLabels: {
+                font: {
+                  family: "Pretendard",
+                  size: 13,
+                  weight: "bold"
+                },
+                color: "#1e293b"
+              },
+              grid: {
+                color: "#e2e8f0"
+              },
+              angleLines: {
+                color: "#e2e8f0"
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+    }
+
+    // 결과 텍스트 복사 기능
+    function copyShareText() {
+      const childName = document.getElementById("resultChildName").textContent;
+      const fTot = document.getElementById("scoreFlow").textContent;
+      const fAvg = document.getElementById("avgFlow").textContent;
+      const cTot = document.getElementById("scoreControl").textContent;
+      const cAvg = document.getElementById("avgControl").textContent;
+      const sTot = document.getElementById("scoreSustain").textContent;
+      const sAvg = document.getElementById("avgSustain").textContent;
+      const title = document.getElementById("titleTargetPhase").textContent;
+
+      const text = `[아이 성장단계 1~5점 정밀 진단 리포트]
+아이 이름: ${childName}
+- 몰입단계: ${fTot}/25점 (평균 ${fAvg}/5.0)
+- 조절단계: ${cTot}/25점 (평균 ${cAvg}/5.0)
+- 지속단계: ${sTot}/25점 (평균 ${sAvg}/5.0)
+
+핵심 솔루션:
+${title}`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("진단 결과 요약이 클립보드에 복사되었습니다!");
+      }).catch(() => {
+        showToast("복사에 실패했습니다. 직접 복사해 주세요.");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toastMessage").textContent = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "pointer-events-none");
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
