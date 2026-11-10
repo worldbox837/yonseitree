@@ -420,18 +420,32 @@
           </div>
         </div>
 
-        <!-- 1~3점 항목 집중 보완 Action Tip -->
+        <!-- 1~3점 항목 집중 보완 Action Tip (안전한 영구 보존 구조) -->
         <div id="lowScoreFeedbackBox" class="p-4 sm:p-6 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-amber-900 text-base sm:text-lg flex items-center gap-2">
-            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 shrink-0"></i>
-            <span>아이가 더 보완하면 좋은 구체적 체크 포인트 (1~3점 문항)</span>
-          </h4>
-          <p class="text-xs sm:text-sm text-amber-800 leading-relaxed break-keep">
-            아래 항목들은 이번 진단에서 1~3점으로 평가된 항목들입니다. 아이에게 조급해하지 마시고 아래 가이드를 일상 속에서 하나씩 시도해 보세요.
-          </p>
-          <ul id="lowScoreItemsList" class="space-y-3 text-xs sm:text-sm text-slate-700 pt-1">
-            <!-- 점수 낮은 항목들 및 조언 삽입 -->
-          </ul>
+          <!-- 1~3점 항목이 있을 때 표시되는 영역 -->
+          <div id="lowItemsContentWrap" class="space-y-3">
+            <h4 class="font-bold text-amber-900 text-base sm:text-lg flex items-center gap-2">
+              <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 shrink-0"></i>
+              <span>아이가 더 보완하면 좋은 구체적 체크 포인트 (1~3점 문항)</span>
+            </h4>
+            <p class="text-xs sm:text-sm text-amber-800 leading-relaxed break-keep">
+              아래 항목들은 이번 진단에서 1~3점으로 평가된 항목들입니다. 아이에게 조급해하지 마시고 아래 가이드를 일상 속에서 하나씩 시도해 보세요.
+            </p>
+            <ul id="lowScoreItemsList" class="space-y-3 text-xs sm:text-sm text-slate-700 pt-1">
+              <!-- 점수 낮은 항목들 및 조언 삽입 -->
+            </ul>
+          </div>
+
+          <!-- 모든 문항이 4~5점 우수일 때 표시되는 영역 -->
+          <div id="allGoodNotice" class="hidden space-y-2">
+            <div class="font-bold text-emerald-900 text-base sm:text-lg flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0"></i>
+              <span>모든 평가 항목에서 4~5점의 우수한 평가를 받았습니다!</span>
+            </div>
+            <p id="allGoodText" class="text-xs sm:text-sm text-emerald-800 leading-relaxed break-keep">
+              아이의 전 문항에서 고르게 긍정적인 태도를 보여주고 있습니다. 지금처럼 아이의 자율성과 흥미를 지지해 주시면서 장기적인 목표를 함께 응원해 주세요.
+            </p>
+          </div>
         </div>
 
         <!-- 도서 원문 핵심 가이드 안내 배너 -->
@@ -670,9 +684,22 @@
 
     function resetTest() {
       scoreMap = {};
+
+      if (radarChartInstance) {
+        try { radarChartInstance.destroy(); } catch (e) {}
+        radarChartInstance = null;
+      }
+
+      // 문항 다시 렌더링 및 진행률 초기화
       renderSurveyQuestions();
       updateProgressBar();
-      goToIntro();
+
+      // 설문 화면으로 바로 진입 (진행률 배지 활성화)
+      document.getElementById("viewIntro").classList.add("hidden");
+      document.getElementById("viewSurvey").classList.remove("hidden");
+      document.getElementById("viewResult").classList.add("hidden");
+      document.getElementById("headerStepBadge").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     // 설문 문항 동적 렌더링 (1~5점 척도 버튼식 UI)
@@ -814,91 +841,106 @@
 
     // 결과 계산 및 표출
     function calculateAndShowResult() {
-      const answeredCount = Object.keys(scoreMap).length;
-      if (answeredCount < 15) {
-        // 미답변 문항이 있는 경우 안내
-        const unanswered = [];
-        CHECKLIST_DATA.forEach(sec => {
-          sec.items.forEach(it => {
-            if (!scoreMap[it.id]) unanswered.push(it.text);
+      try {
+        const answeredCount = Object.keys(scoreMap).length;
+        if (answeredCount < 15) {
+          // 미답변 첫 번째 문항으로 자동 부드러운 스크롤 & 펄스 하이라이트
+          const firstUnanswered = CHECKLIST_DATA.flatMap(s => s.items).find(it => !scoreMap[it.id]);
+          if (firstUnanswered) {
+            const card = document.getElementById(`item_card_${firstUnanswered.id}`);
+            if (card) {
+              card.scrollIntoView({ behavior: "smooth", block: "center" });
+              card.classList.add("ring-2", "ring-rose-400", "border-rose-300");
+              setTimeout(() => card.classList.remove("ring-2", "ring-rose-400", "border-rose-300"), 3000);
+            }
+          }
+          alert(`아직 점수를 선택하지 않은 문항이 ${15 - answeredCount}개 있습니다.\n화면에 표시된 미선택 문항을 체크해 주세요.`);
+          return;
+        }
+
+        const rawName = document.getElementById("childName") ? document.getElementById("childName").value.trim() : "";
+        const childName = rawName || "아이";
+
+        // 3개 영역 점수 계산 (각 문항 1~5점, 영역당 5문항 -> 5~25점)
+        const flowIds = ["f1", "f2", "f3", "f4", "f5"];
+        const controlIds = ["c1", "c2", "c3", "c4", "c5"];
+        const sustainIds = ["s1", "s2", "s3", "s4", "s5"];
+
+        const flowTotal = flowIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+        const controlTotal = controlIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+        const sustainTotal = sustainIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
+
+        const flowAvg = (flowTotal / 5).toFixed(1);
+        const controlAvg = (controlTotal / 5).toFixed(1);
+        const sustainAvg = (sustainTotal / 5).toFixed(1);
+
+        // 화면에 기본 정보 표시
+        document.getElementById("resultChildName").textContent = childName;
+        
+        document.getElementById("scoreFlow").textContent = flowTotal;
+        document.getElementById("avgFlow").textContent = flowAvg;
+        document.getElementById("barFlow").style.width = `${(flowTotal / 25) * 100}%`;
+
+        document.getElementById("scoreControl").textContent = controlTotal;
+        document.getElementById("avgControl").textContent = controlAvg;
+        document.getElementById("barControl").style.width = `${(controlTotal / 25) * 100}%`;
+
+        document.getElementById("scoreSustain").textContent = sustainTotal;
+        document.getElementById("avgSustain").textContent = sustainAvg;
+        document.getElementById("barSustain").style.width = `${(sustainTotal / 25) * 100}%`;
+
+        // 각 단계별 텍스트 레벨
+        document.getElementById("levelFlow").textContent = getLevelDescription(flowTotal);
+        document.getElementById("levelControl").textContent = getLevelDescription(controlTotal);
+        document.getElementById("levelSustain").textContent = getLevelDescription(sustainTotal);
+
+        // 종합 진단 로직 (평균 점수 기반 분석)
+        const diagnosis = evaluateGrowthStages(childName, parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg), flowTotal, controlTotal, sustainTotal);
+
+        document.getElementById("resultDiagnosisSummary").innerHTML = diagnosis.summary;
+        
+        const badgeElem = document.getElementById("badgeTargetPhase");
+        badgeElem.className = `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold ${diagnosis.badgeClass}`;
+        badgeElem.innerHTML = `<i data-lucide="${diagnosis.icon}" class="w-4 h-4"></i> ${diagnosis.badgeText}`;
+
+        document.getElementById("titleTargetPhase").textContent = diagnosis.title;
+        document.getElementById("descTargetPhase").textContent = diagnosis.desc;
+        document.getElementById("corePointText").innerHTML = diagnosis.corePoint;
+
+        // 먼저 결과 화면을 표시(visible)하여 캔버스 및 레이아웃 크기를 안정적으로 확보!
+        document.getElementById("viewIntro").classList.add("hidden");
+        document.getElementById("viewSurvey").classList.add("hidden");
+        document.getElementById("viewResult").classList.remove("hidden");
+        document.getElementById("headerStepBadge").classList.add("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // 상세 솔루션 목록 생성
+        renderDetailedSolutions(flowTotal, controlTotal, sustainTotal, flowAvg, controlAvg, sustainAvg, childName);
+
+        // 1~3점 낮은 점수 문항 집중 피드백 렌더링
+        renderLowScoreFeedback(childName);
+
+        // 레이더 차트 렌더링 (visible 캔버스에서 안전하게 실행)
+        renderRadarChart(parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg));
+
+        lucide.createIcons();
+
+        // 축하 색종이 이펙트
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 60,
+            spread: 70,
+            origin: { y: 0.6 }
           });
-        });
-        alert(`아직 점수를 선택하지 않은 문항이 ${15 - answeredCount}개 있습니다.\n모든 문항(1~5점)을 체크해 주시면 보다 정확한 진단 결과를 얻을 수 있습니다.`);
-        return;
+        }
+      } catch (err) {
+        console.error("진단 결과 분석 중 오류 발생:", err);
+        // 비상 fallback 화면 전환
+        document.getElementById("viewIntro").classList.add("hidden");
+        document.getElementById("viewSurvey").classList.add("hidden");
+        document.getElementById("viewResult").classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
-
-      const rawName = document.getElementById("childName").value.trim();
-      const childName = rawName || "아이";
-
-      // 3개 영역 점수 계산 (각 문항 1~5점, 영역당 5문항 -> 5~25점)
-      const flowIds = ["f1", "f2", "f3", "f4", "f5"];
-      const controlIds = ["c1", "c2", "c3", "c4", "c5"];
-      const sustainIds = ["s1", "s2", "s3", "s4", "s5"];
-
-      const flowTotal = flowIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
-      const controlTotal = controlIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
-      const sustainTotal = sustainIds.reduce((sum, id) => sum + (scoreMap[id] || 0), 0);
-
-      const flowAvg = (flowTotal / 5).toFixed(1);
-      const controlAvg = (controlTotal / 5).toFixed(1);
-      const sustainAvg = (sustainTotal / 5).toFixed(1);
-
-      // 화면에 표시
-      document.getElementById("resultChildName").textContent = childName;
-      
-      document.getElementById("scoreFlow").textContent = flowTotal;
-      document.getElementById("avgFlow").textContent = flowAvg;
-      document.getElementById("barFlow").style.width = `${(flowTotal / 25) * 100}%`;
-
-      document.getElementById("scoreControl").textContent = controlTotal;
-      document.getElementById("avgControl").textContent = controlAvg;
-      document.getElementById("barControl").style.width = `${(controlTotal / 25) * 100}%`;
-
-      document.getElementById("scoreSustain").textContent = sustainTotal;
-      document.getElementById("avgSustain").textContent = sustainAvg;
-      document.getElementById("barSustain").style.width = `${(sustainTotal / 25) * 100}%`;
-
-      // 각 단계별 텍스트 레벨
-      document.getElementById("levelFlow").textContent = getLevelDescription(flowTotal);
-      document.getElementById("levelControl").textContent = getLevelDescription(controlTotal);
-      document.getElementById("levelSustain").textContent = getLevelDescription(sustainTotal);
-
-      // 종합 진단 로직 (평균 점수 기반 분석)
-      const diagnosis = evaluateGrowthStages(childName, parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg), flowTotal, controlTotal, sustainTotal);
-
-      document.getElementById("resultDiagnosisSummary").innerHTML = diagnosis.summary;
-      
-      const badgeElem = document.getElementById("badgeTargetPhase");
-      badgeElem.className = `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold ${diagnosis.badgeClass}`;
-      badgeElem.innerHTML = `<i data-lucide="${diagnosis.icon}" class="w-4 h-4"></i> ${diagnosis.badgeText}`;
-
-      document.getElementById("titleTargetPhase").textContent = diagnosis.title;
-      document.getElementById("descTargetPhase").textContent = diagnosis.desc;
-      document.getElementById("corePointText").innerHTML = diagnosis.corePoint;
-
-      // 상세 솔루션 목록 생성
-      renderDetailedSolutions(flowTotal, controlTotal, sustainTotal, flowAvg, controlAvg, sustainAvg, childName);
-
-      // 1~3점 낮은 점수 문항 집중 피드백 렌더링
-      renderLowScoreFeedback(childName);
-
-      // 레이더 차트 렌더링 (5.0 만점 기준)
-      renderRadarChart(parseFloat(flowAvg), parseFloat(controlAvg), parseFloat(sustainAvg));
-
-      // 화면 전환
-      document.getElementById("viewIntro").classList.add("hidden");
-      document.getElementById("viewSurvey").classList.add("hidden");
-      document.getElementById("viewResult").classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
-      lucide.createIcons();
-
-      // 축하 색종이 이펙트
-      confetti({
-        particleCount: 60,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
     }
 
     function getLevelDescription(totalScore) {
@@ -1027,11 +1069,15 @@
       });
     }
 
-    // 1~3점 낮은 점수 문항 집중 피드백
+    // 1~3점 낮은 점수 문항 집중 피드백 (DOM 보존형 안전 렌더링)
     function renderLowScoreFeedback(childName) {
       const listElem = document.getElementById("lowScoreItemsList");
       const boxElem = document.getElementById("lowScoreFeedbackBox");
-      listElem.innerHTML = "";
+      const lowItemsWrap = document.getElementById("lowItemsContentWrap");
+      const allGoodNotice = document.getElementById("allGoodNotice");
+      const allGoodText = document.getElementById("allGoodText");
+
+      if (listElem) listElem.innerHTML = "";
 
       let lowItems = [];
 
@@ -1052,67 +1098,133 @@
       });
 
       if (lowItems.length === 0) {
-        boxElem.className = "p-6 bg-emerald-50/70 border border-emerald-200 rounded-2xl space-y-2";
-        boxElem.innerHTML = `
-          <div class="font-bold text-emerald-900 text-base sm:text-lg flex items-center gap-2">
-            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
-            모든 평가 항목에서 4~5점의 우수한 평가를 받았습니다!
-          </div>
-          <p class="text-xs sm:text-sm text-emerald-800 leading-relaxed">
-            ${childName}는 [몰입], [조절], [지속]의 전 문항에서 고르게 긍정적인 태도를 보여주고 있습니다. 지금처럼 아이의 자율성과 흥미를 지지해 주시면서 장기적인 목표를 함께 응원해 주세요.
-          </p>
-        `;
+        if (boxElem) boxElem.className = "p-4 sm:p-6 bg-emerald-50/70 border border-emerald-200 rounded-2xl space-y-2";
+        if (lowItemsWrap) lowItemsWrap.classList.add("hidden");
+        if (allGoodNotice) allGoodNotice.classList.remove("hidden");
+        if (allGoodText) {
+          allGoodText.textContent = `${childName}는 [몰입], [조절], [지속]의 전 문항에서 고르게 긍정적인 태도를 보여주고 있습니다. 지금처럼 아이의 자율성과 흥미를 지지해 주시면서 장기적인 목표를 함께 응원해 주세요.`;
+        }
       } else {
-        boxElem.classList.remove("hidden");
-        lowItems.forEach(it => {
-          const badgeClass = {
-            emerald: "bg-emerald-100 text-emerald-800 border border-emerald-200/70",
-            blue: "bg-blue-100 text-blue-800 border border-blue-200/70",
-            purple: "bg-purple-100 text-purple-800 border border-purple-200/70"
-          }[it.theme] || "bg-slate-100 text-slate-700";
+        if (boxElem) boxElem.className = "p-4 sm:p-6 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3";
+        if (allGoodNotice) allGoodNotice.classList.add("hidden");
+        if (lowItemsWrap) lowItemsWrap.classList.remove("hidden");
 
-          const li = document.createElement("li");
-          li.className = "p-3.5 sm:p-4 bg-white rounded-xl border border-amber-200/80 shadow-xs space-y-2.5";
-          li.innerHTML = `
-            <!-- 1. 상단: 영역 뱃지 & 점수 뱃지 (좌우 양끝 분리) -->
-            <div class="flex items-center justify-between gap-2">
-              <span class="text-xs px-2.5 py-0.5 rounded-md font-bold ${badgeClass}">
-                ${it.sectionTitle}
-              </span>
-              <span class="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 ${it.score <= 2 ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-amber-100 text-amber-800 border border-amber-200'}">
-                ${it.score}점 (${SCALE_LABELS[it.score]})
-              </span>
-            </div>
+        if (listElem) {
+          lowItems.forEach(it => {
+            const badgeClass = {
+              emerald: "bg-emerald-100 text-emerald-800 border border-emerald-200/70",
+              blue: "bg-blue-100 text-blue-800 border border-blue-200/70",
+              purple: "bg-purple-100 text-purple-800 border border-purple-200/70"
+            }[it.theme] || "bg-slate-100 text-slate-700";
 
-            <!-- 2. 문항 텍스트 (너비 100% 온전히 사용하여 시원하고 자연스러운 줄바꿈) -->
-            <div class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
-              ${it.text}
-            </div>
-
-            <!-- 3. 부모 실천 Tip (박스형 레이아웃으로 모바일에서도 한눈에 편안하게 정렬) -->
-            <div class="text-xs sm:text-sm text-slate-700 leading-relaxed bg-amber-50/70 p-3 rounded-lg border border-amber-100/90 break-keep space-y-1">
-              <div class="text-emerald-800 font-bold flex items-center gap-1">
-                <span>💡 부모 실천 Tip</span>
+            const li = document.createElement("li");
+            li.className = "p-3.5 sm:p-4 bg-white rounded-xl border border-amber-200/80 shadow-xs space-y-2.5";
+            li.innerHTML = `
+              <!-- 1. 상단: 영역 뱃지 & 점수 뱃지 (좌우 양끝 분리) -->
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs px-2.5 py-0.5 rounded-md font-bold ${badgeClass}">
+                  ${it.sectionTitle}
+                </span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 ${it.score <= 2 ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-amber-100 text-amber-800 border border-amber-200'}">
+                  ${it.score}점 (${SCALE_LABELS[it.score]})
+                </span>
               </div>
-              <p class="text-slate-800 font-normal leading-relaxed">
-                ${it.tip}
-              </p>
-            </div>
-          `;
-          listElem.appendChild(li);
-        });
+
+              <!-- 2. 문항 텍스트 (너비 100% 온전히 사용하여 시원하고 자연스러운 줄바꿈) -->
+              <div class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+                ${it.text}
+              </div>
+
+              <!-- 3. 부모 실천 Tip (박스형 레이아웃으로 모바일에서도 한눈에 편안하게 정렬) -->
+              <div class="text-xs sm:text-sm text-slate-700 leading-relaxed bg-amber-50/70 p-3 rounded-lg border border-amber-100/90 break-keep space-y-1">
+                <div class="text-emerald-800 font-bold flex items-center gap-1">
+                  <span>💡 부모 실천 Tip</span>
+                </div>
+                <p class="text-slate-800 font-normal leading-relaxed">
+                  ${it.tip}
+                </p>
+              </div>
+            `;
+            listElem.appendChild(li);
+          });
+        }
       }
     }
 
-    // Radar 차트 렌더링 (5.0점 만점 기준)
+    // Radar 차트 렌더링 (5.0점 만점 기준, 안전 렌더링)
     function renderRadarChart(flowAvg, controlAvg, sustainAvg) {
-      const ctx = document.getElementById("growthRadarChart").getContext("2d");
+      try {
+        const canvas = document.getElementById("growthRadarChart");
+        if (!canvas) return;
 
-      if (radarChartInstance) {
-        radarChartInstance.destroy();
+        if (radarChartInstance) {
+          try {
+            radarChartInstance.destroy();
+          } catch (e) {
+            console.warn("차트 인스턴스 정리:", e);
+          }
+          radarChartInstance = null;
+        }
+
+        const ctx = canvas.getContext("2d");
+        radarChartInstance = new Chart(ctx, {
+          type: "radar",
+          data: {
+            labels: ["1. 몰입 단계", "2. 조절 단계", "3. 지속 단계"],
+            datasets: [{
+              label: "평균 평점 (5.0점 만점)",
+              data: [flowAvg, controlAvg, sustainAvg],
+              backgroundColor: "rgba(16, 185, 129, 0.25)",
+              borderColor: "rgba(16, 185, 129, 0.95)",
+              pointBackgroundColor: ["#10b981", "#3b82f6", "#8b5cf6"],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "rgba(16, 185, 129, 1)",
+              borderWidth: 3,
+              pointRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              r: {
+                min: 0,
+                max: 5,
+                ticks: {
+                  stepSize: 1,
+                  display: true,
+                  backdropColor: "transparent",
+                  color: "#94a3b8",
+                  font: { size: 10 }
+                },
+                pointLabels: {
+                  font: {
+                    family: "Pretendard",
+                    size: 13,
+                    weight: "bold"
+                  },
+                  color: "#1e293b"
+                },
+                grid: {
+                  color: "#e2e8f0"
+                },
+                angleLines: {
+                  color: "#e2e8f0"
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+      } catch (err) {
+        console.error("차트 렌더링 중 오류:", err);
       }
-
-      radarChartInstance = new Chart(ctx, {
+    }
         type: "radar",
         data: {
           labels: ["1. 몰입 단계", "2. 조절 단계", "3. 지속 단계"],
