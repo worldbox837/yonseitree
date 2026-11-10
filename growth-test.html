@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="text-[18px]">
+<html lang="ko" class="text-[15px] sm:text-[17px]">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +99,7 @@
           <i data-lucide="compass" class="w-5 h-5"></i>
         </div>
         <div>
-          <span class="font-bold text-slate-900 tracking-tight text-lg sm:text-xl">아이 성장단계 자가진단</span>
+          <span class="font-bold text-slate-900 tracking-tight text-base sm:text-xl">아이 성장단계 자가진단</span>
           <span class="hidden sm:inline-block ml-2 text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">몰입 · 조절 · 지속 (1~5점 척도)</span>
         </div>
       </div>
@@ -279,7 +279,7 @@
       </div>
 
       <!-- 메인 결과 리포트 카드 -->
-      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/90 print-shadow-none space-y-8">
+      <div class="bg-white rounded-3xl p-4 sm:p-10 shadow-sm border border-slate-200/90 print-shadow-none space-y-6 sm:space-y-8">
         
         <!-- 리포트 헤더 -->
         <div class="border-b border-slate-100 pb-6 text-center">
@@ -421,15 +421,15 @@
         </div>
 
         <!-- 1~3점 항목 집중 보완 Action Tip -->
-        <div id="lowScoreFeedbackBox" class="p-6 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
+        <div id="lowScoreFeedbackBox" class="p-4 sm:p-6 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
           <h4 class="font-bold text-amber-900 text-base sm:text-lg flex items-center gap-2">
-            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600"></i>
-            아이가 더 보완하면 좋은 구체적 체크 포인트 (1~3점 문항)
+            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 shrink-0"></i>
+            <span>아이가 더 보완하면 좋은 구체적 체크 포인트 (1~3점 문항)</span>
           </h4>
-          <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
+          <p class="text-xs sm:text-sm text-amber-800 leading-relaxed break-keep">
             아래 항목들은 이번 진단에서 1~3점으로 평가된 항목들입니다. 아이에게 조급해하지 마시고 아래 가이드를 일상 속에서 하나씩 시도해 보세요.
           </p>
-          <ul id="lowScoreItemsList" class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2">
+          <ul id="lowScoreItemsList" class="space-y-3 text-xs sm:text-sm text-slate-700 pt-1">
             <!-- 점수 낮은 항목들 및 조언 삽입 -->
           </ul>
         </div>
@@ -1072,20 +1072,31 @@
           }[it.theme] || "bg-slate-100 text-slate-700";
 
           const li = document.createElement("li");
-          li.className = "p-4 bg-white rounded-xl border border-amber-200/70 shadow-xs space-y-2";
+          li.className = "p-3.5 sm:p-4 bg-white rounded-xl border border-amber-200/80 shadow-xs space-y-2.5";
           li.innerHTML = `
-            <div class="font-bold text-slate-800 text-sm sm:text-base flex items-start justify-between gap-2.5">
-              <div class="flex items-start gap-2 flex-1">
-                <span class="text-xs px-2.5 py-0.5 rounded-md font-bold shrink-0 mt-0.5 ${badgeClass}">${it.sectionTitle}</span>
-                <span class="leading-snug text-slate-900">${it.text}</span>
-              </div>
-              <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${it.score <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700'} shrink-0">
+            <!-- 1. 상단: 영역 뱃지 & 점수 뱃지 (좌우 양끝 분리) -->
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs px-2.5 py-0.5 rounded-md font-bold ${badgeClass}">
+                ${it.sectionTitle}
+              </span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 ${it.score <= 2 ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-amber-100 text-amber-800 border border-amber-200'}">
                 ${it.score}점 (${SCALE_LABELS[it.score]})
               </span>
             </div>
-            <div class="text-xs sm:text-sm text-slate-700 leading-relaxed flex items-start gap-1.5">
-              <span class="text-emerald-700 font-bold shrink-0">부모 실천 Tip:</span>
-              <span class="flex-1">${it.tip}</span>
+
+            <!-- 2. 문항 텍스트 (너비 100% 온전히 사용하여 시원하고 자연스러운 줄바꿈) -->
+            <div class="font-bold text-slate-900 text-sm sm:text-base leading-snug break-keep">
+              ${it.text}
+            </div>
+
+            <!-- 3. 부모 실천 Tip (박스형 레이아웃으로 모바일에서도 한눈에 편안하게 정렬) -->
+            <div class="text-xs sm:text-sm text-slate-700 leading-relaxed bg-amber-50/70 p-3 rounded-lg border border-amber-100/90 break-keep space-y-1">
+              <div class="text-emerald-800 font-bold flex items-center gap-1">
+                <span>💡 부모 실천 Tip</span>
+              </div>
+              <p class="text-slate-800 font-normal leading-relaxed">
+                ${it.tip}
+              </p>
             </div>
           `;
           listElem.appendChild(li);
