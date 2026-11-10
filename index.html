@@ -587,34 +587,44 @@
                 ※ 연세나무에서는 도서 《기질육아》의 원리에 기반하여 아이의 기질 평가 및 맞춤 부모 코칭 상담을 체계적으로 진행합니다.
               </div>
 
-              <!-- 아이 성장단계 자가진단 링크 배너 (자연스러운 수직 3단 레이아웃) -->
+              <!-- 아이 성장단계 자가진단 링크 배너 (PC: 첨부 디자인 가로 1열 유지 / 모바일: 자연스러운 3단 스택) -->
               <div class="pt-3">
                 <a href="growth-test.html" 
-                   class="block p-5 sm:p-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 hover:border-amber-400/50 transition-all duration-200 group space-y-3">
+                   class="flex flex-col md:flex-row md:items-center justify-between p-4 sm:p-5 md:p-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 hover:border-amber-400/50 transition-all duration-200 group gap-3.5 sm:gap-4">
                   
-                  <!-- 1행: 녹색체크아이콘 + 아이 성장단계 자가진단 -->
-                  <div class="flex items-center gap-3">
-                    <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                      <!-- 체크리스트 아이콘 -->
-                      <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                        <path d="m9 14 2 2 4-4"/>
-                      </svg>
-                    </span>
-                    <h4 class="text-base sm:text-lg font-bold text-white tracking-tight">
-                      아이 성장단계 자가진단
-                    </h4>
+                  <!-- 좌측 정보 영역 (모바일: 세로 흐름 / PC: 아이콘 옆에 타이틀+설명) -->
+                  <div class="flex flex-col md:flex-row md:items-center gap-2.5 sm:gap-3.5">
+                    <!-- 아이콘 및 모바일 타이틀 -->
+                    <div class="flex items-center gap-3">
+                      <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                        <!-- 체크리스트 아이콘 -->
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+                          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                          <path d="m9 14 2 2 4-4"/>
+                        </svg>
+                      </span>
+                      <!-- 모바일 전용 타이틀 (아이콘 옆 1행) -->
+                      <h4 class="md:hidden text-base font-bold text-white tracking-tight">
+                        아이 성장단계 자가진단
+                      </h4>
+                    </div>
+
+                    <!-- 텍스트 영역 (PC에서는 타이틀+설명 묶음 / 모바일에서는 설명만 2행으로) -->
+                    <div>
+                      <!-- PC 전용 타이틀 (가로 정렬 시 아이콘 옆) -->
+                      <h4 class="hidden md:block text-base sm:text-lg font-bold text-white tracking-tight">
+                        아이 성장단계 자가진단
+                      </h4>
+                      <p class="text-xs sm:text-sm text-slate-300 font-light mt-0.5 leading-relaxed break-keep">
+                        우리 아이의 현재 발달 단계(몰입 · 조절 · 지속)와 맞춤 솔루션을 확인해보세요.
+                      </p>
+                    </div>
                   </div>
 
-                  <!-- 2행: 우리 아이의 현재 발달 단계... -->
-                  <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed break-keep">
-                    우리 아이의 현재 발달 단계(몰입 · 조절 · 지속)와 맞춤 솔루션을 확인해보세요.
-                  </p>
-
-                  <!-- 3행: 테스트 시작하기 버튼 -->
-                  <div class="pt-1 flex">
-                    <div class="w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-lg group-hover:shadow-amber-400/25 group-hover:scale-[1.02] transition-all duration-200">
+                  <!-- 테스트 시작하기 버튼 (PC: 우측 정렬 / 모바일: 하단 풀너비 버튼) -->
+                  <div class="pt-1 md:pt-0 shrink-0">
+                    <div class="w-full md:w-auto px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-lg group-hover:shadow-amber-400/25 group-hover:scale-[1.02] transition-all duration-200">
                       <span>테스트 시작하기</span>
                       <span class="text-base font-extrabold group-hover:translate-x-1 transition-transform">&rarr;</span>
                     </div>
