@@ -1225,60 +1225,6 @@
         console.error("차트 렌더링 중 오류:", err);
       }
     }
-        type: "radar",
-        data: {
-          labels: ["1. 몰입 단계", "2. 조절 단계", "3. 지속 단계"],
-          datasets: [{
-            label: "평균 평점 (5.0점 만점)",
-            data: [flowAvg, controlAvg, sustainAvg],
-            backgroundColor: "rgba(16, 185, 129, 0.25)",
-            borderColor: "rgba(16, 185, 129, 0.95)",
-            pointBackgroundColor: ["#10b981", "#3b82f6", "#8b5cf6"],
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(16, 185, 129, 1)",
-            borderWidth: 3,
-            pointRadius: 5
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          scales: {
-            r: {
-              min: 0,
-              max: 5,
-              ticks: {
-                stepSize: 1,
-                display: true,
-                backdropColor: "transparent",
-                color: "#94a3b8",
-                font: { size: 10 }
-              },
-              pointLabels: {
-                font: {
-                  family: "Pretendard",
-                  size: 13,
-                  weight: "bold"
-                },
-                color: "#1e293b"
-              },
-              grid: {
-                color: "#e2e8f0"
-              },
-              angleLines: {
-                color: "#e2e8f0"
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              display: false
-            }
-          }
-        }
-      });
-    }
 
     // 결과 텍스트 복사 기능
     function copyShareText() {
